@@ -24,13 +24,7 @@ from .sorter import PRESETS, Dimension, JevSorter, calls_estimate
 
 DEFAULT_CACHE = os.environ.get("JEVSORT_CACHE", ".jevsort_cache")
 
-BANNER = """\
- _                            _
-(_) _____   _____  ___  _ __| |_
-| |/ _ \\ \\ / / __|/ _ \\| '__| __|   PKPD pairwise sorting on Jev-style judges
-| |  __/\\ V /\\__ \\ (_) | |  | |_    many small calibrated judgments -> one ranking
-/ |\\___| \\_/ |___/\\___/|_|   \\__|
-|__/"""
+BANNER = "jevsort — PKPD pairwise sorting on Jev-style judges"
 
 
 class _Fmt(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
@@ -259,9 +253,11 @@ def cmd_demo(args) -> int:
     from .io import labels_of, load_items
     from .metrics import kendall_tau
 
-    data = Path(__file__).resolve().parent.parent / "examples" / "data" / "papers.json"
+    data = Path(__file__).resolve().parent / "data" / "papers.json"  # installed wheel
     if not data.exists():
-        _err("examples/data/papers.json not found (run from a source checkout)")
+        data = Path(__file__).resolve().parent.parent / "examples" / "data" / "papers.json"  # source checkout
+    if not data.exists():
+        _err("bundled papers.json not found")
         return 1
     items, extra = load_items(data)
     if os.environ.get("OPENROUTER_API_KEY") and not args.offline:
@@ -278,8 +274,10 @@ def cmd_demo(args) -> int:
     print(f"\n\033[1mObjective:\033[0m {extra['objective']}\n")
     print(res.table())
     tau = kendall_tau(res.fused.log_strength, labels_of(items, "overall"))
-    print(f"\npairs {res.usage['pairs']}/{res.usage['pairs_possible']}, judge questions {res.usage['questions']} "
-          f"(+{res.usage['cache_hits']} cached); Kendall tau vs ground truth = {tau:.3f}")
+    u = res.usage
+    cost = f", ${u['cost_usd']:.4f}" if u.get("cost_usd") else ""
+    print(f"\npairs {u['pairs']}/{u['pairs_possible']}, judge questions {u['questions']} (+{u['cache_hits']} cached){cost}; "
+          f"Kendall tau vs ground truth = {tau:.3f}")
     return 0
 
 

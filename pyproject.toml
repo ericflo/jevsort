@@ -32,5 +32,8 @@ Homepage = "https://github.com/ericflo/jevsort"
 [tool.hatch.build.targets.wheel]
 packages = ["jevsort"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"examples/data/papers.json" = "jevsort/data/papers.json"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

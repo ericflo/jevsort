@@ -4473,24 +4473,25 @@
  },
  "usage": {
   "round_robin": {
-   "requests": 0,
-   "questions": 0,
-   "cache_hits": 720,
-   "input_tokens": 0,
-   "output_tokens": 0,
-   "cost_usd": 0.0,
+   "requests": 720,
+   "questions": 720,
+   "cache_hits": 0,
+   "input_tokens": 239700,
+   "output_tokens": 720,
+   "cost_usd": 0.05008383000000002,
    "pairs": 120,
    "pairs_possible": 120,
    "judgments": 720
   },
   "total": {
-   "requests": 0,
-   "questions": 0,
-   "cache_hits": 2512,
-   "input_tokens": 0,
-   "output_tokens": 0,
-   "cost_usd": 0.0
-  }
+   "requests": 736,
+   "questions": 736,
+   "cache_hits": 1776,
+   "input_tokens": 262203,
+   "output_tokens": 736,
+   "cost_usd": 0.05602762
+  },
+  "note": "measured on the first (uncached) run"
  },
  "seconds": 0.9
 }
