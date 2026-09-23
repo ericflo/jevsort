@@ -1,0 +1,146 @@
+---
+layout: null
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Summary Showdown · pairsort</title>
+<meta name="description" content="100 popular AI models summarized the same paper. Judge pairs yourself and find the AI judge you agree with. Powered by pairsort: rank anything with AI judges.">
+<meta property="og:title" content="Summary Showdown: which AI writes the best summary? You be the judge.">
+<meta property="og:description" content="100 popular models, one paper, ranked by pairwise AI judges. Vote on 8 pairs and see which judge thinks like you.">
+<meta property="og:image" content="https://ericflo.github.io/pairsort/figures/showdown_top.png">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="./">pairsort <span>· summary showdown</span></a>
+  <nav>
+    <a href="#play">Judge</a>
+    <a href="#leaderboard">Leaderboard</a>
+    <a href="#agreement">Humans</a>
+    <a href="evals.html">Evals</a>
+    <a href="./">The library</a>
+    <a href="https://github.com/ericflo/pairsort">GitHub</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <p class="eyebrow">A benchmark you can vote in</p>
+  <h1>Which AI writes the best summary? <span class="accent">You be the judge.</span></h1>
+  <p class="lede"><span id="n-models">100</span> of OpenRouter's most-used models each summarized the same paper in one paragraph.
+    AI judges ranked them. Now compare a few pairs yourself and see which judge thinks like you.</p>
+  <div class="btn-row hero-cta">
+    <a class="btn primary big" href="#play">Judge 8 pairs →</a>
+    <a class="btn big" href="./">What is pairsort?</a>
+  </div>
+  <div class="stats">
+    <div><b id="stat-models">100</b><span>models, one paper</span></div>
+    <div><b id="stat-pct">8%</b><span>of all pairs judged (<span id="pairs-used">400</span> of <span id="pairs-possible">4,950</span>)</span></div>
+    <div><b>$0.11</b><span>for Jev's 4,800 judgments</span></div>
+  </div>
+  <p class="truth-note"><b>Ground truth:</b> none. Nobody can say which summary is <em>truly</em> best. The ranking is an AI jury's
+    opinion, and your votes are the human check. <a href="evals.html">How we test the judges against real ground truth →</a></p>
+</section>
+
+<section id="play" class="play">
+  <div class="section-head">
+    <h2>Your turn</h2>
+    <p>You don't need to know the paper: these summaries were written for exactly you. Pick the better one for the
+      question asked<span class="keys-hint">. Keys: <kbd>←</kbd> A · <kbd>→</kbd> B · <kbd>↓</kbd> skip</span>. Models stay anonymous until the end.</p>
+  </div>
+  <div id="game">
+    <div class="progress"><div class="bar" id="progress-bar"></div><span id="progress-text"></span></div>
+    <div class="question" id="question"></div>
+    <div class="pair">
+      <article class="card" id="card-a"><header><span class="tag">A</span><span class="meta" id="meta-a"></span></header><p id="text-a"></p>
+        <button class="btn pick" data-pick="A">A is better</button></article>
+      <article class="card" id="card-b"><header><span class="tag">B</span><span class="meta" id="meta-b"></span></header><p id="text-b"></p>
+        <button class="btn pick" data-pick="B">B is better</button></article>
+    </div>
+    <div class="skip-row"><button class="btn ghost" data-pick="skip">Can't tell / skip</button>
+      <a class="fine" id="paper-link-2" href="#" target="_blank" rel="noopener">the paper (PDF)</a></div>
+    <div class="pick-bar" role="group" aria-label="Your pick">
+      <button class="btn pick-a" data-pick="A">A is better</button>
+      <button class="btn ghost" data-pick="skip">Skip</button>
+      <button class="btn pick-b" data-pick="B">B is better</button>
+    </div>
+  </div>
+  <div id="results" hidden>
+    <h3 id="verdict"></h3>
+    <p class="fine" id="verdict-sub"></p>
+    <div id="judge-bars" class="judge-bars"></div>
+    <details class="reveal">
+      <summary>Who wrote the summaries you saw?</summary>
+      <ol id="reveal-list"></ol>
+    </details>
+    <div class="submit-box">
+      <h4>Add your picks to the study</h4>
+      <p>Opens a prefilled GitHub issue; nothing is sent until you press submit there.</p>
+      <div class="btn-row">
+        <button class="btn primary" id="submit-btn">Submit ballot</button>
+        <button class="btn ghost" id="again-btn">Judge 8 more</button>
+        <button class="btn ghost" id="copy-btn">Copy JSON</button>
+        <button class="btn ghost" id="download-btn">Download</button>
+      </div>
+      <p class="fine" id="submit-status"></p>
+    </div>
+  </div>
+</section>
+
+<section id="leaderboard">
+  <div class="section-head">
+    <h2>Leaderboard</h2>
+    <p>The AI jury's ranking (4 judges pooled). <b>Strength</b> = how often the jury would prefer that summary over a typical
+      one (50% = average). <b>vs next</b> = how often it's preferred over the model ranked just below. Tap a model to read its summary.</p>
+    <p class="gap-note" id="lb-gap"></p>
+  </div>
+  <div class="table-tools">
+    <input type="search" id="filter" placeholder="Find a model…" aria-label="Filter models">
+    <label class="sort-by">Sort by <select id="lb-sort" aria-label="Sort by"></select></label>
+    <span class="fine" id="lb-count"></span>
+  </div>
+  <div class="table-wrap"><table id="lb"><thead></thead><tbody></tbody></table></div>
+  <div id="lb-cards" class="lb-cards"></div>
+  <p class="more-row"><button class="btn" id="lb-more">Show all 100</button> <a href="showdown.html">Full results &amp; method →</a></p>
+</section>
+
+<section id="trust" class="trust-mini">
+  <div class="section-head">
+    <h2>Is the judging any good?</h2>
+    <p>Here there's no right answer, so we test the same judges on eight tasks where there is: exact error counts,
+      next-day stock returns, sandboxed code timings, tomorrow's weather and more.</p>
+  </div>
+  <p class="btn-row"><a class="btn primary" href="evals.html">See the evals →</a> <a class="btn" href="showdown.html">Showdown results &amp; method</a></p>
+</section>
+
+<section id="agreement">
+  <div class="section-head">
+    <h2>Humans vs judges</h2>
+    <p>Ground truth: the picks of site visitors who submitted ballots (not experts).</p>
+  </div>
+  <div id="agreement-body"><p class="fine">Loading…</p></div>
+</section>
+
+<section id="how" class="how">
+  <div class="section-head"><h2>Made with pairsort</h2>
+    <p>This whole leaderboard came from one open-source Python library that ranks anything with AI judges:
+      summaries, ideas, papers, candidates, prompts.</p></div>
+  <pre class="install"><code>pip install pairsort
+pairsort sort ideas.txt "Which idea has more impact?"</code></pre>
+  <p class="btn-row"><a class="btn primary" href="./">About pairsort →</a> <a class="btn" href="quickstart.html">Quickstart</a>
+    <a class="btn" href="https://github.com/ericflo/pairsort">GitHub</a></p>
+</section>
+</main>
+
+<footer>
+  <p id="citation"></p>
+  <p>Paper: Price, Knerr, Personnaz &amp; Dreyfus, <em>Pairwise Neural Network Classifiers with Probabilistic Outputs</em>, NeurIPS 7 (1994).
+    <a id="paper-link" href="#">PDF</a> · MIT-licensed code: <a href="https://github.com/ericflo/pairsort">github.com/ericflo/pairsort</a></p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

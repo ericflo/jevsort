@@ -156,10 +156,10 @@ def readme_section(R, dims, names) -> str:
 
 **{K} of OpenRouter's most-used models each summarized the same paper, the 1994 PKPD paper this library implements.
 pairsort ranked the summaries on six questions from just {R['pairs_used']} of the {R['pairs_possible']:,} possible pairs
-({R['pairs_used'] / R['pairs_possible']:.1%}).** Then you can [**judge them yourself →**](https://ericflo.github.io/pairsort/)
+({R['pairs_used'] / R['pairs_possible']:.1%}).** Then you can [**judge them yourself →**](https://ericflo.github.io/pairsort/summary-showdown.html)
 and find out which AI judge agrees with you.
 
-[![Summary Showdown: top 20](examples/figures/showdown_top.png)](https://ericflo.github.io/pairsort/)
+[![Summary Showdown: top 20](examples/figures/showdown_top.png)](https://ericflo.github.io/pairsort/summary-showdown.html)
 
 * **Contestants**: the top {K} callable models by tokens served on OpenRouter ({R['citation']}), each given the
   full paper text and asked for one paragraph. Cost of all {K} summaries: **${costs['summaries_usd']:.2f}**.
@@ -178,7 +178,7 @@ and find out which AI judge agrees with you.
 {chr(10).join(rows)}
 
 Full 100-model leaderboard: [examples/SHOWDOWN.md](examples/SHOWDOWN.md) · interactive version:
-[ericflo.github.io/pairsort](https://ericflo.github.io/pairsort/).
+[ericflo.github.io/pairsort/summary-showdown.html](https://ericflo.github.io/pairsort/summary-showdown.html).
 
 **What we found**
 
@@ -213,11 +213,11 @@ def readme_teaser(R, names) -> str:
             f"pairsort ranked them on six questions from {R['pairs_used']} of {R['pairs_possible']:,} possible pairs "
             f"({R['pairs_used'] / R['pairs_possible']:.0%}) with a jury of {len(R['judges'])} AI judges. Current top 3: {top}.\n\n"
             "[![Summary Showdown](https://raw.githubusercontent.com/ericflo/pairsort/main/examples/figures/showdown_top.png)]"
-            "(https://ericflo.github.io/pairsort/)\n\n"
+            "(https://ericflo.github.io/pairsort/summary-showdown.html)\n\n"
             "*Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; "
             "we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the "
             "[verifiable eval](https://ericflo.github.io/pairsort/verifiable.html) shows is itself accurate on exact counts. Humans can vote on the site.*\n\n"
-            "[**Judge the summaries yourself →**](https://ericflo.github.io/pairsort/) · "
+            "[**Judge the summaries yourself →**](https://ericflo.github.io/pairsort/summary-showdown.html) · "
             "[full results + method](https://ericflo.github.io/pairsort/showdown.html) · "
             "[leaderboard](https://github.com/ericflo/pairsort/blob/main/examples/SHOWDOWN.md)")
 

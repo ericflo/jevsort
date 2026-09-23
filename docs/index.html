@@ -6,187 +6,198 @@ layout: null
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Summary Showdown · pairsort</title>
-<meta name="description" content="100 popular AI models summarized the same paper. Judge pairs yourself and find the AI judge you agree with. Powered by pairsort: rank anything with AI judges.">
-<meta property="og:title" content="Summary Showdown: which AI writes the best summary? You be the judge.">
-<meta property="og:description" content="100 popular models, one paper, ranked by pairwise AI judges. Vote on 8 pairs and see which judge thinks like you.">
-<meta property="og:image" content="https://ericflo.github.io/pairsort/figures/showdown_top.png">
+<title>pairsort · sort anything with Jev</title>
+<meta name="description" content="pairsort turns Jev's cheap, calibrated pairwise judgments into one ranking with probabilities. Python library + CLI, MIT.">
+<meta property="og:title" content="pairsort: sort anything with Jev">
+<meta property="og:description" content="Jev judges pairs; pairsort couples them into one ranking with probabilities. 30 judgments for a hundredth of a cent. Python library + CLI, MIT.">
+<meta property="og:image" content="https://ericflo.github.io/pairsort/figures/verifiable_eval.png">
 <link rel="stylesheet" href="style.css">
-<script src="config.js"></script>
+<script>
+  // old links to the showdown (pairsort/#play etc.) now live on their own page
+  if (/^#(play|leaderboard|agreement|trust)$/.test(location.hash)) location.replace("summary-showdown.html" + location.hash);
+</script>
 </head>
-<body>
+<body class="home">
 <header class="top">
-  <a class="brand" href="#">pairsort <span>· summary showdown</span></a>
+  <a class="brand" href="./">pairsort</a>
   <nav>
-    <a href="#play">Judge</a>
-    <a href="#leaderboard">Leaderboard</a>
-    <a href="#trust">Is it any good?</a>
-    <a href="usage.html">Use pairsort</a>
+    <a href="quickstart.html">Quickstart</a>
+    <a href="#demo">Demo</a>
+    <a href="#jev">Why Jev</a>
+    <a href="evals.html">Evals</a>
+    <a href="summary-showdown.html">Showdown</a>
+    <a href="usage.html">Docs</a>
     <a href="https://github.com/ericflo/pairsort">GitHub</a>
   </nav>
 </header>
 
 <main>
-<section class="hero">
-  <p class="eyebrow">A benchmark you can vote in</p>
-  <h1>Which AI writes the best summary? <span class="accent">You be the judge.</span></h1>
-  <p class="lede"><span id="n-models">100</span> of OpenRouter's most-used models each summarized the same paper in one paragraph.
-    AI judges ranked them. Now compare a few pairs yourself and see which judge thinks like you.</p>
-  <div class="btn-row hero-cta">
-    <a class="btn primary big" href="#play">Judge 8 pairs →</a>
-    <a class="btn big" href="#how">What is pairsort?</a>
-  </div>
-  <div class="stats">
-    <div><b id="stat-models">100</b><span>models, one paper</span></div>
-    <div><b id="stat-pct">8%</b><span>of all pairs judged (<span id="pairs-used">400</span> of <span id="pairs-possible">4,950</span>)</span></div>
-    <div><b>$0.11</b><span>for Jev's 4,800 judgments</span></div>
-  </div>
-  <p class="truth-note"><b>Ground truth:</b> none. Nobody can say which summary is <em>truly</em> best. The ranking is an AI jury's
-    opinion, and your votes are the human check. <a href="#trust">How we test the judges against real ground truth →</a></p>
-</section>
+<section class="hero hero-home">
+  <h1>Sort anything with <span class="accent">Jev</span>.</h1>
+  <p class="lede">Jev judges “which of these two is better?” for a fraction of a cent. pairsort turns its answers into
+    one ranking with honest probabilities.</p>
 
-<section id="play" class="play">
-  <div class="section-head">
-    <h2>Your turn</h2>
-    <p>You don't need to know the paper: these summaries were written for exactly you. Pick the better one for the
-      question asked<span class="keys-hint">. Keys: <kbd>←</kbd> A · <kbd>→</kbd> B · <kbd>↓</kbd> skip</span>. Models stay anonymous until the end.</p>
-  </div>
-  <div id="game">
-    <div class="progress"><div class="bar" id="progress-bar"></div><span id="progress-text"></span></div>
-    <div class="question" id="question"></div>
-    <div class="pair">
-      <article class="card" id="card-a"><header><span class="tag">A</span><span class="meta" id="meta-a"></span></header><p id="text-a"></p>
-        <button class="btn pick" data-pick="A">A is better</button></article>
-      <article class="card" id="card-b"><header><span class="tag">B</span><span class="meta" id="meta-b"></span></header><p id="text-b"></p>
-        <button class="btn pick" data-pick="B">B is better</button></article>
+  <div class="qs" role="tablist">
+    <div class="qs-tabs">
+      <button type="button" class="on" data-tab="py" role="tab" aria-selected="true">Python</button>
+      <button type="button" data-tab="cli" role="tab" aria-selected="false">CLI</button>
+      <button type="button" class="copy" data-copy-from="qs">Copy</button>
     </div>
-    <div class="skip-row"><button class="btn ghost" data-pick="skip">Can't tell / skip</button>
-      <a class="fine" id="paper-link-2" href="#" target="_blank" rel="noopener">the paper (PDF)</a></div>
-    <div class="pick-bar" role="group" aria-label="Your pick">
-      <button class="btn pick-a" data-pick="A">A is better</button>
-      <button class="btn ghost" data-pick="skip">Skip</button>
-      <button class="btn pick-b" data-pick="B">B is better</button>
+<pre class="qs-code" data-pane="py"><code><span class="c"># pip install pairsort</span>
+<span class="k">import</span> pairsort
+
+ideas = [<span class="s">"A CSV-to-chart CLI"</span>,
+         <span class="s">"A blockchain to-do app"</span>,
+         <span class="s">"A PR-urgency ranker"</span>]
+r = pairsort.sort(ideas,
+      <span class="s">"Which is most useful?"</span>)
+r.best     <span class="c"># the winner</span>
+r.scores   <span class="c"># P(best) for each idea</span></code></pre>
+<pre class="qs-code" data-pane="cli" hidden><code><span class="c"># no install needed</span>
+uvx pairsort sort - \
+  <span class="s">"Which is most useful?"</span> &lt;&lt;EOF
+A CSV-to-chart CLI
+A blockchain to-do app
+A PR-urgency ranker
+EOF</code></pre>
+  </div>
+  <p class="hero-proof">Jev is the default judge: set <code>OPENROUTER_API_KEY</code>. Ranking six ideas took
+    <b>30 Jev judgments, 0.52 s and $0.0001</b> (<a href="#demo">watch it</a>). <a href="quickstart.html">Quickstart →</a></p>
+</section>
+
+<section id="demo">
+  <div class="section-head"><h2>Watch Jev sort</h2>
+    <p id="demo-q">A recorded run: six side-project ideas, every pair asked in both orders.</p></div>
+  <div class="demo" id="demo-box">
+    <div class="demo-top">
+      <span class="demo-meter"><b id="demo-n">0</b> / 30 judgments</span>
+      <span class="demo-meter">cost <b id="demo-cost">$0.000000</b></span>
+      <button type="button" class="btn small" id="demo-replay">Replay</button>
     </div>
-  </div>
-  <div id="results" hidden>
-    <h3 id="verdict"></h3>
-    <p class="fine" id="verdict-sub"></p>
-    <div id="judge-bars" class="judge-bars"></div>
-    <details class="reveal">
-      <summary>Who wrote the summaries you saw?</summary>
-      <ol id="reveal-list"></ol>
-    </details>
-    <div class="submit-box">
-      <h4>Add your picks to the study</h4>
-      <p>Opens a prefilled GitHub issue; nothing is sent until you press submit there.</p>
-      <div class="btn-row">
-        <button class="btn primary" id="submit-btn">Submit ballot</button>
-        <button class="btn ghost" id="again-btn">Judge 8 more</button>
-        <button class="btn ghost" id="copy-btn">Copy JSON</button>
-        <button class="btn ghost" id="download-btn">Download</button>
-      </div>
-      <p class="fine" id="submit-status"></p>
-    </div>
+    <div class="demo-pair" id="demo-pair" aria-live="polite"><span class="fine">Starting…</span></div>
+    <ol class="demo-rank" id="demo-rank"></ol>
+    <p class="fine" id="demo-foot">Live ranking = Bradley–Terry on the pairs so far. Recorded 2026-09-23 against
+      <code>typesafe/jev-1.13</code> on OpenRouter; the numbers are the real ones.</p>
   </div>
 </section>
 
-<section id="leaderboard">
-  <div class="section-head">
-    <h2>Leaderboard</h2>
-    <p>The AI jury's ranking (4 judges pooled). <b>Strength</b> = how often the jury would prefer that summary over a typical
-      one (50% = average). <b>vs next</b> = how often it's preferred over the model ranked just below. Tap a model to read its summary.</p>
-    <p class="gap-note" id="lb-gap"></p>
+<section id="jev">
+  <div class="section-head"><h2>Jev: cheap <em>and</em> good</h2>
+    <p>The same pairs, scored against ground truth, with Jev and three general LLM judges. Jev was the
+      <strong>cheapest judge in every eval, by 1.5–20×</strong>, and landed within 2.3 points of the best judge every time.</p></div>
+  <div class="vs-wrap">
+  <table class="vs">
+    <thead><tr><th>eval (ground truth)</th><th>Jev</th><th>best other judge</th><th>Jev cost</th><th>others</th></tr></thead>
+    <tbody>
+      <tr><td data-label="eval"><a href="crosslingual.html">Same answer in 4 languages</a></td><td data-label="Jev" class="win">96%</td><td data-label="best other">94% Gemma 4 31B</td><td data-label="Jev cost" class="cost">5.2¢</td><td data-label="others">15–21¢</td></tr>
+      <tr><td data-label="eval"><a href="market.html">Next-day stock returns, Mon</a></td><td data-label="Jev" class="win">τ +0.14</td><td data-label="best other">+0.08 Gemma 4 31B</td><td data-label="Jev cost" class="cost">7.3¢</td><td data-label="others">11–17¢</td></tr>
+      <tr><td data-label="eval"><a href="verifiable.html">Exact error counts</a></td><td data-label="Jev">96.4%</td><td data-label="best other">97.2% Gemma 4 31B</td><td data-label="Jev cost" class="cost">2.2¢</td><td data-label="others">6.8–9.7¢</td></tr>
+      <tr><td data-label="eval"><a href="runtime.html">Which code runs faster</a></td><td data-label="Jev">97.3%</td><td data-label="best other">97.9% DeepSeek V4.1 Flash</td><td data-label="Jev cost" class="cost">1.2¢</td><td data-label="others">3.2–6.7¢</td></tr>
+      <tr><td data-label="eval"><a href="ladder.html">Damage ladder</a></td><td data-label="Jev">94.4%</td><td data-label="best other">96.7% Gemma 4 31B</td><td data-label="Jev cost" class="cost">1.6¢</td><td data-label="others">6.3–32¢</td></tr>
+      <tr><td data-label="eval"><a href="market.html">Next-day stock returns, Tue</a></td><td data-label="Jev">τ +0.06</td><td data-label="best other">+0.08 Gemma 4 31B</td><td data-label="Jev cost" class="cost">—</td><td data-label="others">—</td></tr>
+    </tbody>
+  </table>
   </div>
-  <div class="table-tools">
-    <input type="search" id="filter" placeholder="Find a model…" aria-label="Filter models">
-    <label class="sort-by">Sort by <select id="lb-sort" aria-label="Sort by"></select></label>
-    <span class="fine" id="lb-count"></span>
-  </div>
-  <div class="table-wrap"><table id="lb"><thead></thead><tbody></tbody></table></div>
-  <div id="lb-cards" class="lb-cards"></div>
-  <p class="more-row"><button class="btn" id="lb-more">Show all 100</button> <a href="showdown.html">Full results &amp; method →</a></p>
+  <p class="fine">Percentages are pairs ordered correctly (cross-lingual: identical answer in EN/ES/DE/JA). Market rows are
+    Kendall τ against realized returns; neither day is strong evidence yet. Costs are what each judge actually billed for its
+    whole eval (Tuesday re-used cached answers, so its cost is not comparable). On the 100-model Summary Showdown, Jev's 4,800 judgments cost <strong>11¢</strong>; the other judges cost $0.37–$1.55 for the same pairs.</p>
 </section>
 
-<section id="trust">
-  <div class="section-head">
-    <h2>Is the judging any good?</h2>
-    <p>We test the judges on tasks where the right answer is known, and say exactly what that answer is.</p>
-  </div>
-  <div class="evals">
-    <a class="eval-card" href="verifiable.html">
-      <span class="eval-kicker">Verifiable</span>
-      <b>Exact counts</b>
-      <p>Summaries of made-up documents with a known number of planted errors and facts. Anyone can recount the truth with a script.</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="market.html">
-      <span class="eval-kicker">Market</span>
-      <b>Next-day stock moves</b>
-      <p>Stocks ranked from pre-open SEC filings, two sessions so far. The truth is the realized return, which didn't exist until that day.</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="ladder.html">
-      <span class="eval-kicker">Ladder</span>
-      <b>Damage, one step at a time</b>
-      <p>A good summary copied and damaged step by step. Are judges only as sure as the damage gap justifies?</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="runtime.html">
-      <span class="eval-kicker">Code</span>
-      <b>Which code is faster?</b>
-      <p>25 implementations, timed in a sandbox. Judges read two and pick the faster one before anything runs.</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="crosslingual.html">
-      <span class="eval-kicker">4 languages</span>
-      <b>Same truth, any language</b>
-      <p>Identical summaries in English, Spanish, German and Japanese. Does the judge agree with itself?</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="weather.html">
-      <span class="eval-kicker">Weather</span>
-      <b>Tomorrow, today</b>
-      <p>Cities ranked by tomorrow's heat and rain, committed before the day starts, scored by airport sensors.</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="evaluation.html">
-      <span class="eval-kicker">Synthetic + papers</span>
-      <b>Known orderings</b>
-      <p>Simulated items with a known order, and 16 fictional abstracts with quality levels set by their author.</p>
-      <span class="eval-link">Results →</span></a>
-    <a class="eval-card" href="#agreement">
-      <span class="eval-kicker">Humans</span>
-      <b>Your votes</b>
-      <p>Which AI judge agrees most with real readers? Built from submitted ballots.</p>
-      <span class="eval-link">See below ↓</span></a>
-  </div>
-</section>
-
-<section id="agreement">
-  <div class="section-head">
-    <h2>Humans vs judges</h2>
-    <p>Ground truth: the picks of site visitors who submitted ballots (not experts).</p>
-  </div>
-  <div id="agreement-body"><p class="fine">Loading…</p></div>
+<section id="showdown-taste">
+  <div class="section-head"><h2>100 AI models, one paper, one jury</h2>
+    <p>Jev and three other judges ranked 100 popular models' summaries from 8% of the possible pairs.</p></div>
+  <div class="taste" id="taste"><p class="fine">Loading the leaderboard…</p></div>
+  <p class="btn-row"><a class="btn primary" href="summary-showdown.html">Judge the summaries yourself →</a>
+    <a class="btn" href="showdown.html">Results &amp; method</a></p>
 </section>
 
 <section id="how" class="how">
-  <div class="section-head"><h2>What is pairsort?</h2>
-    <p>A small Python library that ranks anything with AI judges: summaries, ideas, papers, candidates, prompts.</p></div>
-  <ol class="steps">
-    <li><strong>Ask small questions.</strong> "Which of these two is clearer?" beats "score this 1–10".</li>
-    <li><strong>Ask both ways, couple the answers.</strong> Averaging A-first and B-first cancels position bias; the 1994 PKPD rule
-      (or Bradley–Terry) turns pairwise answers into one ranking with probabilities, even when the judge contradicts itself.</li>
-    <li><strong>Only ask what matters.</strong> An active schedule picks the informative pairs and stops when the ranking settles.</li>
+  <div class="section-head"><h2>How it works</h2>
+    <p>One hard question (“rank these 100 things”) becomes many easy ones (“which of these two?”), put back together
+      with the pairwise-coupling rule of Price, Knerr, Personnaz &amp; Dreyfus (NeurIPS 1994).</p></div>
+  <ol class="flow">
+    <li><span class="flow-n">1</span><div><b>Pick informative pairs</b><p>An active schedule asks about the pairs the
+      ranking is least sure of, and stops when it settles. No all-vs-all.</p></div></li>
+    <li><span class="flow-n">2</span><div><b>Ask both orders</b><p>A-first and B-first are averaged:
+      <code class="blk">P<sub>ij</sub> = (q(i,j) + 1 − q(j,i)) / 2</code> which cancels position bias exactly.</p></div></li>
+    <li><span class="flow-n">3</span><div><b>Couple into one ranking</b><p>PKPD Eq. 7 turns pairwise probabilities into
+      a probability per item, even when the judge contradicts itself. Bradley–Terry takes over for large or sparse sets.</p>
+      <p class="eq">P<sub>i</sub> = 1 / ( Σ<sub>j≠i</sub> 1/P<sub>ij</sub> − (K − 2) )</p></div></li>
+    <li><span class="flow-n">4</span><div><b>Blend questions, abstain when unsure</b><p>Each question is coupled
+      separately, then fused. When the top two are too close to call, pairsort says so.</p></div></li>
   </ol>
-  <pre class="install"><code>pip install pairsort         # or: uvx pairsort demo
+  <details class="worked">
+    <summary>Worked example: a judge that goes in circles</summary>
+    <p>The judge says A beats B (70%), B beats C (65%) and C beats A (55%). Everyone beats D. Counting wins gives a
+      three-way tie; coupling uses <em>how sure</em> each answer was.</p>
+    <div class="worked-grid">
+      <table class="pmat" aria-label="Pairwise probabilities: row beats column">
+        <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+        <tbody>
+          <tr><th>A</th><td class="d">·</td><td class="w">.70</td><td>.45</td><td class="w">.85</td></tr>
+          <tr><th>B</th><td>.30</td><td class="d">·</td><td class="w">.65</td><td class="w">.80</td></tr>
+          <tr><th>C</th><td class="w">.55</td><td>.35</td><td class="d">·</td><td class="w">.75</td></tr>
+          <tr><th>D</th><td>.15</td><td>.20</td><td>.25</td><td class="d">·</td></tr>
+        </tbody>
+      </table>
+      <div class="post" aria-label="Coupled posteriors">
+        <div class="post-row"><span>A</span><div class="post-track"><i style="width:77%"></i></div><b>38%</b></div>
+        <div class="post-row"><span>C</span><div class="post-track"><i style="width:54%"></i></div><b>27%</b></div>
+        <div class="post-row"><span>B</span><div class="post-track"><i style="width:53%"></i></div><b>26%</b></div>
+        <div class="post-row"><span>D</span><div class="post-track"><i style="width:16%"></i></div><b>8%</b></div>
+        <p class="fine">P(best) from PKPD Eq. 7. A wins its fights by wider margins; B and C are too close to separate.</p>
+      </div>
+    </div>
+  </details>
+  <p class="btn-row"><a class="btn" href="how-it-works.html">The full pipeline</a> <a class="btn" href="judges.html">Other judges: any OpenRouter LLM, open Jev models, your own function</a></p>
+</section>
 
-import pairsort
-pairsort.sort(ideas, "Which idea has more impact?").best</code></pre>
-  <p class="btn-row"><a class="btn primary" href="quickstart.html">Quickstart</a> <a class="btn" href="how-it-works.html">How it works</a>
-    <a class="btn" href="judges.html">Judges</a> <a class="btn" href="https://github.com/ericflo/pairsort">GitHub</a></p>
+<section id="explore">
+  <div class="section-head"><h2>Go deeper</h2></div>
+  <div class="evals">
+    <a class="eval-card feature" href="evals.html">
+      <span class="eval-kicker">Evidence</span>
+      <b>Eight evals, ground truth first</b>
+      <p>Exact counts, stock returns, sandboxed code timings, tomorrow's weather, a damage ladder, four languages, synthetic data.</p>
+      <span class="eval-link">See the results →</span></a>
+    <a class="eval-card" href="summary-showdown.html">
+      <span class="eval-kicker">Play</span>
+      <b>Summary Showdown</b>
+      <p>Judge 8 pairs of summaries and find out which AI judge thinks most like you.</p>
+      <span class="eval-link">Play →</span></a>
+    <a class="eval-card" href="humans-vs-judges.html">
+      <span class="eval-kicker">Science</span>
+      <b>Humans vs judges</b>
+      <p>Agreement rate, Cohen's κ and Kendall τ between reader ballots and each AI judge.</p>
+      <span class="eval-link">How it's measured →</span></a>
+    <a class="eval-card" href="usage.html">
+      <span class="eval-kicker">Docs</span>
+      <b>Usage &amp; API</b>
+      <p>Budgets, active and referee schedules, meta-judges, calibration, every backend, the full CLI.</p>
+      <span class="eval-link">Read the docs →</span></a>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="section-head"><h2>What's next</h2></div>
+  <ul class="roadmap">
+    <li><b>Weather resolves Friday.</b> 35 cities ranked by tomorrow's heat and rain, committed before the day starts,
+      scored against airport sensors from 2026-09-25.</li>
+    <li><b>More market sessions.</b> Two days is not evidence. Each new session gets added as it resolves.</li>
+    <li><b>Humans vs judges.</b> Every submitted <a href="summary-showdown.html">showdown</a> ballot grows the agreement study.</li>
+    <li><b>Open Jev models, locally.</b> Running the in-process adapters (Laya, Decider, NanoJev, Verdict) against real checkpoints.</li>
+  </ul>
+  <p class="fine">Ideas and PRs welcome on <a href="https://github.com/ericflo/pairsort/issues">GitHub</a>.</p>
 </section>
 </main>
 
 <footer>
-  <p id="citation"></p>
   <p>Paper: Price, Knerr, Personnaz &amp; Dreyfus, <em>Pairwise Neural Network Classifiers with Probabilistic Outputs</em>, NeurIPS 7 (1994).
-    <a id="paper-link" href="#">PDF</a> · MIT-licensed code: <a href="https://github.com/ericflo/pairsort">github.com/ericflo/pairsort</a></p>
+    <a href="https://proceedings.neurips.cc/paper_files/paper/1994/file/210f760a89db30aa72ca258a3483cc7f-Paper.pdf">PDF</a></p>
+  <p><a href="quickstart.html">Quickstart</a> · <a href="usage.html">Usage</a> · <a href="how-it-works.html">How it works</a> ·
+    <a href="judges.html">Judges</a> · <a href="evals.html">Evals</a> · <a href="summary-showdown.html">Summary Showdown</a> ·
+    MIT · <a href="https://github.com/ericflo/pairsort">GitHub</a> · <a href="https://pypi.org/project/pairsort/">PyPI</a></p>
 </footer>
-<script src="app.js"></script>
+<script src="home.js"></script>
 </body>
 </html>

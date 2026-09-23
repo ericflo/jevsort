@@ -3,6 +3,7 @@
 | page | what's inside |
 |---|---|
 | [Quickstart](quickstart.md) | rank anything in one line; the 60-second tour |
+| [Evals](evals.md) | all eight evals on one page, each with its ground truth and headline result |
 | [Summary Showdown results](showdown.md) | 100 popular models summarize the PKPD paper: leaderboard, findings, judges, method |
 | [Usage](usage.md) | install, CLI, input formats, Python API, calibration, the 16-paper worked example |
 | [How it works](how-it-works.md) | pairwise questions, PKPD Eq. 7, Bradley–Terry, the guards, blending, meta-judge, referee, budgets |
@@ -16,4 +17,4 @@
 | [Evaluation](evaluation.md) | synthetic judge + 16-paper demo: ROC/AUC, calibration, cost vs quality, guard ablations |
 | [Humans vs judges](humans-vs-judges.md) | the voting site, ballots, and the human-agreement graph |
 
-Or just [play the Summary Showdown](https://ericflo.github.io/pairsort/).
+Or just [play the Summary Showdown](https://ericflo.github.io/pairsort/summary-showdown.html).
