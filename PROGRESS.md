@@ -42,10 +42,15 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
 - `jevsort/agreement.py` + `jevsort agreement`: per-judge agreement rate (Wilson CI), Cohen's kappa, human-BT vs judge
   rank correlation, judge-vs-judge baseline, figure + `docs/data/agreement.json`.
 
-## Blocked / next
-- **Jev via OpenRouter returns 404** for this account: allowed-providers list lacks `typesafe`.
-  Eric: allow TypeSafe at https://openrouter.ai/settings/privacy, then run
-  `jevsort eval --data examples/data/papers.json --out examples/results/real_eval_jev.json && python examples/make_plots.py`
-  (figures prefer Jev results automatically) and commit.
+## Jev
+- Eric allowed the TypeSafe provider (2026-09-22). Jev via OpenRouter now works: 16-paper eval 720 judgments in 12
+  requests for $0.0039 (fused AUC 0.994, referee said STOP at 24/120 pairs); showdown jury member 4,800 judgments in
+  7 s for $0.107.
+
+## Next
+- Collect human ballots (issues labeled `human-ballot`), then `jevsort agreement --github ericflo/jevsort` and commit
+  `docs/data/agreement.json` + `docs/figures/agreement.png`.
 - Exercise the in-process open-model adapters against real checkpoints (needs GPU + each project's package).
-- Optional: CI workflow, PyPI release.
+- Optional: PyPI release; a Worker/Supabase `submit_endpoint` for ballots.
+
+Last commit: see `git log -1` (Summary Showdown + Pages site + agreement).
