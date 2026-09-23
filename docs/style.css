@@ -195,3 +195,8 @@ footer { padding-block: 2.5rem 3rem; color: var(--muted); font-size: .84rem; bor
 .eval-link { font-size: .88rem; font-weight: 600; color: var(--accent); }
 pre.install { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: .8rem 1rem; overflow-x: auto; margin: 1rem 0; }
 pre.install code { font-size: .92rem; }
+pre.install { display: block; margin-left: 0; max-width: 100%; }
+@media (max-width: 560px) {
+  .top nav a:not(:first-child):not(:nth-child(2)):not(:last-child) { display: none; }
+  .brand span { display: none; }
+}
