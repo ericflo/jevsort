@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jevsort"
+version = "0.1.0"
+description = "PKPD pairwise sorting on Jev-style judges — sort anything by blending many calibrated pairwise judgments"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Eric Florenzano" }]
+keywords = ["ranking", "pairwise", "llm-as-judge", "bradley-terry", "pkpd", "jev", "typesafe", "calibration"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["numpy>=1.24", "httpx>=0.25"]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.7"]
+hf = ["transformers>=4.45", "torch", "huggingface_hub"]
+dev = ["pytest>=7", "matplotlib>=3.7"]
+
+[project.scripts]
+jevsort = "jevsort.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ericflo/jevsort"
+
+[tool.hatch.build.targets.wheel]
+packages = ["jevsort"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
