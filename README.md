@@ -4,7 +4,7 @@
 
 [![tests](https://github.com/ericflo/jevsort/actions/workflows/ci.yml/badge.svg)](https://github.com/ericflo/jevsort/actions/workflows/ci.yml)
 [![Summary Showdown](https://img.shields.io/badge/play-Summary%20Showdown-2a78d6)](https://ericflo.github.io/jevsort/)
-[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ericflo/jevsort/blob/main/LICENSE)
 
 Ask a model to *score* 100 things from 1 to 10 and you get noise on a drifting scale. Ask it *"which of these two is
 better?"* and you get its best judgment. jevsort asks many of those small questions, cancels the model's biases,
@@ -15,17 +15,17 @@ Price, Knerr, Personnaz & Dreyfus ([NeurIPS 1994](https://proceedings.neurips.cc
   (A > B > C > A) and averages out its noise and position bias. Measured against explicit ground truth in
   [eight evals](#does-it-work).
 * **Cheap: not all-vs-all.** An active schedule asks only the informative pairs and stops when the ranking settles;
-  100 items were ranked from 8% of the possible pairs. With [Jev](docs/judges.md) as the judge, 4,800 comparisons cost $0.11.
+  100 items were ranked from 8% of the possible pairs. With [Jev](https://ericflo.github.io/jevsort/judges.html) as the judge, 4,800 comparisons cost $0.11.
 * **Probabilities, not vibes.** Every item gets a posterior, every pair a calibrated P(A beats B), and jevsort
   abstains when the top two are too close to call.
 * **Any judge.** TypeSafe's Jev via OpenRouter (default), any OpenRouter LLM via token logprobs, open Jev models,
-  or your own: [judges](docs/judges.md).
+  or your own: [judges](https://ericflo.github.io/jevsort/judges.html).
 * **Auditable.** Every judgment, in both orders, lands in a JSON audit log.
 
 ## Try it in 60 seconds
 
 ```bash
-pip install git+https://github.com/ericflo/jevsort
+pip install jevsort                        # or run the CLI without installing: uvx jevsort demo
 export OPENROUTER_API_KEY=sk-or-...        # or skip it and bring your own judge function
 ```
 
@@ -52,8 +52,8 @@ jevsort compare "draft A" "draft B" "Which is clearer?"
 
 Nothing is hidden behind the easy path: budgets, active/referee schedules, meta-judges, calibration profiles and
 any backend are all keywords on `jevsort.sort` or steps on the builder (`jevsort.sorter().by(...).budget(60).meta()`).
-[Quickstart](docs/quickstart.md) (runs in ~5 s: `python examples/quickstart.py`) ·
-[Usage & CLI](docs/usage.md)
+[Quickstart](https://ericflo.github.io/jevsort/quickstart.html) (runs in ~5 s: `python examples/quickstart.py`) ·
+[Usage & CLI](https://ericflo.github.io/jevsort/usage.html)
 
 ## Summary Showdown
 
@@ -61,11 +61,11 @@ any backend are all keywords on `jevsort.sort` or steps on the builder (`jevsort
 
 **100 of OpenRouter's most-used models each summarized the 1994 paper this library implements.** jevsort ranked them on six questions from 400 of 4,950 possible pairs (8%) with a jury of 4 AI judges. Current top 3: GPT-6 Astra, Claude Opus 5, Nemotron 3 Ultra.
 
-[![Summary Showdown](examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)
+[![Summary Showdown](https://raw.githubusercontent.com/ericflo/jevsort/main/examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)
 
-*Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the [verifiable eval](docs/verifiable.md) shows is itself accurate on exact counts. Humans can vote on the site.*
+*Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the [verifiable eval](https://ericflo.github.io/jevsort/verifiable.html) shows is itself accurate on exact counts. Humans can vote on the site.*
 
-[**Judge the summaries yourself →**](https://ericflo.github.io/jevsort/) · [full results + method](docs/showdown.md) · [leaderboard](examples/SHOWDOWN.md)
+[**Judge the summaries yourself →**](https://ericflo.github.io/jevsort/) · [full results + method](https://ericflo.github.io/jevsort/showdown.html) · [leaderboard](https://github.com/ericflo/jevsort/blob/main/examples/SHOWDOWN.md)
 
 <!-- showdown:end -->
 
@@ -75,25 +75,25 @@ Eight evals, each with its ground truth stated up front:
 
 | eval | what gets ranked | ground truth | result | details |
 |---|---|---|---|---|
-| **Verifiable** | 72 summaries of 6 *fictional* documents | **exact counts** of injected false statements and of facts mentioned, fixed by construction and recountable by a script | <!-- ev:verifiable -->Jev: 96% of pairs right on accuracy, 94% on completeness (τ 0.82 / 0.89) for $0.02; weakest judge τ 0.42<!-- /ev --> | [verifiable](docs/verifiable.md) |
-| **Market** | 80 + 101 stocks over 2 sessions, judged only on their pre-open SEC filings | **realized next-day returns** (Mon 09-21 and Tue 09-22), which didn't exist before those days | <!-- ev:market -->Monday: Jev τ +0.14 (p = 0.035). Tuesday: no judge beat guessing (best p = 0.12). Weak evidence so far<!-- /ev --> | [market](docs/market.md) |
-| **Degradation ladder** | 60 copies of 6 real summaries, damaged one logged step at a time | **rung number** (each rung = previous + one planted error / deleted / swapped sentence) | Jev: 94% of pairs right, ECE 0.033 | [ladder](docs/ladder.md) |
-| **Code runtime** | 25 correct implementations of a new function | **measured wall-clock time** in a sandbox | Jev picks the faster one 97% of the time | [runtime](docs/runtime.md) |
-| **Cross-lingual** | the same summaries in EN/ES/DE/JA | **exact counts, identical in every language** by construction | Jev gives the same answer in all 4 languages 96% of the time | [cross-lingual](docs/crosslingual.md) |
-| **Weather** | 35 cities, ranked the day before | **airport observations** of the next day's high and rain; predictions committed first | first round resolves 2026-09-25 | [weather](docs/weather.md) |
-| **Paper sorting** | 16 *fictional* abstracts on 3 questions | **1–5 levels assigned by construction** by the dataset author (not expert ratings) | Jev: fused AUC 0.994, Kendall τ 0.86 | [evaluation](docs/evaluation.md) |
-| **Synthetic** | simulated items, flawed simulated judge | **known latent order**; calibration labels sampled from it | coupling + both orders + temperature: ECE 0.158 → 0.013 | [evaluation](docs/evaluation.md) |
+| **Verifiable** | 72 summaries of 6 *fictional* documents | **exact counts** of injected false statements and of facts mentioned, fixed by construction and recountable by a script | <!-- ev:verifiable -->Jev: 96% of pairs right on accuracy, 94% on completeness (τ 0.82 / 0.89) for $0.02; weakest judge τ 0.42<!-- /ev --> | [verifiable](https://ericflo.github.io/jevsort/verifiable.html) |
+| **Market** | 80 + 101 stocks over 2 sessions, judged only on their pre-open SEC filings | **realized next-day returns** (Mon 09-21 and Tue 09-22), which didn't exist before those days | <!-- ev:market -->Monday: Jev τ +0.14 (p = 0.035). Tuesday: no judge beat guessing (best p = 0.12). Weak evidence so far<!-- /ev --> | [market](https://ericflo.github.io/jevsort/market.html) |
+| **Degradation ladder** | 60 copies of 6 real summaries, damaged one logged step at a time | **rung number** (each rung = previous + one planted error / deleted / swapped sentence) | Jev: 94% of pairs right, ECE 0.033 | [ladder](https://ericflo.github.io/jevsort/ladder.html) |
+| **Code runtime** | 25 correct implementations of a new function | **measured wall-clock time** in a sandbox | Jev picks the faster one 97% of the time | [runtime](https://ericflo.github.io/jevsort/runtime.html) |
+| **Cross-lingual** | the same summaries in EN/ES/DE/JA | **exact counts, identical in every language** by construction | Jev gives the same answer in all 4 languages 96% of the time | [cross-lingual](https://ericflo.github.io/jevsort/crosslingual.html) |
+| **Weather** | 35 cities, ranked the day before | **airport observations** of the next day's high and rain; predictions committed first | first round resolves 2026-09-25 | [weather](https://ericflo.github.io/jevsort/weather.html) |
+| **Paper sorting** | 16 *fictional* abstracts on 3 questions | **1–5 levels assigned by construction** by the dataset author (not expert ratings) | Jev: fused AUC 0.994, Kendall τ 0.86 | [evaluation](https://ericflo.github.io/jevsort/evaluation.html) |
+| **Synthetic** | simulated items, flawed simulated judge | **known latent order**; calibration labels sampled from it | coupling + both orders + temperature: ECE 0.158 → 0.013 | [evaluation](https://ericflo.github.io/jevsort/evaluation.html) |
 
-![Verifiable eval](examples/figures/verifiable_eval.png)
+![Verifiable eval](https://raw.githubusercontent.com/ericflo/jevsort/main/examples/figures/verifiable_eval.png)
 
 *Ground truth in this figure: exact counts built into fictional documents; recount them with
 `python examples/verifiable_eval.py verify`.*
 
 ## Learn more
 
-* [How it works](docs/how-it-works.md): pairwise questions, PKPD Eq. 7, Bradley–Terry, bias guards, blending, Jev as meta-judge and referee
-* [Judges & backends](docs/judges.md): Jev via OpenRouter, the LLM fallback, open Jev models, the `/v1/systemone` shim
-* [Usage](docs/usage.md): CLI, input formats, Python API, calibration, a worked example
-* Evals: [verifiable](docs/verifiable.md) · [market](docs/market.md) · [ladder](docs/ladder.md) · [runtime](docs/runtime.md) · [cross-lingual](docs/crosslingual.md) · [weather](docs/weather.md) · [synthetic + papers](docs/evaluation.md) · [Summary Showdown](docs/showdown.md) · [Humans vs judges](docs/humans-vs-judges.md)
+* [How it works](https://ericflo.github.io/jevsort/how-it-works.html): pairwise questions, PKPD Eq. 7, Bradley–Terry, bias guards, blending, Jev as meta-judge and referee
+* [Judges & backends](https://ericflo.github.io/jevsort/judges.html): Jev via OpenRouter, the LLM fallback, open Jev models, the `/v1/systemone` shim
+* [Usage](https://ericflo.github.io/jevsort/usage.html): CLI, input formats, Python API, calibration, a worked example
+* Evals: [verifiable](https://ericflo.github.io/jevsort/verifiable.html) · [market](https://ericflo.github.io/jevsort/market.html) · [ladder](https://ericflo.github.io/jevsort/ladder.html) · [runtime](https://ericflo.github.io/jevsort/runtime.html) · [cross-lingual](https://ericflo.github.io/jevsort/crosslingual.html) · [weather](https://ericflo.github.io/jevsort/weather.html) · [synthetic + papers](https://ericflo.github.io/jevsort/evaluation.html) · [Summary Showdown](https://ericflo.github.io/jevsort/showdown.html) · [Humans vs judges](https://ericflo.github.io/jevsort/humans-vs-judges.html)
 
 MIT licensed. Contributions welcome.

@@ -5,16 +5,29 @@ build-backend = "hatchling.build"
 [project]
 name = "jevsort"
 version = "0.1.0"
-description = "PKPD pairwise sorting on Jev-style judges — sort anything by blending many calibrated pairwise judgments"
+description = "Rank anything with AI judges: many small pairwise questions, coupled into one calibrated ranking (PKPD / Bradley-Terry)"
 readme = "README.md"
 license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
-authors = [{ name = "Eric Florenzano" }]
-keywords = ["ranking", "pairwise", "llm-as-judge", "bradley-terry", "pkpd", "jev", "typesafe", "calibration"]
+authors = [{ name = "Eric Florenzano", email = "floguy@gmail.com" }]
+keywords = ["ranking", "sorting", "pairwise-comparison", "llm-as-judge", "bradley-terry", "pkpd", "jev", "typesafe",
+            "openrouter", "calibration", "evaluation"]
 classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Typing :: Typed",
 ]
 dependencies = ["numpy>=1.24", "httpx>=0.25"]
 
@@ -27,13 +40,29 @@ dev = ["pytest>=7", "matplotlib>=3.7"]
 jevsort = "jevsort.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/ericflo/jevsort"
+Homepage = "https://ericflo.github.io/jevsort/"
+Documentation = "https://ericflo.github.io/jevsort/quickstart.html"
+Source = "https://github.com/ericflo/jevsort"
+Issues = "https://github.com/ericflo/jevsort/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["jevsort"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "examples/data/papers.json" = "jevsort/data/papers.json"
+
+# The sdist carries the library, tests and the files they need — not the eval datasets, results or figures
+# (those live in the git repo).
+[tool.hatch.build.targets.sdist]
+include = [
+  "/jevsort",
+  "/tests",
+  "/examples/data/papers.json",
+  "/examples/quickstart.py",
+  "/README.md",
+  "/LICENSE",
+  "/pyproject.toml",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -212,12 +212,14 @@ def readme_teaser(R, names) -> str:
     return (f"**{R['k']} of OpenRouter's most-used models each summarized the 1994 paper this library implements.** "
             f"jevsort ranked them on six questions from {R['pairs_used']} of {R['pairs_possible']:,} possible pairs "
             f"({R['pairs_used'] / R['pairs_possible']:.0%}) with a jury of {len(R['judges'])} AI judges. Current top 3: {top}.\n\n"
-            "[![Summary Showdown](examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)\n\n"
+            "[![Summary Showdown](https://raw.githubusercontent.com/ericflo/jevsort/main/examples/figures/showdown_top.png)]"
+            "(https://ericflo.github.io/jevsort/)\n\n"
             "*Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; "
             "we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the "
-            "[verifiable eval](docs/verifiable.md) shows is itself accurate on exact counts. Humans can vote on the site.*\n\n"
+            "[verifiable eval](https://ericflo.github.io/jevsort/verifiable.html) shows is itself accurate on exact counts. Humans can vote on the site.*\n\n"
             "[**Judge the summaries yourself →**](https://ericflo.github.io/jevsort/) · "
-            "[full results + method](docs/showdown.md) · [leaderboard](examples/SHOWDOWN.md)")
+            "[full results + method](https://ericflo.github.io/jevsort/showdown.html) · "
+            "[leaderboard](https://github.com/ericflo/jevsort/blob/main/examples/SHOWDOWN.md)")
 
 
 def _splice(path, start, end, body):

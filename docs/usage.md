@@ -5,7 +5,7 @@ Everything you need to sort your own things: CLI, input formats, Python API, cal
 ## Install and try
 
 ```bash
-pip install git+https://github.com/ericflo/jevsort      # or: uv tool install git+https://github.com/ericflo/jevsort
+pip install jevsort        # or: uv tool install jevsort · or run without installing: uvx jevsort demo
 export OPENROUTER_API_KEY=sk-or-...
 
 jevsort demo                                            # 16 papers × 3 questions

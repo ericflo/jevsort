@@ -5,7 +5,7 @@ Rank anything in one line; reach every knob when you need it. This page is
 (uncached) run against the real judges takes about 4 seconds.
 
 ```bash
-pip install git+https://github.com/ericflo/jevsort
+pip install jevsort
 export OPENROUTER_API_KEY=sk-or-...
 python examples/quickstart.py
 ```
