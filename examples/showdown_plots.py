@@ -24,7 +24,13 @@ ROOT = HERE.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(HERE))
 
-from make_plots import GRID, INK, INK2, MUTED, S1, S2, S3, S4, SURFACE, _save, _suptitle  # noqa: E402,F401
+from make_plots import GRID, INK, INK2, MUTED, S1, S2, S3, S4, SURFACE, _save, _suptitle, _truth  # noqa: E402,F401
+
+NO_TRUTH = ("NONE. There is no ground truth for summary quality. Scores/ranks = the AI jury's pairwise judgments (LLM judges + Jev), "
+            "not human ratings.")
+REF = ("there is no ground truth. 'Reference' = ANOTHER LLM, Claude Sonnet 5 (anthropic/claude-sonnet-5), grading each summary "
+       "against a rubric of 9 key facts hand-extracted", "from the paper (factual errors, facts covered, invented claims) + 1-10 "
+       "writing/understandability scores; verbosity = distance from a 110-220-word paragraph. Not human judgment.")
 
 from jevsort.metrics import spearman  # noqa: E402
 
@@ -80,6 +86,7 @@ def fig_leaderboard(R, dims):
               f"jevsort jury ranking · {R['pairs_used']} of {R['pairs_possible']} pairs judged "
               f"({R['pairs_used'] / R['pairs_possible']:.0%}) × 6 questions × 2 orders × {len(R['judges'])} judges")
     fig.subplots_adjust(top=1 - 1.25 / (0.23 * K + 2.2))
+    _truth(fig, NO_TRUTH)
     _save(fig, "showdown_leaderboard.png")
 
 
@@ -116,6 +123,7 @@ def fig_top(R, dims, n=20):
               f"Ranked by jevsort from {R['pairs_used']} of {R['pairs_possible']:,} pairs ({R['pairs_used'] / R['pairs_possible']:.1%}) "
               f"× 6 questions × 2 orders × {len(R['judges'])} AI judges · cells = rank on each question (of {K})")
     fig.subplots_adjust(top=1 - 1.45 / (0.36 * n + 2.4))
+    _truth(fig, NO_TRUTH)
     _save(fig, "showdown_top.png")
 
 
@@ -140,7 +148,7 @@ def fig_cost_quality(R):
         ax.annotate(lb[i]["name"][:30], (cost[i], sc[i]), xytext=(6, 4), textcoords="offset points", fontsize=8, color=INK2)
     ax.set_xscale("log")
     ax.set_xlabel("cost of writing the summary (USD, log scale)")
-    ax.set_ylabel("jury score (higher = better)")
+    ax.set_ylabel("AI-jury score (higher = better)")
     rho = spearman(np.log(cost), sc)
     ax.set_title(f"Spearman ρ(cost, quality) = {rho:.2f}")
     ax.legend(loc="lower right")
@@ -148,6 +156,7 @@ def fig_cost_quality(R):
              any(i for i in front if free[i]) else f"Price vs quality (ρ = {rho:.2f})")
     _suptitle(fig, title, "Each dot is one model's one-paragraph summary of the same paper; dashed line = best score at or below each price")
     fig.subplots_adjust(top=0.84)
+    _truth(fig, NO_TRUTH)
     _save(fig, "showdown_cost_quality.png")
 
 
@@ -161,10 +170,11 @@ def fig_popularity(R):
         ax.annotate(lb[i]["name"][:26], (pop[i], q[i]), xytext=(5, 3), textcoords="offset points", fontsize=8, color=INK2)
     ax.invert_yaxis()
     ax.set_xlabel("popularity rank on OpenRouter (tokens served; 1 = most used)")
-    ax.set_ylabel("jury quality rank (1 = best summary)")
+    ax.set_ylabel("AI-jury quality rank (1 = best summary)")
     ax.set_title(f"Spearman ρ = {spearman(pop, q):.2f}")
     _suptitle(fig, "Most-used ≠ best summarizer", "Popularity from OpenRouter's public rankings dataset (CC BY 4.0)")
     fig.subplots_adjust(top=0.84)
+    _truth(fig, NO_TRUTH)
     _save(fig, "showdown_popularity.png")
 
 
@@ -177,7 +187,7 @@ def fig_convergence(R):
     total = R["pairs_possible"]
     if "tau_vs_reference" in tr[0]:
         y = np.array([t["tau_vs_reference"] for t in tr])
-        ax.plot(x, y, "-o", color=S2, ms=5, mec=SURFACE, label="Kendall τ vs the reference grader (primary judge)")
+        ax.plot(x, y, "-o", color=S2, ms=5, mec=SURFACE, label="Kendall τ vs the LLM reference grader (primary judge)")
         k = int(np.argmax(y >= 0.95 * y.max()))
         ax.annotate(f"95% of final agreement after {x[k]} pairs ({x[k] / total:.1%} of all)", (x[k], y[k]),
                     xytext=(20, 40), textcoords="offset points", fontsize=9, color=INK,
@@ -194,6 +204,7 @@ def fig_convergence(R):
     _suptitle(fig, "Not all-vs-all: agreement with the reference plateaus early",
               f"{R['k']} summaries → {total:,} possible pairs per question; the active schedule stops at a {R['pairs_used']}-pair budget")
     fig.subplots_adjust(top=0.82)
+    _truth(fig, *REF)
     _save(fig, "showdown_convergence.png")
 
 
@@ -212,14 +223,15 @@ def fig_judges(R, dims, names):
                 mec=SURFACE, mew=1.2, label=f"{lab} (overall {ev['overall']['auc']:.3f})", ls="none", zorder=3)
     ax.axvline(0.5, color=MUTED, ls=(0, (4, 4)), lw=1)
     ax.set_yticks(y, cats)
-    ax.set_xlabel("pairwise AUC vs reference grader (checklist-based; 0.5 = chance)")
+    ax.set_xlabel("pairwise AUC vs the LLM reference grader (Claude Sonnet 5 + key-fact rubric; 0.5 = chance)")
     ax.set_xlim(0.4, 1.0)
     ax.legend(loc="upper left", bbox_to_anchor=(1.01, 1.0), fontsize=9)
     ax.grid(axis="y", visible=False)
-    _suptitle(fig, "How well does each judge track a checklist-based reference?",
+    _suptitle(fig, "How well does each judge track an LLM reference grader?",
               "Reference = Claude Sonnet 5 grading each summary against 9 hand-extracted key facts (errors, coverage, "
               "invented claims) + writing scores; verbosity = distance from a 110–220-word paragraph")
     fig.subplots_adjust(top=0.82)
+    _truth(fig, *REF)
     _save(fig, "showdown_judges.png")
 
 
@@ -316,6 +328,12 @@ def readme_section(R, dims, names) -> str:
     n_wrong = sum(1 for r in lb if r.get("reference") and r["reference"]["accuracy"] < 0)
     return f"""## Summary Showdown
 
+> **Ground truth: none.** Nobody can say which summary of a paper is *truly* best. Rankings here are the AI jury's
+> pairwise judgments. They are checked against a separate **LLM reference grader** (Claude Sonnet 5 with a rubric of 9
+> key facts hand-extracted from the paper), which is another model, **not human judgment**. How much to trust that
+> grader is measured on exact counts in the [verifiable eval](verifiable.md). Human votes from the site are reported
+> separately in [Humans vs judges](humans-vs-judges.md).
+
 **{K} of OpenRouter's most-used models each summarized the same paper, the 1994 PKPD paper this library implements.
 jevsort ranked the summaries on six questions from just {R['pairs_used']} of the {R['pairs_possible']:,} possible pairs
 ({R['pairs_used'] / R['pairs_possible']:.1%}).** Then you can [**judge them yourself →**](https://ericflo.github.io/jevsort/)
@@ -351,10 +369,10 @@ Full 100-model leaderboard: [examples/SHOWDOWN.md](examples/SHOWDOWN.md) · inte
 * **The paper has a trap.** Its own Softmax MLP baseline beats the pairwise classifier on recognition rate (54.9% vs 48.9%).
   Summaries that say the method "outperforms" or is "competitive with" all MLPs are wrong. The reference grader
   flagged factual errors in {n_wrong} of {K} summaries.
-* **The judges track a checklist-based reference.** A separate grader (Claude Sonnet 5) checked every summary against 9
-  hand-extracted key facts. Pairwise AUC of each judge's coupled ranking vs that reference:
+* **Agreement with the LLM reference grader.** A separate grader (Claude Sonnet 5, another LLM) checked every summary
+  against 9 hand-extracted key facts. Pairwise AUC of each judge's coupled ranking vs that grader (not vs human truth):
 
-| judge | AUC vs reference (overall) | Kendall τ | judge spend |
+| judge | AUC vs LLM reference grader (overall; not human truth) | Kendall τ | judge spend |
 |---|---|---|---|
 {chr(10).join(judge_rows)}
 
@@ -368,15 +386,38 @@ re-runs are free). The paper text is downloaded at runtime and not redistributed
 """
 
 
-def update_readme(R, dims, names):
-    path = ROOT / "README.md"
+def readme_teaser(R, names) -> str:
+    lb = R["leaderboard"]
+    top = ", ".join(pretty(r["model"], names) for r in lb[:3])
+    return (f"**{R['k']} of OpenRouter's most-used models each summarized the 1994 paper this library implements.** "
+            f"jevsort ranked them on six questions from {R['pairs_used']} of {R['pairs_possible']:,} possible pairs "
+            f"({R['pairs_used'] / R['pairs_possible']:.0%}) with a jury of {len(R['judges'])} AI judges. Current top 3: {top}.\n\n"
+            "[![Summary Showdown](examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)\n\n"
+            "*Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; "
+            "we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the "
+            "[verifiable eval](docs/verifiable.md) shows is itself accurate on exact counts. Humans can vote on the site.*\n\n"
+            "[**Judge the summaries yourself →**](https://ericflo.github.io/jevsort/) · "
+            "[full results + method](docs/showdown.md) · [leaderboard](examples/SHOWDOWN.md)")
+
+
+def _splice(path, start, end, body):
     text = path.read_text()
-    start, end = "<!-- showdown:start -->", "<!-- showdown:end -->"
     if start not in text:
-        return
+        return False
     a, b = text.index(start) + len(start), text.index(end)
-    path.write_text(text[:a] + "\n" + readme_section(R, dims, names) + "\n" + text[b:])
-    print("updated README.md showdown section")
+    path.write_text(text[:a] + "\n" + body + "\n" + text[b:])
+    return True
+
+
+def update_readme(R, dims, names):
+    marks = ("<!-- showdown:start -->", "<!-- showdown:end -->")
+    full = readme_section(R, dims, names).replace("examples/figures/", "figures/").replace("(examples/SHOWDOWN.md)",
+                                                   "(https://github.com/ericflo/jevsort/blob/main/examples/SHOWDOWN.md)")
+    full = full.replace("## Summary Showdown\n", "## Results\n")
+    if _splice(ROOT / "docs" / "showdown.md", *marks, full):
+        print("updated docs/showdown.md")
+    if _splice(ROOT / "README.md", *marks, readme_teaser(R, names)):
+        print("updated README.md teaser")
 
 
 def main():

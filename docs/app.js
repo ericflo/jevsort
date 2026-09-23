@@ -49,17 +49,8 @@
     $("#pairs-possible").textContent = s.pairs_possible.toLocaleString();
     for (const a of [$("#paper-link"), $("#paper-link-2")]) a.href = D.paper.url;
     document.querySelectorAll(".n-votes").forEach((n) => (n.textContent = CFG.votes_per_round));
-    $("#stats-line").textContent = `${s.judgments.toLocaleString()} pairwise judgments by ${s.n_judges} AI judges · total spend $${s.total_cost_usd.toFixed(2)}`;
-    const pod = $("#podium");
-    pod.append(el("h3", { text: "Top 10 (jury ranking)" }));
-    const top = D.leaderboard.slice(0, 10);
-    const hi = top[0].score, lo = D.leaderboard[D.leaderboard.length - 1].score;
-    for (const r of top) {
-      const w = Math.max(4, (100 * (r.score - lo)) / (hi - lo || 1));
-      const name = el("div", {}, el("div", { class: "pod-name", text: r.name }), el("div", { class: "pod-bar", style: `width:${w}%` }));
-      pod.append(el("div", { class: "pod-row" }, el("span", { class: "pod-rank", text: `#${r.rank}` }), name,
-        el("span", { class: "pod-meta", text: `pop. #${r.popularity_rank} · ${r.words}w` })));
-    }
+    $("#stat-models").textContent = D.summaries.length;
+    $("#stat-pct").textContent = `${Math.round((100 * s.pairs_used) / s.pairs_possible)}%`;
     $("#citation").textContent = D.citation + " Model selection by tokens served; rankings dataset licensed CC BY 4.0.";
   }
 
@@ -80,7 +71,8 @@
       { k: "words", label: "Words", num: true, v: (r) => r.words },
       { k: "cost", label: "Cost", num: true, v: (r) => r.summary_cost_usd, fmt: money },
     ];
-    let sortK = "rank", asc = true;
+    let sortK = "rank", asc = true, showAll = false;
+    $("#lb-more").addEventListener("click", () => { showAll = !showAll; $("#lb-more").textContent = showAll ? "Show top 20" : `Show all ${D.leaderboard.length}`; draw(); });
     const thead = $("#lb thead"), tbody = $("#lb tbody");
     const tr = el("tr");
     for (const c of cols) {
@@ -95,8 +87,9 @@
       const col = cols.find((c) => c.k === sortK);
       const rows = D.leaderboard.filter((r) => !q || r.name.toLowerCase().includes(q) || r.model.toLowerCase().includes(q))
         .sort((a, b) => { const x = col.v(a), y = col.v(b); return (x < y ? -1 : x > y ? 1 : 0) * (asc ? 1 : -1); });
+      const shown = showAll || q ? rows : rows.slice(0, 20);
       tbody.replaceChildren();
-      for (const r of rows) {
+      for (const r of shown) {
         const row = el("tr", { class: "row" });
         for (const c of cols) {
           const v = c.v(r);
@@ -117,7 +110,7 @@
         });
         tbody.append(row);
       }
-      $("#lb-count").textContent = `${rows.length} of ${N} models`;
+      $("#lb-count").textContent = `${shown.length} of ${N} models`;
     }
     $("#filter").addEventListener("input", draw);
     draw();
@@ -288,7 +281,7 @@
         el("div", { class: "jb-track" }, el("div", { class: "jb-fill", style: `width:${100 * r.agreement}%` })),
         el("div", { class: "jb-val", text: `${pct(r.agreement)} (n=${r.votes})` })));
     }
-    body.append(bars, el("figure", { class: "fig" }, el("img", { src: "figures/agreement.png", alt: "Agreement chart", loading: "lazy" })));
+    body.append(bars, el("p", { class: "fine", text: "Ground truth here = submitted human picks (self-selected visitors, not experts)." }));
   }
 
   // ---------------------------------------------------------------- boot

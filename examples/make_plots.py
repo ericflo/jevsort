@@ -56,6 +56,19 @@ def _suptitle(fig, title, subtitle):
     fig.text(0.012, 0.935, subtitle, fontsize=10.5, color=INK2, va="top")
 
 
+TRUTH_SYN = ("SYNTHETIC panels: truth = a known latent quality per item (simulated); calibration labels are preferences "
+             "sampled from that known ordering, y ~ Bernoulli(sigmoid(x_i - x_j)).")
+TRUTH_PAPERS = ("16-PAPER panels: truth = 1-5 levels per question assigned BY CONSTRUCTION by the dataset author to 16 "
+                "FICTIONAL abstracts (examples/data/papers.json); overall = mean of the three levels. Not expert or human ratings.")
+
+
+def _truth(fig, *lines):
+    """Stamp the ground-truth definition into the figure itself (bottom-left, below the axes)."""
+    text = "\n".join(("GROUND TRUTH · " if n == 0 else "") + ln for n, ln in enumerate(lines))
+    fig.text(0.012, -0.012, text, fontsize=9, color=INK, va="top", ha="left", wrap=True,
+             bbox={"boxstyle": "round,pad=0.45", "fc": "#fff7e6", "ec": "#eda100", "lw": 1})
+
+
 def _save(fig, name):
     FIGS.mkdir(parents=True, exist_ok=True)
     path = FIGS / name
@@ -75,7 +88,8 @@ def _label(res):
 
 # ----------------------------------------------------------------------------
 def fig_roc(syn, real):
-    panels = [(syn, "Synthetic judge · K=40 · 780 pairs")] + [(r, f"{_label(r)} · 16 papers") for r in real]
+    panels = [(syn, "Synthetic judge · K=40\ntruth: known latent order")] + [
+        (r, f"{_label(r).split(' (')[0]} · 16 fictional papers\ntruth: author-assigned levels") for r in real]
     fig, axes = plt.subplots(1, len(panels), figsize=(6.2 * len(panels), 6.0))
     axes = np.atleast_1d(axes)
     for ax, (res, title) in zip(axes, panels):
@@ -97,6 +111,7 @@ def fig_roc(syn, real):
               "Every item pair is scored by its PKPD/Bradley–Terry-coupled P(i beats j) · per-dimension curves vs that "
               "dimension's truth; fused vs overall truth")
     fig.subplots_adjust(top=0.84, wspace=0.18)
+    _truth(fig, TRUTH_SYN, TRUTH_PAPERS)
     _save(fig, "roc_curves.png")
 
 
@@ -104,7 +119,8 @@ def fig_auc_ladder(syn, real):
     """How each guard moves AUC: raw single order -> both orders -> +temperature -> coupled."""
     stages = [("raw", "raw judge,\none order"), ("sym", "both orders\n(symmetrized)"), ("cal", "+ temperature\nscaling"),
               ("coupled", "+ PKPD / BT\ncoupling")]
-    panels = [(syn, "Synthetic judge")] + [(r, _label(r).split(" (")[0]) for r in real]
+    panels = [(syn, "Synthetic judge\ntruth: latent order")] + [
+        (r, _label(r).split(" (")[0] + "\ntruth: author-assigned levels") for r in real]
     fig, axes = plt.subplots(1, len(panels), figsize=(6.2 * len(panels), 4.8))
     axes = np.atleast_1d(axes)
     x = np.arange(len(stages))
@@ -130,6 +146,7 @@ def fig_auc_ladder(syn, real):
               "Symmetrizing removes position bias; temperature is monotone (AUC ≈ unchanged; it fixes calibration); "
               "coupling pools evidence across all pairs")
     fig.subplots_adjust(top=0.80, wspace=0.2)
+    _truth(fig, TRUTH_SYN, TRUTH_PAPERS)
     _save(fig, "auc_ladder.png")
 
 
@@ -153,7 +170,8 @@ def _reliability(ax, rel, title):
 
 
 def fig_calibration(syn, real):
-    panels = [(syn, "Synthetic judge (3× overconfident)")] + [(r, _label(r).split(" (")[0]) for r in real]
+    panels = [(syn, "Synthetic judge (3× overconfident)\nlabels: sampled from known order")] + [
+        (r, _label(r).split(" (")[0] + "\nlabels: author-assigned levels, 16 fictional papers") for r in real]
     fig = plt.figure(figsize=(6.2 * len(panels), 7.2))
     gs = fig.add_gridspec(2, len(panels), height_ratios=[4, 1], hspace=0.08, wspace=0.2)
     for c, (res, title) in enumerate(panels):
@@ -176,6 +194,8 @@ def fig_calibration(syn, real):
               "Temperature scaling (fit on a held-out split) pulls predictions onto the diagonal · synthetic labels are "
               "sampled preferences, real labels are ground-truth orderings")
     fig.subplots_adjust(top=0.86)
+    _truth(fig, TRUTH_SYN, TRUTH_PAPERS + " Calibration here is therefore 'agreement with the author's ordering', "
+           "not calibration against real outcomes.")
     _save(fig, "calibration.png")
 
 
@@ -232,12 +252,15 @@ def fig_tau_vs_pairs(syn, real):
         ax.set_ylim(0, 1)
         ax.set_xlabel("unique pairs judged")
         ax.set_ylabel("Kendall τ vs ground truth")
-        ax.set_title(f"{_label(res).split(' (')[0]} · 16 papers · ◆ = adaptive stop", pad=34)
+        ax.set_title(f"{_label(res).split(' (')[0]} · 16 fictional papers · ◆ = stop", pad=34)
         ax.legend(loc="lower right")
     _suptitle(fig, "Cost vs quality: you don't need all K(K−1)/2 pairs",
               "Bounded budgets + adaptive stopping on diminishing returns reach round-robin quality for a fraction "
               "of the judge calls")
     fig.subplots_adjust(top=0.76, wspace=0.18)
+    _truth(fig, "Kendall τ is measured against: synthetic = the known latent overall order (simulated); "
+           "real-judge panels = the overall level (mean of 1-5 levels) that the dataset author", "assigned by construction to "
+           "16 FICTIONAL abstracts. Not expert or human ratings.")
     _save(fig, "tau_vs_pairs.png")
 
 
@@ -263,6 +286,8 @@ def fig_guards(syn):
     _suptitle(fig, "The mandatory guards, measured", "Synthetic judge with known truth · left: coupling vs win counting under "
               "intransitivity · right: symmetrization vs position bias")
     fig.subplots_adjust(top=0.78, wspace=0.22)
+    _truth(fig, "a known latent quality per item in a simulation (synthetic judge with controlled position bias and "
+           "per-pair noise). No real data in this figure.")
     _save(fig, "guards.png")
 
 
@@ -325,6 +350,8 @@ def fig_papers(res):
               f"Judge: {_label(res)} · {res['k'] * (res['k'] - 1) // 2} pairs × 3 dimensions × 2 orders · objective: "
               f"reduce hallucination in LLM discharge summaries")
     fig.subplots_adjust(top=0.84, left=0.04, right=0.99)
+    _truth(fig, "the 'truth' column = mean of 1-5 levels (evidence, relevance, contribution) that the dataset author "
+           "assigned BY CONSTRUCTION to 16 FICTIONAL abstracts (examples/data/papers.json). Not expert or human ratings.")
     _save(fig, "paper_ranking.png")
 
 

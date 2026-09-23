@@ -1,0 +1,4998 @@
+{
+ "seed": 20260923,
+ "generated_by": "examples/verifiable_eval.py generate",
+ "n_docs": 6,
+ "k": 12,
+ "truth": {
+  "accuracy": "-(number of statements whose value contradicts the source)",
+  "completeness": "number of source facts mentioned (correctly or not)"
+ },
+ "docs": [
+  {
+   "doc": "D1",
+   "org": "Zusor Banzu Institute",
+   "source": "Report on the Zusor Banzu Institute.\n\nThe Zusor Banzu Institute was founded in 1952. The Zusor Banzu Institute is headquartered in Sorailost. It was founded by Pellor Ostvenlor. It employs 810 researchers. It operates 31 laboratories. Its annual budget is 439 million crowns. Its governance includes an independent advisory board. Its current director is Thesor Kagarzu. The current director took office in 2017. Visitors can tour parts of the main building by appointment. It opened a satellite campus in Elkalor. The satellite campus opened in 2014. It holds 622 patents. 45% of its funding comes from private donors. Its journal, the Fenfen Review, publishes 5 issues a year. Its main partner university is in Nyelny. The organisation publishes an annual report describing its activities. It has won the Zurom Prize 18 times. It trains 77 doctoral students each year.",
+   "facts": [
+    {
+     "key": "founded",
+     "template": "The Zusor Banzu Institute was founded in {v}.",
+     "value": "1952",
+     "wrong": "1958"
+    },
+    {
+     "key": "city",
+     "template": "The Zusor Banzu Institute is headquartered in {v}.",
+     "value": "Sorailost",
+     "wrong": "Kaelgar"
+    },
+    {
+     "key": "founder",
+     "template": "It was founded by {v}.",
+     "value": "Pellor Ostvenlor",
+     "wrong": "Quitas Drufenny"
+    },
+    {
+     "key": "staff",
+     "template": "It employs {v} researchers.",
+     "value": "810",
+     "wrong": "404"
+    },
+    {
+     "key": "labs",
+     "template": "It operates {v} laboratories.",
+     "value": "31",
+     "wrong": "46"
+    },
+    {
+     "key": "budget",
+     "template": "Its annual budget is {v} million crowns.",
+     "value": "439",
+     "wrong": "221"
+    },
+    {
+     "key": "director",
+     "template": "Its current director is {v}.",
+     "value": "Thesor Kagarzu",
+     "wrong": "Fengar Venailel"
+    },
+    {
+     "key": "director_year",
+     "template": "The current director took office in {v}.",
+     "value": "2017",
+     "wrong": "2030"
+    },
+    {
+     "key": "satellite",
+     "template": "It opened a satellite campus in {v}.",
+     "value": "Elkalor",
+     "wrong": "Romnythe"
+    },
+    {
+     "key": "satellite_year",
+     "template": "The satellite campus opened in {v}.",
+     "value": "2014",
+     "wrong": "2000"
+    },
+    {
+     "key": "patents",
+     "template": "It holds {v} patents.",
+     "value": "622",
+     "wrong": "836"
+    },
+    {
+     "key": "share",
+     "template": "{v} of its funding comes from private donors.",
+     "value": "45%",
+     "wrong": "67%"
+    },
+    {
+     "key": "journal",
+     "template": "Its journal, the Fenfen Review, publishes {v} issues a year.",
+     "value": "5",
+     "wrong": "1"
+    },
+    {
+     "key": "partner",
+     "template": "Its main partner university is in {v}.",
+     "value": "Nyelny",
+     "wrong": "Kaelgar"
+    },
+    {
+     "key": "award",
+     "template": "It has won the Zurom Prize {v} times.",
+     "value": "18",
+     "wrong": "12"
+    },
+    {
+     "key": "students",
+     "template": "It trains {v} doctoral students each year.",
+     "value": "77",
+     "wrong": "103"
+    }
+   ],
+   "summaries": [
+    {
+     "id": "D1S01",
+     "text": "It has won the Zurom Prize 18 times. Its current director is Thesor Kagarzu. Its annual budget is 221 million crowns. It employs 810 researchers. Its journal, the Fenfen Review, publishes 5 issues a year. The Zusor Banzu Institute is headquartered in Sorailost. The satellite campus opened in 2014. It opened a satellite campus in Elkalor.",
+     "sentences": [
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zurom Prize 18 times."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 221 million crowns."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Fenfen Review, publishes 5 issues a year."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute is headquartered in Sorailost."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Elkalor."
+      }
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 1
+    },
+    {
+     "id": "D1S08",
+     "text": "It has won the Zurom Prize 18 times. It employs 404 researchers. The Zusor Banzu Institute was founded in 1958. 45% of its funding comes from private donors. The current director took office in 2030.",
+     "sentences": [
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zurom Prize 18 times."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 404 researchers."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute was founded in 1958."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "45% of its funding comes from private donors."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2030."
+      }
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 3
+    },
+    {
+     "id": "D1S12",
+     "text": "It opened a satellite campus in Elkalor. It trains 103 doctoral students each year. Its journal, the Fenfen Review, publishes 5 issues a year. It holds 622 patents. It operates 31 laboratories. 45% of its funding comes from private donors. It was founded by Pellor Ostvenlor. The current director took office in 2030. Its current director is Thesor Kagarzu. It has won the Zurom Prize 18 times. The Zusor Banzu Institute is headquartered in Sorailost. Its main partner university is in Nyelny.",
+     "sentences": [
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Elkalor."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 103 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Fenfen Review, publishes 5 issues a year."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 622 patents."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 31 laboratories."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "45% of its funding comes from private donors."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2030."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zurom Prize 18 times."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute is headquartered in Sorailost."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Nyelny."
+      }
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 2
+    },
+    {
+     "id": "D1S04",
+     "text": "The satellite campus opened in 2014. The Zusor Banzu Institute was founded in 1952. Its annual budget is 439 million crowns. It trains 77 doctoral students each year. Its journal, the Fenfen Review, publishes 1 issues a year. Its main partner university is in Kaelgar. It operates 31 laboratories. It holds 622 patents. It was founded by Pellor Ostvenlor.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute was founded in 1952."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 439 million crowns."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 77 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Fenfen Review, publishes 1 issues a year."
+      },
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Kaelgar."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 31 laboratories."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 622 patents."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      }
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 2
+    },
+    {
+     "id": "D1S03",
+     "text": "The Zusor Banzu Institute is headquartered in Kaelgar. The satellite campus opened in 2000. The current director took office in 2017. 67% of its funding comes from private donors. Its annual budget is 439 million crowns. It was founded by Pellor Ostvenlor. The Zusor Banzu Institute was founded in 1958. Its journal, the Fenfen Review, publishes 5 issues a year. It opened a satellite campus in Elkalor. It operates 31 laboratories. It employs 810 researchers. Its current director is Thesor Kagarzu. It has won the Zurom Prize 12 times. It trains 77 doctoral students each year.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute is headquartered in Kaelgar."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2017."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "67% of its funding comes from private donors."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 439 million crowns."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute was founded in 1958."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Fenfen Review, publishes 5 issues a year."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Elkalor."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 31 laboratories."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Zurom Prize 12 times."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 77 doctoral students each year."
+      }
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 5
+    },
+    {
+     "id": "D1S07",
+     "text": "The Zusor Banzu Institute was founded in 1958. The current director took office in 2030. Its main partner university is in Nyelny. Its journal, the Fenfen Review, publishes 5 issues a year. The Zusor Banzu Institute is headquartered in Kaelgar. It employs 810 researchers. It operates 31 laboratories. 67% of its funding comes from private donors. It has won the Zurom Prize 18 times. It was founded by Pellor Ostvenlor. It trains 103 doctoral students each year.",
+     "sentences": [
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute was founded in 1958."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2030."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Nyelny."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Fenfen Review, publishes 5 issues a year."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute is headquartered in Kaelgar."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 31 laboratories."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "67% of its funding comes from private donors."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zurom Prize 18 times."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 103 doctoral students each year."
+      }
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 5
+    },
+    {
+     "id": "D1S06",
+     "text": "It was founded by Pellor Ostvenlor. Its current director is Thesor Kagarzu. It employs 810 researchers. Its annual budget is 221 million crowns. Its main partner university is in Kaelgar. It trains 103 doctoral students each year. The current director took office in 2017.",
+     "sentences": [
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 221 million crowns."
+      },
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Kaelgar."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 103 doctoral students each year."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2017."
+      }
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 3
+    },
+    {
+     "id": "D1S05",
+     "text": "It opened a satellite campus in Elkalor. It operates 31 laboratories. The Zusor Banzu Institute is headquartered in Sorailost. It was founded by Pellor Ostvenlor. Its main partner university is in Nyelny. The satellite campus opened in 2014. It has won the Zurom Prize 18 times. It trains 77 doctoral students each year. Its current director is Thesor Kagarzu. Its journal, the Fenfen Review, publishes 5 issues a year. The current director took office in 2017. It holds 622 patents. The Zusor Banzu Institute was founded in 1952. It employs 810 researchers. 45% of its funding comes from private donors. Its annual budget is 439 million crowns.",
+     "sentences": [
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Elkalor."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 31 laboratories."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute is headquartered in Sorailost."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Nyelny."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zurom Prize 18 times."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 77 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Fenfen Review, publishes 5 issues a year."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2017."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 622 patents."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute was founded in 1952."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "45% of its funding comes from private donors."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 439 million crowns."
+      }
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 0
+    },
+    {
+     "id": "D1S02",
+     "text": "It operates 46 laboratories. The Zusor Banzu Institute is headquartered in Kaelgar. It was founded by Pellor Ostvenlor. It employs 810 researchers. It trains 103 doctoral students each year. Its current director is Fengar Venailel.",
+     "sentences": [
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 46 laboratories."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute is headquartered in Kaelgar."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 103 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Fengar Venailel."
+      }
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 4
+    },
+    {
+     "id": "D1S10",
+     "text": "The current director took office in 2017. It employs 810 researchers. Its annual budget is 439 million crowns. It trains 77 doctoral students each year. The satellite campus opened in 2014. It holds 622 patents. It has won the Zurom Prize 12 times. The Zusor Banzu Institute was founded in 1952. 45% of its funding comes from private donors. Its current director is Thesor Kagarzu.",
+     "sentences": [
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2017."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 439 million crowns."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 77 doctoral students each year."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 622 patents."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Zurom Prize 12 times."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute was founded in 1952."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "45% of its funding comes from private donors."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      }
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 1
+    },
+    {
+     "id": "D1S11",
+     "text": "It holds 622 patents. It has won the Zurom Prize 18 times. The Zusor Banzu Institute is headquartered in Sorailost. It operates 31 laboratories. It opened a satellite campus in Elkalor. 45% of its funding comes from private donors. The satellite campus opened in 2014. Its main partner university is in Nyelny. The current director took office in 2017. It employs 810 researchers. Its journal, the Fenfen Review, publishes 5 issues a year. The Zusor Banzu Institute was founded in 1952. Its annual budget is 439 million crowns. It was founded by Pellor Ostvenlor. It trains 77 doctoral students each year.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 622 patents."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zurom Prize 18 times."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute is headquartered in Sorailost."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 31 laboratories."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Elkalor."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "45% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Nyelny."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2017."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 810 researchers."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Fenfen Review, publishes 5 issues a year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute was founded in 1952."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 439 million crowns."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 77 doctoral students each year."
+      }
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 0
+    },
+    {
+     "id": "D1S09",
+     "text": "The satellite campus opened in 2014. Its journal, the Fenfen Review, publishes 1 issues a year. Its annual budget is 439 million crowns. It opened a satellite campus in Elkalor. It has won the Zurom Prize 12 times. Its current director is Thesor Kagarzu. The Zusor Banzu Institute is headquartered in Sorailost. It holds 622 patents. It was founded by Pellor Ostvenlor. The Zusor Banzu Institute was founded in 1958. 67% of its funding comes from private donors. Its main partner university is in Nyelny. It trains 77 doctoral students each year.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Fenfen Review, publishes 1 issues a year."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 439 million crowns."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Elkalor."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Zurom Prize 12 times."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Thesor Kagarzu."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zusor Banzu Institute is headquartered in Sorailost."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 622 patents."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Pellor Ostvenlor."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Zusor Banzu Institute was founded in 1958."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "67% of its funding comes from private donors."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Nyelny."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 77 doctoral students each year."
+      }
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 4
+    }
+   ]
+  },
+  {
+   "doc": "D2",
+   "org": "Kawick Sorpel Institute",
+   "source": "Report on the Kawick Sorpel Institute.\n\nThe Kawick Sorpel Institute was founded in 1941. The Kawick Sorpel Institute is headquartered in Pelwicksor. It was founded by Wickost Ostvenzu. It employs 528 researchers. Visitors can tour parts of the main building by appointment. It operates 15 laboratories. Its annual budget is 457 million crowns. Its current director is Drugar Ailvenny. Its research spans several scientific disciplines. The current director took office in 2012. It opened a satellite campus in Wickailmi. The satellite campus opened in 1995. It holds 491 patents. 63% of its funding comes from private donors. The organisation publishes an annual report describing its activities. Its journal, the Zudru Review, publishes 2 issues a year. Its main partner university is in Fennyost. It has won the Banven Prize 2 times. It trains 139 doctoral students each year.",
+   "facts": [
+    {
+     "key": "founded",
+     "template": "The Kawick Sorpel Institute was founded in {v}.",
+     "value": "1941",
+     "wrong": "1936"
+    },
+    {
+     "key": "city",
+     "template": "The Kawick Sorpel Institute is headquartered in {v}.",
+     "value": "Pelwicksor",
+     "wrong": "Romdrutas"
+    },
+    {
+     "key": "founder",
+     "template": "It was founded by {v}.",
+     "value": "Wickost Ostvenzu",
+     "wrong": "Tassor Drufenthe"
+    },
+    {
+     "key": "staff",
+     "template": "It employs {v} researchers.",
+     "value": "528",
+     "wrong": "322"
+    },
+    {
+     "key": "labs",
+     "template": "It operates {v} laboratories.",
+     "value": "15",
+     "wrong": "23"
+    },
+    {
+     "key": "budget",
+     "template": "Its annual budget is {v} million crowns.",
+     "value": "457",
+     "wrong": "667"
+    },
+    {
+     "key": "director",
+     "template": "Its current director is {v}.",
+     "value": "Drugar Ailvenny",
+     "wrong": "Druqui Quithemi"
+    },
+    {
+     "key": "director_year",
+     "template": "The current director took office in {v}.",
+     "value": "2012",
+     "wrong": "2026"
+    },
+    {
+     "key": "satellite",
+     "template": "It opened a satellite campus in {v}.",
+     "value": "Wickailmi",
+     "wrong": "Miailpel"
+    },
+    {
+     "key": "satellite_year",
+     "template": "The satellite campus opened in {v}.",
+     "value": "1995",
+     "wrong": "1980"
+    },
+    {
+     "key": "patents",
+     "template": "It holds {v} patents.",
+     "value": "491",
+     "wrong": "728"
+    },
+    {
+     "key": "share",
+     "template": "{v} of its funding comes from private donors.",
+     "value": "63%",
+     "wrong": "51%"
+    },
+    {
+     "key": "journal",
+     "template": "Its journal, the Zudru Review, publishes {v} issues a year.",
+     "value": "2",
+     "wrong": "1"
+    },
+    {
+     "key": "partner",
+     "template": "Its main partner university is in {v}.",
+     "value": "Fennyost",
+     "wrong": "Miailpel"
+    },
+    {
+     "key": "award",
+     "template": "It has won the Banven Prize {v} times.",
+     "value": "2",
+     "wrong": "5"
+    },
+    {
+     "key": "students",
+     "template": "It trains {v} doctoral students each year.",
+     "value": "139",
+     "wrong": "201"
+    }
+   ],
+   "summaries": [
+    {
+     "id": "D2S02",
+     "text": "Its main partner university is in Miailpel. The Kawick Sorpel Institute is headquartered in Romdrutas. It employs 322 researchers. It has won the Banven Prize 5 times. It trains 201 doctoral students each year. 63% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Miailpel."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Kawick Sorpel Institute is headquartered in Romdrutas."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 322 researchers."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Banven Prize 5 times."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 201 doctoral students each year."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "63% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 5
+    },
+    {
+     "id": "D2S10",
+     "text": "It holds 491 patents. Its annual budget is 457 million crowns. It trains 139 doctoral students each year. It operates 15 laboratories. The Kawick Sorpel Institute is headquartered in Pelwicksor. It was founded by Wickost Ostvenzu. It employs 528 researchers. The satellite campus opened in 1980. It opened a satellite campus in Wickailmi. Its main partner university is in Fennyost. The Kawick Sorpel Institute was founded in 1941. The current director took office in 2012. 51% of its funding comes from private donors. Its current director is Druqui Quithemi.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 491 patents."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 457 million crowns."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 139 doctoral students each year."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickost Ostvenzu."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1980."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Fennyost."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "51% of its funding comes from private donors."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Druqui Quithemi."
+      }
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 3
+    },
+    {
+     "id": "D2S03",
+     "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor. Its current director is Druqui Quithemi. Its main partner university is in Fennyost. It employs 528 researchers. It was founded by Tassor Drufenthe. The current director took office in 2026. 51% of its funding comes from private donors. Its journal, the Zudru Review, publishes 2 issues a year. It trains 139 doctoral students each year. It has won the Banven Prize 2 times.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Druqui Quithemi."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Fennyost."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Tassor Drufenthe."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2026."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "51% of its funding comes from private donors."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Zudru Review, publishes 2 issues a year."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 139 doctoral students each year."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Banven Prize 2 times."
+      }
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 4
+    },
+    {
+     "id": "D2S04",
+     "text": "It opened a satellite campus in Wickailmi. It has won the Banven Prize 5 times. It operates 23 laboratories. It holds 728 patents. The Kawick Sorpel Institute was founded in 1941. Its annual budget is 457 million crowns. The current director took office in 2012.",
+     "sentences": [
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Banven Prize 5 times."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 23 laboratories."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 728 patents."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 457 million crowns."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      }
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 3
+    },
+    {
+     "id": "D2S05",
+     "text": "Its current director is Drugar Ailvenny. It opened a satellite campus in Wickailmi. It operates 15 laboratories. The satellite campus opened in 1995. 63% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Drugar Ailvenny."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1995."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "63% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 0
+    },
+    {
+     "id": "D2S11",
+     "text": "The Kawick Sorpel Institute is headquartered in Romdrutas. Its current director is Drugar Ailvenny. 51% of its funding comes from private donors. Its main partner university is in Fennyost. It opened a satellite campus in Wickailmi. It trains 139 doctoral students each year. Its journal, the Zudru Review, publishes 2 issues a year. It holds 491 patents.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Kawick Sorpel Institute is headquartered in Romdrutas."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Drugar Ailvenny."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "51% of its funding comes from private donors."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Fennyost."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 139 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Zudru Review, publishes 2 issues a year."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 491 patents."
+      }
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 2
+    },
+    {
+     "id": "D2S07",
+     "text": "The current director took office in 2012. It employs 528 researchers. The Kawick Sorpel Institute was founded in 1941. Its current director is Drugar Ailvenny. The satellite campus opened in 1995. The Kawick Sorpel Institute is headquartered in Pelwicksor. It holds 491 patents. It has won the Banven Prize 2 times. It opened a satellite campus in Wickailmi.",
+     "sentences": [
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Drugar Ailvenny."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1995."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 491 patents."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Banven Prize 2 times."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      }
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 0
+    },
+    {
+     "id": "D2S12",
+     "text": "It employs 528 researchers. The current director took office in 2012. It operates 15 laboratories. It has won the Banven Prize 5 times. 63% of its funding comes from private donors. The Kawick Sorpel Institute was founded in 1941. It holds 491 patents. Its current director is Drugar Ailvenny. It trains 201 doctoral students each year. Its main partner university is in Fennyost. Its annual budget is 457 million crowns. It was founded by Wickost Ostvenzu.",
+     "sentences": [
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Banven Prize 5 times."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "63% of its funding comes from private donors."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 491 patents."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Drugar Ailvenny."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 201 doctoral students each year."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Fennyost."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 457 million crowns."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickost Ostvenzu."
+      }
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 2
+    },
+    {
+     "id": "D2S09",
+     "text": "Its current director is Drugar Ailvenny. It operates 15 laboratories. It employs 528 researchers. The Kawick Sorpel Institute was founded in 1941. It was founded by Tassor Drufenthe. It opened a satellite campus in Wickailmi. The current director took office in 2012. It trains 139 doctoral students each year. Its journal, the Zudru Review, publishes 2 issues a year. 63% of its funding comes from private donors. The Kawick Sorpel Institute is headquartered in Pelwicksor.",
+     "sentences": [
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Drugar Ailvenny."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Tassor Drufenthe."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 139 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Zudru Review, publishes 2 issues a year."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "63% of its funding comes from private donors."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      }
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 1
+    },
+    {
+     "id": "D2S06",
+     "text": "Its main partner university is in Miailpel. It employs 528 researchers. Its annual budget is 667 million crowns. It has won the Banven Prize 2 times. The satellite campus opened in 1980. It was founded by Wickost Ostvenzu. Its current director is Druqui Quithemi. It opened a satellite campus in Wickailmi. It holds 491 patents. The Kawick Sorpel Institute is headquartered in Pelwicksor. The Kawick Sorpel Institute was founded in 1941. It trains 139 doctoral students each year. Its journal, the Zudru Review, publishes 2 issues a year. 51% of its funding comes from private donors. The current director took office in 2012. It operates 15 laboratories.",
+     "sentences": [
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Miailpel."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 667 million crowns."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Banven Prize 2 times."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1980."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickost Ostvenzu."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Druqui Quithemi."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 491 patents."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 139 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Zudru Review, publishes 2 issues a year."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "51% of its funding comes from private donors."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      }
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 5
+    },
+    {
+     "id": "D2S08",
+     "text": "It holds 728 patents. The Kawick Sorpel Institute is headquartered in Pelwicksor. It was founded by Wickost Ostvenzu. It operates 15 laboratories. It has won the Banven Prize 2 times. It trains 201 doctoral students each year. Its journal, the Zudru Review, publishes 2 issues a year. Its main partner university is in Fennyost. It opened a satellite campus in Wickailmi. The current director took office in 2026. The satellite campus opened in 1995. It employs 528 researchers. The Kawick Sorpel Institute was founded in 1941. Its current director is Druqui Quithemi. 63% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 728 patents."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickost Ostvenzu."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Banven Prize 2 times."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 201 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Zudru Review, publishes 2 issues a year."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Fennyost."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Wickailmi."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2026."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1995."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Druqui Quithemi."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "63% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 4
+    },
+    {
+     "id": "D2S01",
+     "text": "It holds 491 patents. It trains 139 doctoral students each year. Its journal, the Zudru Review, publishes 2 issues a year. It operates 15 laboratories. It employs 528 researchers. Its current director is Drugar Ailvenny. The current director took office in 2012. The Kawick Sorpel Institute was founded in 1941. Its main partner university is in Fennyost. It opened a satellite campus in Miailpel. It was founded by Wickost Ostvenzu. 63% of its funding comes from private donors. The Kawick Sorpel Institute is headquartered in Pelwicksor.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 491 patents."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 139 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Zudru Review, publishes 2 issues a year."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 15 laboratories."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 528 researchers."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Drugar Ailvenny."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2012."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute was founded in 1941."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Fennyost."
+      },
+      {
+       "fact": "satellite",
+       "wrong": true,
+       "text": "It opened a satellite campus in Miailpel."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickost Ostvenzu."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "63% of its funding comes from private donors."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Kawick Sorpel Institute is headquartered in Pelwicksor."
+      }
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 1
+    }
+   ]
+  },
+  {
+   "doc": "D3",
+   "org": "Peldru Kagar Institute",
+   "source": "Report on the Peldru Kagar Institute.\n\nIts research spans several scientific disciplines. Its governance includes an independent advisory board. The Peldru Kagar Institute was founded in 1969. The Peldru Kagar Institute is headquartered in Sorkalor. It was founded by Nypel Ventasel. It employs 105 researchers. It operates 33 laboratories. The organisation publishes an annual report describing its activities. Its annual budget is 118 million crowns. Its current director is Romlor Bansorrom. The current director took office in 2016. It opened a satellite campus in Fenthemi. The satellite campus opened in 1994. It holds 515 patents. 86% of its funding comes from private donors. Its journal, the Miven Review, publishes 15 issues a year. Its main partner university is in Zumizu. It has won the Nytas Prize 5 times. It trains 36 doctoral students each year.",
+   "facts": [
+    {
+     "key": "founded",
+     "template": "The Peldru Kagar Institute was founded in {v}.",
+     "value": "1969",
+     "wrong": "1977"
+    },
+    {
+     "key": "city",
+     "template": "The Peldru Kagar Institute is headquartered in {v}.",
+     "value": "Sorkalor",
+     "wrong": "Banbangar"
+    },
+    {
+     "key": "founder",
+     "template": "It was founded by {v}.",
+     "value": "Nypel Ventasel",
+     "wrong": "Tasven Gargarrom"
+    },
+    {
+     "key": "staff",
+     "template": "It employs {v} researchers.",
+     "value": "105",
+     "wrong": "70"
+    },
+    {
+     "key": "labs",
+     "template": "It operates {v} laboratories.",
+     "value": "33",
+     "wrong": "47"
+    },
+    {
+     "key": "budget",
+     "template": "Its annual budget is {v} million crowns.",
+     "value": "118",
+     "wrong": "159"
+    },
+    {
+     "key": "director",
+     "template": "Its current director is {v}.",
+     "value": "Romlor Bansorrom",
+     "wrong": "Tasven Gargarrom"
+    },
+    {
+     "key": "director_year",
+     "template": "The current director took office in {v}.",
+     "value": "2016",
+     "wrong": "2004"
+    },
+    {
+     "key": "satellite",
+     "template": "It opened a satellite campus in {v}.",
+     "value": "Fenthemi",
+     "wrong": "Theelthe"
+    },
+    {
+     "key": "satellite_year",
+     "template": "The satellite campus opened in {v}.",
+     "value": "1994",
+     "wrong": "1989"
+    },
+    {
+     "key": "patents",
+     "template": "It holds {v} patents.",
+     "value": "515",
+     "wrong": "309"
+    },
+    {
+     "key": "share",
+     "template": "{v} of its funding comes from private donors.",
+     "value": "86%",
+     "wrong": "99%"
+    },
+    {
+     "key": "journal",
+     "template": "Its journal, the Miven Review, publishes {v} issues a year.",
+     "value": "15",
+     "wrong": "24"
+    },
+    {
+     "key": "partner",
+     "template": "Its main partner university is in {v}.",
+     "value": "Zumizu",
+     "wrong": "Garsortas"
+    },
+    {
+     "key": "award",
+     "template": "It has won the Nytas Prize {v} times.",
+     "value": "5",
+     "wrong": "1"
+    },
+    {
+     "key": "students",
+     "template": "It trains {v} doctoral students each year.",
+     "value": "36",
+     "wrong": "56"
+    }
+   ],
+   "summaries": [
+    {
+     "id": "D3S07",
+     "text": "The current director took office in 2016. It holds 515 patents. It employs 105 researchers. Its annual budget is 118 million crowns. It operates 47 laboratories. It opened a satellite campus in Theelthe. The Peldru Kagar Institute is headquartered in Sorkalor. 86% of its funding comes from private donors. It trains 36 doctoral students each year. The Peldru Kagar Institute was founded in 1969. It has won the Nytas Prize 5 times. Its current director is Romlor Bansorrom. The satellite campus opened in 1994.",
+     "sentences": [
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2016."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 515 patents."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 105 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 47 laboratories."
+      },
+      {
+       "fact": "satellite",
+       "wrong": true,
+       "text": "It opened a satellite campus in Theelthe."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "86% of its funding comes from private donors."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1994."
+      }
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 2
+    },
+    {
+     "id": "D3S11",
+     "text": "It trains 56 doctoral students each year. The satellite campus opened in 1989. The Peldru Kagar Institute is headquartered in Banbangar. It has won the Nytas Prize 5 times. Its annual budget is 118 million crowns. 86% of its funding comes from private donors. The Peldru Kagar Institute was founded in 1977. Its main partner university is in Garsortas.",
+     "sentences": [
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 56 doctoral students each year."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1989."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Peldru Kagar Institute is headquartered in Banbangar."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "86% of its funding comes from private donors."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Peldru Kagar Institute was founded in 1977."
+      },
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Garsortas."
+      }
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 5
+    },
+    {
+     "id": "D3S08",
+     "text": "It holds 515 patents. Its annual budget is 159 million crowns. The current director took office in 2016. Its current director is Romlor Bansorrom. It was founded by Nypel Ventasel. The Peldru Kagar Institute is headquartered in Sorkalor. It operates 33 laboratories. It trains 36 doctoral students each year. 86% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 515 patents."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 159 million crowns."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2016."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Nypel Ventasel."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 33 laboratories."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "86% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 1
+    },
+    {
+     "id": "D3S01",
+     "text": "Its annual budget is 118 million crowns. Its main partner university is in Zumizu. It employs 105 researchers. It was founded by Nypel Ventasel. It holds 515 patents. It operates 33 laboratories. It opened a satellite campus in Fenthemi. It trains 36 doctoral students each year. Its current director is Romlor Bansorrom. The Peldru Kagar Institute is headquartered in Sorkalor. The Peldru Kagar Institute was founded in 1969.",
+     "sentences": [
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Zumizu."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 105 researchers."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Nypel Ventasel."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 515 patents."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 33 laboratories."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Fenthemi."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      }
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 0
+    },
+    {
+     "id": "D3S04",
+     "text": "The Peldru Kagar Institute is headquartered in Sorkalor. The satellite campus opened in 1994. The current director took office in 2016. Its journal, the Miven Review, publishes 24 issues a year. Its main partner university is in Zumizu. Its annual budget is 118 million crowns. It employs 105 researchers. 99% of its funding comes from private donors. It has won the Nytas Prize 1 times. It was founded by Tasven Gargarrom. The Peldru Kagar Institute was founded in 1969. It holds 309 patents.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1994."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2016."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Miven Review, publishes 24 issues a year."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Zumizu."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 105 researchers."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "99% of its funding comes from private donors."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Nytas Prize 1 times."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Tasven Gargarrom."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 309 patents."
+      }
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 5
+    },
+    {
+     "id": "D3S03",
+     "text": "It employs 70 researchers. The Peldru Kagar Institute is headquartered in Banbangar. It operates 47 laboratories. The Peldru Kagar Institute was founded in 1969. It holds 309 patents.",
+     "sentences": [
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 70 researchers."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Peldru Kagar Institute is headquartered in Banbangar."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 47 laboratories."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 309 patents."
+      }
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 4
+    },
+    {
+     "id": "D3S12",
+     "text": "It trains 36 doctoral students each year. Its journal, the Miven Review, publishes 15 issues a year. It employs 105 researchers. It holds 309 patents. The current director took office in 2004. The Peldru Kagar Institute was founded in 1969. It was founded by Nypel Ventasel. The Peldru Kagar Institute is headquartered in Sorkalor. It opened a satellite campus in Fenthemi. Its current director is Romlor Bansorrom. 86% of its funding comes from private donors. The satellite campus opened in 1989. It has won the Nytas Prize 5 times. Its annual budget is 118 million crowns. Its main partner university is in Zumizu.",
+     "sentences": [
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Miven Review, publishes 15 issues a year."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 105 researchers."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 309 patents."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2004."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Nypel Ventasel."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Fenthemi."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "86% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1989."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Zumizu."
+      }
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 3
+    },
+    {
+     "id": "D3S06",
+     "text": "The satellite campus opened in 1989. Its current director is Romlor Bansorrom. It trains 36 doctoral students each year. The current director took office in 2004. It has won the Nytas Prize 5 times. It was founded by Nypel Ventasel. The Peldru Kagar Institute was founded in 1977. It holds 309 patents. Its annual budget is 118 million crowns. It operates 33 laboratories.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1989."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2004."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Nypel Ventasel."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Peldru Kagar Institute was founded in 1977."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 309 patents."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 33 laboratories."
+      }
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 4
+    },
+    {
+     "id": "D3S10",
+     "text": "It was founded by Nypel Ventasel. The current director took office in 2016. It holds 515 patents. It opened a satellite campus in Fenthemi. Its journal, the Miven Review, publishes 15 issues a year. It has won the Nytas Prize 5 times. 86% of its funding comes from private donors. It trains 56 doctoral students each year. The Peldru Kagar Institute was founded in 1969. The satellite campus opened in 1994. Its annual budget is 118 million crowns. It operates 33 laboratories. Its current director is Romlor Bansorrom. Its main partner university is in Zumizu.",
+     "sentences": [
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Nypel Ventasel."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2016."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 515 patents."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Fenthemi."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Miven Review, publishes 15 issues a year."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "86% of its funding comes from private donors."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 56 doctoral students each year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1994."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 33 laboratories."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Zumizu."
+      }
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 1
+    },
+    {
+     "id": "D3S05",
+     "text": "It has won the Nytas Prize 5 times. The current director took office in 2016. Its annual budget is 118 million crowns. The satellite campus opened in 1994. It trains 36 doctoral students each year. Its main partner university is in Zumizu.",
+     "sentences": [
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2016."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 1994."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Zumizu."
+      }
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 0
+    },
+    {
+     "id": "D3S02",
+     "text": "Its annual budget is 118 million crowns. The satellite campus opened in 1989. The current director took office in 2004. It operates 33 laboratories. It opened a satellite campus in Theelthe. The Peldru Kagar Institute is headquartered in Sorkalor. 86% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1989."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2004."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 33 laboratories."
+      },
+      {
+       "fact": "satellite",
+       "wrong": true,
+       "text": "It opened a satellite campus in Theelthe."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "86% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 3
+    },
+    {
+     "id": "D3S09",
+     "text": "99% of its funding comes from private donors. It has won the Nytas Prize 5 times. The current director took office in 2016. It trains 36 doctoral students each year. Its journal, the Miven Review, publishes 15 issues a year. It operates 33 laboratories. The Peldru Kagar Institute is headquartered in Sorkalor. The Peldru Kagar Institute was founded in 1969. Its main partner university is in Zumizu. Its current director is Romlor Bansorrom. Its annual budget is 118 million crowns. It holds 515 patents. It employs 105 researchers. It opened a satellite campus in Fenthemi. It was founded by Nypel Ventasel. The satellite campus opened in 1989.",
+     "sentences": [
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "99% of its funding comes from private donors."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Nytas Prize 5 times."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2016."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 36 doctoral students each year."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Miven Review, publishes 15 issues a year."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 33 laboratories."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute is headquartered in Sorkalor."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Peldru Kagar Institute was founded in 1969."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Zumizu."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Romlor Bansorrom."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 118 million crowns."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 515 patents."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 105 researchers."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Fenthemi."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Nypel Ventasel."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 1989."
+      }
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 2
+    }
+   ]
+  },
+  {
+   "doc": "D4",
+   "org": "Mipel Ostzu Institute",
+   "source": "Report on the Mipel Ostzu Institute.\n\nThe Mipel Ostzu Institute was founded in 1947. The Mipel Ostzu Institute is headquartered in Tasdruny. It was founded by Wickmi Lordruny. It employs 733 researchers. It operates 12 laboratories. Its governance includes an independent advisory board. Its annual budget is 98 million crowns. Its current director is Nyost Theailny. The current director took office in 2006. The organisation publishes an annual report describing its activities. It opened a satellite campus in Banpelwick. The satellite campus opened in 2000. Its research spans several scientific disciplines. It holds 180 patents. 53% of its funding comes from private donors. Its journal, the Wickgar Review, publishes 18 issues a year. Its main partner university is in Miailthe. It has won the Vendru Prize 12 times. It trains 10 doctoral students each year.",
+   "facts": [
+    {
+     "key": "founded",
+     "template": "The Mipel Ostzu Institute was founded in {v}.",
+     "value": "1947",
+     "wrong": "1953"
+    },
+    {
+     "key": "city",
+     "template": "The Mipel Ostzu Institute is headquartered in {v}.",
+     "value": "Tasdruny",
+     "wrong": "Quiventas"
+    },
+    {
+     "key": "founder",
+     "template": "It was founded by {v}.",
+     "value": "Wickmi Lordruny",
+     "wrong": "Wickny Garsorsor"
+    },
+    {
+     "key": "staff",
+     "template": "It employs {v} researchers.",
+     "value": "733",
+     "wrong": "996"
+    },
+    {
+     "key": "labs",
+     "template": "It operates {v} laboratories.",
+     "value": "12",
+     "wrong": "17"
+    },
+    {
+     "key": "budget",
+     "template": "Its annual budget is {v} million crowns.",
+     "value": "98",
+     "wrong": "66"
+    },
+    {
+     "key": "director",
+     "template": "Its current director is {v}.",
+     "value": "Nyost Theailny",
+     "wrong": "Drutas Quilorzu"
+    },
+    {
+     "key": "director_year",
+     "template": "The current director took office in {v}.",
+     "value": "2006",
+     "wrong": "1998"
+    },
+    {
+     "key": "satellite",
+     "template": "It opened a satellite campus in {v}.",
+     "value": "Banpelwick",
+     "wrong": "Ostvenny"
+    },
+    {
+     "key": "satellite_year",
+     "template": "The satellite campus opened in {v}.",
+     "value": "2000",
+     "wrong": "2015"
+    },
+    {
+     "key": "patents",
+     "template": "It holds {v} patents.",
+     "value": "180",
+     "wrong": "247"
+    },
+    {
+     "key": "share",
+     "template": "{v} of its funding comes from private donors.",
+     "value": "53%",
+     "wrong": "66%"
+    },
+    {
+     "key": "journal",
+     "template": "Its journal, the Wickgar Review, publishes {v} issues a year.",
+     "value": "18",
+     "wrong": "7"
+    },
+    {
+     "key": "partner",
+     "template": "Its main partner university is in {v}.",
+     "value": "Miailthe",
+     "wrong": "Ostvenny"
+    },
+    {
+     "key": "award",
+     "template": "It has won the Vendru Prize {v} times.",
+     "value": "12",
+     "wrong": "18"
+    },
+    {
+     "key": "students",
+     "template": "It trains {v} doctoral students each year.",
+     "value": "10",
+     "wrong": "15"
+    }
+   ],
+   "summaries": [
+    {
+     "id": "D4S06",
+     "text": "Its main partner university is in Miailthe. Its journal, the Wickgar Review, publishes 7 issues a year. Its current director is Drutas Quilorzu. The satellite campus opened in 2015. It employs 733 researchers. Its annual budget is 98 million crowns.",
+     "sentences": [
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Wickgar Review, publishes 7 issues a year."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Drutas Quilorzu."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 2015."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 733 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 98 million crowns."
+      }
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 3
+    },
+    {
+     "id": "D4S10",
+     "text": "The satellite campus opened in 2000. The Mipel Ostzu Institute was founded in 1947. It has won the Vendru Prize 12 times. The current director took office in 2006. It was founded by Wickmi Lordruny. It trains 10 doctoral students each year. It operates 12 laboratories. Its current director is Nyost Theailny. It employs 733 researchers. Its annual budget is 98 million crowns. It holds 180 patents. 53% of its funding comes from private donors. It opened a satellite campus in Banpelwick. Its journal, the Wickgar Review, publishes 18 issues a year.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute was founded in 1947."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Vendru Prize 12 times."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2006."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 10 doctoral students each year."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 12 laboratories."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 733 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 98 million crowns."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      }
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 0
+    },
+    {
+     "id": "D4S08",
+     "text": "It trains 15 doctoral students each year. The Mipel Ostzu Institute is headquartered in Tasdruny. 53% of its funding comes from private donors. It opened a satellite campus in Banpelwick. It has won the Vendru Prize 12 times. The satellite campus opened in 2000. It was founded by Wickmi Lordruny. Its main partner university is in Miailthe. It operates 17 laboratories. Its journal, the Wickgar Review, publishes 18 issues a year. The current director took office in 2006. It holds 180 patents.",
+     "sentences": [
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 15 doctoral students each year."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute is headquartered in Tasdruny."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Vendru Prize 12 times."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 17 laboratories."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2006."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      }
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 2
+    },
+    {
+     "id": "D4S07",
+     "text": "The satellite campus opened in 2000. It trains 15 doctoral students each year. Its current director is Nyost Theailny. It operates 12 laboratories. Its main partner university is in Miailthe. The Mipel Ostzu Institute is headquartered in Quiventas. Its annual budget is 98 million crowns. It holds 180 patents. 53% of its funding comes from private donors. It employs 733 researchers. It opened a satellite campus in Ostvenny. The Mipel Ostzu Institute was founded in 1947. It was founded by Wickmi Lordruny. Its journal, the Wickgar Review, publishes 18 issues a year. It has won the Vendru Prize 18 times.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 15 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 12 laboratories."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Mipel Ostzu Institute is headquartered in Quiventas."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 98 million crowns."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 733 researchers."
+      },
+      {
+       "fact": "satellite",
+       "wrong": true,
+       "text": "It opened a satellite campus in Ostvenny."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute was founded in 1947."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Vendru Prize 18 times."
+      }
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 4
+    },
+    {
+     "id": "D4S03",
+     "text": "It has won the Vendru Prize 18 times. It operates 12 laboratories. Its main partner university is in Miailthe. It was founded by Wickmi Lordruny. Its journal, the Wickgar Review, publishes 18 issues a year. It employs 996 researchers. The Mipel Ostzu Institute was founded in 1953. It opened a satellite campus in Banpelwick.",
+     "sentences": [
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Vendru Prize 18 times."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 12 laboratories."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 996 researchers."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Mipel Ostzu Institute was founded in 1953."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      }
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 3
+    },
+    {
+     "id": "D4S02",
+     "text": "The Mipel Ostzu Institute was founded in 1947. It has won the Vendru Prize 12 times. 53% of its funding comes from private donors. Its annual budget is 98 million crowns. It trains 10 doctoral students each year. It opened a satellite campus in Banpelwick. Its main partner university is in Miailthe. It holds 247 patents. Its current director is Nyost Theailny. It operates 12 laboratories.",
+     "sentences": [
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute was founded in 1947."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Vendru Prize 12 times."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 98 million crowns."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 10 doctoral students each year."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 247 patents."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 12 laboratories."
+      }
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 1
+    },
+    {
+     "id": "D4S09",
+     "text": "It opened a satellite campus in Banpelwick. Its annual budget is 66 million crowns. Its journal, the Wickgar Review, publishes 7 issues a year. It trains 15 doctoral students each year. The Mipel Ostzu Institute was founded in 1947. It was founded by Wickmi Lordruny. It holds 180 patents. It employs 733 researchers. The current director took office in 2006. Its current director is Nyost Theailny. The Mipel Ostzu Institute is headquartered in Tasdruny. Its main partner university is in Ostvenny. 53% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 66 million crowns."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Wickgar Review, publishes 7 issues a year."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 15 doctoral students each year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute was founded in 1947."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 733 researchers."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2006."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute is headquartered in Tasdruny."
+      },
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Ostvenny."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 4
+    },
+    {
+     "id": "D4S01",
+     "text": "Its journal, the Wickgar Review, publishes 18 issues a year. It operates 12 laboratories. It was founded by Wickmi Lordruny. It has won the Vendru Prize 12 times. It trains 10 doctoral students each year. Its annual budget is 66 million crowns. 53% of its funding comes from private donors. The satellite campus opened in 2000. It holds 180 patents. Its main partner university is in Miailthe. It opened a satellite campus in Banpelwick. The current director took office in 2006. Its current director is Nyost Theailny. It employs 733 researchers. The Mipel Ostzu Institute is headquartered in Quiventas. The Mipel Ostzu Institute was founded in 1947.",
+     "sentences": [
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 12 laboratories."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Vendru Prize 12 times."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 10 doctoral students each year."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 66 million crowns."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2006."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 733 researchers."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Mipel Ostzu Institute is headquartered in Quiventas."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute was founded in 1947."
+      }
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 2
+    },
+    {
+     "id": "D4S05",
+     "text": "The Mipel Ostzu Institute was founded in 1953. The current director took office in 2006. The satellite campus opened in 2015. It employs 996 researchers. Its current director is Nyost Theailny. The Mipel Ostzu Institute is headquartered in Quiventas. It opened a satellite campus in Banpelwick. It has won the Vendru Prize 12 times. It was founded by Wickny Garsorsor.",
+     "sentences": [
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Mipel Ostzu Institute was founded in 1953."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2006."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 2015."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 996 researchers."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Mipel Ostzu Institute is headquartered in Quiventas."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Vendru Prize 12 times."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Wickny Garsorsor."
+      }
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 5
+    },
+    {
+     "id": "D4S11",
+     "text": "It was founded by Wickmi Lordruny. Its main partner university is in Miailthe. 53% of its funding comes from private donors. It holds 180 patents. It operates 12 laboratories.",
+     "sentences": [
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Wickmi Lordruny."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 12 laboratories."
+      }
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 0
+    },
+    {
+     "id": "D4S04",
+     "text": "The satellite campus opened in 2000. Its journal, the Wickgar Review, publishes 18 issues a year. It holds 247 patents. It opened a satellite campus in Banpelwick. It employs 733 researchers. Its main partner university is in Miailthe. The Mipel Ostzu Institute was founded in 1947.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 247 patents."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Banpelwick."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 733 researchers."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Mipel Ostzu Institute was founded in 1947."
+      }
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 1
+    },
+    {
+     "id": "D4S12",
+     "text": "It holds 180 patents. Its current director is Nyost Theailny. Its annual budget is 66 million crowns. It opened a satellite campus in Ostvenny. The Mipel Ostzu Institute is headquartered in Quiventas. 53% of its funding comes from private donors. The satellite campus opened in 2000. It has won the Vendru Prize 18 times. Its journal, the Wickgar Review, publishes 18 issues a year. It was founded by Wickny Garsorsor. Its main partner university is in Miailthe.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 180 patents."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Nyost Theailny."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 66 million crowns."
+      },
+      {
+       "fact": "satellite",
+       "wrong": true,
+       "text": "It opened a satellite campus in Ostvenny."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Mipel Ostzu Institute is headquartered in Quiventas."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "53% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2000."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Vendru Prize 18 times."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Wickgar Review, publishes 18 issues a year."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Wickny Garsorsor."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Miailthe."
+      }
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 5
+    }
+   ]
+  },
+  {
+   "doc": "D5",
+   "org": "Zudru Garny Institute",
+   "source": "Report on the Zudru Garny Institute.\n\nThe Zudru Garny Institute was founded in 1962. Visitors can tour parts of the main building by appointment. The Zudru Garny Institute is headquartered in Elgarqui. It was founded by Quigar Pelrompel. It employs 589 researchers. It operates 36 laboratories. Its annual budget is 55 million crowns. Its current director is Ailpel Romkathe. The current director took office in 2015. The organisation publishes an annual report describing its activities. It opened a satellite campus in Venpelban. The institute's archive is open to accredited scholars. The satellite campus opened in 2011. It holds 588 patents. 75% of its funding comes from private donors. Its journal, the Ostsor Review, publishes 14 issues a year. Its main partner university is in Thevenban. It has won the Taska Prize 15 times. It trains 128 doctoral students each year.",
+   "facts": [
+    {
+     "key": "founded",
+     "template": "The Zudru Garny Institute was founded in {v}.",
+     "value": "1962",
+     "wrong": "1951"
+    },
+    {
+     "key": "city",
+     "template": "The Zudru Garny Institute is headquartered in {v}.",
+     "value": "Elgarqui",
+     "wrong": "Sorbanmi"
+    },
+    {
+     "key": "founder",
+     "template": "It was founded by {v}.",
+     "value": "Quigar Pelrompel",
+     "wrong": "Banrom Lorwickny"
+    },
+    {
+     "key": "staff",
+     "template": "It employs {v} researchers.",
+     "value": "589",
+     "wrong": "330"
+    },
+    {
+     "key": "labs",
+     "template": "It operates {v} laboratories.",
+     "value": "36",
+     "wrong": "55"
+    },
+    {
+     "key": "budget",
+     "template": "Its annual budget is {v} million crowns.",
+     "value": "55",
+     "wrong": "30"
+    },
+    {
+     "key": "director",
+     "template": "Its current director is {v}.",
+     "value": "Ailpel Romkathe",
+     "wrong": "Elka Lorwicklor"
+    },
+    {
+     "key": "director_year",
+     "template": "The current director took office in {v}.",
+     "value": "2015",
+     "wrong": "2022"
+    },
+    {
+     "key": "satellite",
+     "template": "It opened a satellite campus in {v}.",
+     "value": "Venpelban",
+     "wrong": "Wicknywick"
+    },
+    {
+     "key": "satellite_year",
+     "template": "The satellite campus opened in {v}.",
+     "value": "2011",
+     "wrong": "2017"
+    },
+    {
+     "key": "patents",
+     "template": "It holds {v} patents.",
+     "value": "588",
+     "wrong": "837"
+    },
+    {
+     "key": "share",
+     "template": "{v} of its funding comes from private donors.",
+     "value": "75%",
+     "wrong": "97%"
+    },
+    {
+     "key": "journal",
+     "template": "Its journal, the Ostsor Review, publishes {v} issues a year.",
+     "value": "14",
+     "wrong": "8"
+    },
+    {
+     "key": "partner",
+     "template": "Its main partner university is in {v}.",
+     "value": "Thevenban",
+     "wrong": "Fensorpel"
+    },
+    {
+     "key": "award",
+     "template": "It has won the Taska Prize {v} times.",
+     "value": "15",
+     "wrong": "7"
+    },
+    {
+     "key": "students",
+     "template": "It trains {v} doctoral students each year.",
+     "value": "128",
+     "wrong": "175"
+    }
+   ],
+   "summaries": [
+    {
+     "id": "D5S11",
+     "text": "75% of its funding comes from private donors. The Zudru Garny Institute is headquartered in Elgarqui. It trains 175 doctoral students each year. It employs 330 researchers. It has won the Taska Prize 15 times. It opened a satellite campus in Venpelban. Its main partner university is in Thevenban. Its annual budget is 55 million crowns. It was founded by Quigar Pelrompel. The satellite campus opened in 2011. It operates 55 laboratories. The current director took office in 2015. Its current director is Ailpel Romkathe. The Zudru Garny Institute was founded in 1962. Its journal, the Ostsor Review, publishes 14 issues a year. It holds 588 patents.",
+     "sentences": [
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "75% of its funding comes from private donors."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zudru Garny Institute is headquartered in Elgarqui."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 175 doctoral students each year."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 330 researchers."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Taska Prize 15 times."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 55 million crowns."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Quigar Pelrompel."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2011."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 55 laboratories."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2015."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Ostsor Review, publishes 14 issues a year."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      }
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 3
+    },
+    {
+     "id": "D5S12",
+     "text": "The Zudru Garny Institute was founded in 1962. It opened a satellite campus in Venpelban. It holds 588 patents. Its annual budget is 55 million crowns. Its journal, the Ostsor Review, publishes 14 issues a year. The satellite campus opened in 2011. The current director took office in 2015. It was founded by Quigar Pelrompel. It trains 128 doctoral students each year. 75% of its funding comes from private donors. It employs 589 researchers. Its main partner university is in Thevenban. It has won the Taska Prize 15 times.",
+     "sentences": [
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 55 million crowns."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Ostsor Review, publishes 14 issues a year."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2011."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2015."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Quigar Pelrompel."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 128 doctoral students each year."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "75% of its funding comes from private donors."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 589 researchers."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Taska Prize 15 times."
+      }
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 0
+    },
+    {
+     "id": "D5S07",
+     "text": "It trains 175 doctoral students each year. Its current director is Ailpel Romkathe. Its annual budget is 30 million crowns. It opened a satellite campus in Venpelban. It operates 36 laboratories. 75% of its funding comes from private donors. It holds 588 patents.",
+     "sentences": [
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 175 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 30 million crowns."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 36 laboratories."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "75% of its funding comes from private donors."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      }
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 2
+    },
+    {
+     "id": "D5S05",
+     "text": "The satellite campus opened in 2011. It holds 588 patents. Its main partner university is in Thevenban. It operates 36 laboratories. The current director took office in 2015. Its annual budget is 55 million crowns. It employs 589 researchers. Its journal, the Ostsor Review, publishes 14 issues a year. The Zudru Garny Institute was founded in 1962. The Zudru Garny Institute is headquartered in Elgarqui. It trains 128 doctoral students each year. Its current director is Ailpel Romkathe. 75% of its funding comes from private donors. It opened a satellite campus in Venpelban.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2011."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 36 laboratories."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2015."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 55 million crowns."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 589 researchers."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Ostsor Review, publishes 14 issues a year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zudru Garny Institute is headquartered in Elgarqui."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 128 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "75% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      }
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 0
+    },
+    {
+     "id": "D5S10",
+     "text": "It employs 589 researchers. Its annual budget is 55 million crowns. Its journal, the Ostsor Review, publishes 14 issues a year. It holds 588 patents. The Zudru Garny Institute is headquartered in Elgarqui. It operates 36 laboratories. It trains 175 doctoral students each year. The satellite campus opened in 2011. Its main partner university is in Thevenban. Its current director is Ailpel Romkathe. The current director took office in 2022. The Zudru Garny Institute was founded in 1962.",
+     "sentences": [
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 589 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 55 million crowns."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Ostsor Review, publishes 14 issues a year."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zudru Garny Institute is headquartered in Elgarqui."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 36 laboratories."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 175 doctoral students each year."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2011."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2022."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      }
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 2
+    },
+    {
+     "id": "D5S04",
+     "text": "The current director took office in 2022. It trains 128 doctoral students each year. It operates 55 laboratories. The Zudru Garny Institute was founded in 1951. The satellite campus opened in 2017.",
+     "sentences": [
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2022."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 128 doctoral students each year."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 55 laboratories."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Zudru Garny Institute was founded in 1951."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 2017."
+      }
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 4
+    },
+    {
+     "id": "D5S08",
+     "text": "It was founded by Quigar Pelrompel. It employs 589 researchers. It opened a satellite campus in Wicknywick. It trains 175 doctoral students each year. Its main partner university is in Fensorpel. Its current director is Elka Lorwicklor. Its journal, the Ostsor Review, publishes 8 issues a year. It has won the Taska Prize 15 times.",
+     "sentences": [
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Quigar Pelrompel."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 589 researchers."
+      },
+      {
+       "fact": "satellite",
+       "wrong": true,
+       "text": "It opened a satellite campus in Wicknywick."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 175 doctoral students each year."
+      },
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Fensorpel."
+      },
+      {
+       "fact": "director",
+       "wrong": true,
+       "text": "Its current director is Elka Lorwicklor."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Ostsor Review, publishes 8 issues a year."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Taska Prize 15 times."
+      }
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 5
+    },
+    {
+     "id": "D5S06",
+     "text": "The Zudru Garny Institute is headquartered in Elgarqui. The current director took office in 2015. It opened a satellite campus in Venpelban. It has won the Taska Prize 15 times. It was founded by Quigar Pelrompel. It holds 837 patents.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zudru Garny Institute is headquartered in Elgarqui."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2015."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Taska Prize 15 times."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Quigar Pelrompel."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 837 patents."
+      }
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 1
+    },
+    {
+     "id": "D5S02",
+     "text": "The Zudru Garny Institute is headquartered in Elgarqui. Its main partner university is in Thevenban. Its annual budget is 30 million crowns. It opened a satellite campus in Venpelban. Its journal, the Ostsor Review, publishes 14 issues a year. It was founded by Banrom Lorwickny. The current director took office in 2022. The satellite campus opened in 2011. It employs 589 researchers. 97% of its funding comes from private donors. It has won the Taska Prize 7 times. Its current director is Ailpel Romkathe. It holds 588 patents. It operates 36 laboratories. The Zudru Garny Institute was founded in 1962.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Zudru Garny Institute is headquartered in Elgarqui."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 30 million crowns."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Ostsor Review, publishes 14 issues a year."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Banrom Lorwickny."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2022."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2011."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 589 researchers."
+      },
+      {
+       "fact": "share",
+       "wrong": true,
+       "text": "97% of its funding comes from private donors."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Taska Prize 7 times."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 36 laboratories."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      }
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 5
+    },
+    {
+     "id": "D5S01",
+     "text": "It trains 128 doctoral students each year. It holds 588 patents. Its main partner university is in Thevenban. It operates 55 laboratories. The current director took office in 2015. The Zudru Garny Institute is headquartered in Sorbanmi. Its journal, the Ostsor Review, publishes 8 issues a year. The Zudru Garny Institute was founded in 1951. It opened a satellite campus in Venpelban.",
+     "sentences": [
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 128 doctoral students each year."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "labs",
+       "wrong": true,
+       "text": "It operates 55 laboratories."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2015."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Zudru Garny Institute is headquartered in Sorbanmi."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Ostsor Review, publishes 8 issues a year."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Zudru Garny Institute was founded in 1951."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      }
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 4
+    },
+    {
+     "id": "D5S09",
+     "text": "It holds 588 patents. It operates 36 laboratories. It trains 175 doctoral students each year. Its current director is Ailpel Romkathe. Its annual budget is 30 million crowns. The current director took office in 2015. Its main partner university is in Thevenban. 75% of its funding comes from private donors. It employs 330 researchers. Its journal, the Ostsor Review, publishes 14 issues a year. The Zudru Garny Institute was founded in 1962.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 588 patents."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 36 laboratories."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 175 doctoral students each year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 30 million crowns."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2015."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Thevenban."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "75% of its funding comes from private donors."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 330 researchers."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Ostsor Review, publishes 14 issues a year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      }
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 3
+    },
+    {
+     "id": "D5S03",
+     "text": "It employs 589 researchers. Its annual budget is 55 million crowns. Its current director is Ailpel Romkathe. It was founded by Quigar Pelrompel. The satellite campus opened in 2011. The Zudru Garny Institute was founded in 1962. 75% of its funding comes from private donors. It opened a satellite campus in Venpelban. The current director took office in 2022. It operates 36 laboratories.",
+     "sentences": [
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 589 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 55 million crowns."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Ailpel Romkathe."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Quigar Pelrompel."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2011."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Zudru Garny Institute was founded in 1962."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "75% of its funding comes from private donors."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Venpelban."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2022."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 36 laboratories."
+      }
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 1
+    }
+   ]
+  },
+  {
+   "doc": "D6",
+   "org": "Ventas Druzu Institute",
+   "source": "Report on the Ventas Druzu Institute.\n\nThe Ventas Druzu Institute was founded in 1979. The Ventas Druzu Institute is headquartered in Thewicktas. It was founded by Venpel Zutassor. It employs 337 researchers. It operates 20 laboratories. Its annual budget is 280 million crowns. Its current director is Mizu Nybanrom. The current director took office in 2020. It opened a satellite campus in Zuaillor. The satellite campus opened in 2014. Its research spans several scientific disciplines. The institute's archive is open to accredited scholars. It holds 624 patents. 71% of its funding comes from private donors. Its journal, the Gartas Review, publishes 21 issues a year. Its governance includes an independent advisory board. Its main partner university is in Venailpel. It has won the Zuwick Prize 11 times. It trains 112 doctoral students each year.",
+   "facts": [
+    {
+     "key": "founded",
+     "template": "The Ventas Druzu Institute was founded in {v}.",
+     "value": "1979",
+     "wrong": "1994"
+    },
+    {
+     "key": "city",
+     "template": "The Ventas Druzu Institute is headquartered in {v}.",
+     "value": "Thewicktas",
+     "wrong": "Lormiven"
+    },
+    {
+     "key": "founder",
+     "template": "It was founded by {v}.",
+     "value": "Venpel Zutassor",
+     "wrong": "Tasail Venvenel"
+    },
+    {
+     "key": "staff",
+     "template": "It employs {v} researchers.",
+     "value": "337",
+     "wrong": "205"
+    },
+    {
+     "key": "labs",
+     "template": "It operates {v} laboratories.",
+     "value": "20",
+     "wrong": "8"
+    },
+    {
+     "key": "budget",
+     "template": "Its annual budget is {v} million crowns.",
+     "value": "280",
+     "wrong": "174"
+    },
+    {
+     "key": "director",
+     "template": "Its current director is {v}.",
+     "value": "Mizu Nybanrom",
+     "wrong": "Romthe Quipeltas"
+    },
+    {
+     "key": "director_year",
+     "template": "The current director took office in {v}.",
+     "value": "2020",
+     "wrong": "2026"
+    },
+    {
+     "key": "satellite",
+     "template": "It opened a satellite campus in {v}.",
+     "value": "Zuaillor",
+     "wrong": "Fenvenfen"
+    },
+    {
+     "key": "satellite_year",
+     "template": "The satellite campus opened in {v}.",
+     "value": "2014",
+     "wrong": "2028"
+    },
+    {
+     "key": "patents",
+     "template": "It holds {v} patents.",
+     "value": "624",
+     "wrong": "414"
+    },
+    {
+     "key": "share",
+     "template": "{v} of its funding comes from private donors.",
+     "value": "71%",
+     "wrong": "87%"
+    },
+    {
+     "key": "journal",
+     "template": "Its journal, the Gartas Review, publishes {v} issues a year.",
+     "value": "21",
+     "wrong": "33"
+    },
+    {
+     "key": "partner",
+     "template": "Its main partner university is in {v}.",
+     "value": "Venailpel",
+     "wrong": "Fenvenfen"
+    },
+    {
+     "key": "award",
+     "template": "It has won the Zuwick Prize {v} times.",
+     "value": "11",
+     "wrong": "5"
+    },
+    {
+     "key": "students",
+     "template": "It trains {v} doctoral students each year.",
+     "value": "112",
+     "wrong": "164"
+    }
+   ],
+   "summaries": [
+    {
+     "id": "D6S01",
+     "text": "The Ventas Druzu Institute is headquartered in Lormiven. Its main partner university is in Venailpel. It opened a satellite campus in Zuaillor. 71% of its funding comes from private donors. It was founded by Tasail Venvenel. It trains 164 doctoral students each year. Its annual budget is 280 million crowns. It operates 20 laboratories. The satellite campus opened in 2014. The Ventas Druzu Institute was founded in 1979.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Ventas Druzu Institute is headquartered in Lormiven."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Venailpel."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Tasail Venvenel."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 164 doctoral students each year."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 280 million crowns."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      }
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 3
+    },
+    {
+     "id": "D6S07",
+     "text": "It operates 20 laboratories. It holds 414 patents. Its journal, the Gartas Review, publishes 21 issues a year. The Ventas Druzu Institute is headquartered in Thewicktas. It opened a satellite campus in Zuaillor. It trains 164 doctoral students each year. The Ventas Druzu Institute was founded in 1979. The current director took office in 2020. Its current director is Mizu Nybanrom. The satellite campus opened in 2014. It employs 337 researchers. 71% of its funding comes from private donors. Its annual budget is 280 million crowns. It was founded by Venpel Zutassor.",
+     "sentences": [
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 414 patents."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 164 doctoral students each year."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2020."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 337 researchers."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 280 million crowns."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      }
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 2
+    },
+    {
+     "id": "D6S09",
+     "text": "It employs 337 researchers. It operates 20 laboratories. The current director took office in 2020. It was founded by Tasail Venvenel. It has won the Zuwick Prize 5 times. Its journal, the Gartas Review, publishes 21 issues a year. It opened a satellite campus in Zuaillor. It trains 112 doctoral students each year. Its annual budget is 174 million crowns. 71% of its funding comes from private donors. The Ventas Druzu Institute is headquartered in Thewicktas. It holds 414 patents. The satellite campus opened in 2014.",
+     "sentences": [
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 337 researchers."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2020."
+      },
+      {
+       "fact": "founder",
+       "wrong": true,
+       "text": "It was founded by Tasail Venvenel."
+      },
+      {
+       "fact": "award",
+       "wrong": true,
+       "text": "It has won the Zuwick Prize 5 times."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 112 doctoral students each year."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 174 million crowns."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 414 patents."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      }
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 4
+    },
+    {
+     "id": "D6S06",
+     "text": "The Ventas Druzu Institute is headquartered in Thewicktas. The current director took office in 2026. The Ventas Druzu Institute was founded in 1994. It trains 164 doctoral students each year. It holds 414 patents. It operates 20 laboratories. Its journal, the Gartas Review, publishes 21 issues a year. 71% of its funding comes from private donors. Its main partner university is in Venailpel.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2026."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Ventas Druzu Institute was founded in 1994."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 164 doctoral students each year."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 414 patents."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Venailpel."
+      }
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 4
+    },
+    {
+     "id": "D6S05",
+     "text": "It operates 20 laboratories. The satellite campus opened in 2014. The Ventas Druzu Institute was founded in 1979. Its annual budget is 174 million crowns. Its journal, the Gartas Review, publishes 21 issues a year. Its current director is Mizu Nybanrom. The Ventas Druzu Institute is headquartered in Thewicktas. It was founded by Venpel Zutassor.",
+     "sentences": [
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 174 million crowns."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      }
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 1
+    },
+    {
+     "id": "D6S08",
+     "text": "It holds 624 patents. The Ventas Druzu Institute was founded in 1979. It has won the Zuwick Prize 11 times. Its annual budget is 280 million crowns. It was founded by Venpel Zutassor. 71% of its funding comes from private donors.",
+     "sentences": [
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 624 patents."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zuwick Prize 11 times."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 280 million crowns."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      }
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 0
+    },
+    {
+     "id": "D6S11",
+     "text": "Its current director is Mizu Nybanrom. The satellite campus opened in 2014. Its annual budget is 174 million crowns. The Ventas Druzu Institute is headquartered in Lormiven. Its journal, the Gartas Review, publishes 21 issues a year. Its main partner university is in Venailpel. It opened a satellite campus in Zuaillor.",
+     "sentences": [
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 174 million crowns."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Ventas Druzu Institute is headquartered in Lormiven."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Venailpel."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      }
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 2
+    },
+    {
+     "id": "D6S03",
+     "text": "The Ventas Druzu Institute is headquartered in Thewicktas. It operates 20 laboratories. 71% of its funding comes from private donors. It employs 205 researchers. Its annual budget is 174 million crowns. Its journal, the Gartas Review, publishes 21 issues a year. It was founded by Venpel Zutassor. It has won the Zuwick Prize 11 times. Its main partner university is in Fenvenfen. The Ventas Druzu Institute was founded in 1994. The satellite campus opened in 2028.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "staff",
+       "wrong": true,
+       "text": "It employs 205 researchers."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 174 million crowns."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zuwick Prize 11 times."
+      },
+      {
+       "fact": "partner",
+       "wrong": true,
+       "text": "Its main partner university is in Fenvenfen."
+      },
+      {
+       "fact": "founded",
+       "wrong": true,
+       "text": "The Ventas Druzu Institute was founded in 1994."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 2028."
+      }
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 5
+    },
+    {
+     "id": "D6S10",
+     "text": "It was founded by Venpel Zutassor. Its annual budget is 174 million crowns. Its current director is Mizu Nybanrom. Its journal, the Gartas Review, publishes 33 issues a year. The Ventas Druzu Institute is headquartered in Lormiven.",
+     "sentences": [
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 174 million crowns."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      },
+      {
+       "fact": "journal",
+       "wrong": true,
+       "text": "Its journal, the Gartas Review, publishes 33 issues a year."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Ventas Druzu Institute is headquartered in Lormiven."
+      }
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 3
+    },
+    {
+     "id": "D6S04",
+     "text": "The satellite campus opened in 2028. It has won the Zuwick Prize 11 times. The current director took office in 2026. Its annual budget is 280 million crowns. It opened a satellite campus in Zuaillor. Its current director is Mizu Nybanrom. It was founded by Venpel Zutassor. The Ventas Druzu Institute is headquartered in Lormiven. It trains 164 doctoral students each year. It holds 414 patents. 71% of its funding comes from private donors. It employs 337 researchers. The Ventas Druzu Institute was founded in 1979. It operates 20 laboratories. Its main partner university is in Venailpel.",
+     "sentences": [
+      {
+       "fact": "satellite_year",
+       "wrong": true,
+       "text": "The satellite campus opened in 2028."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zuwick Prize 11 times."
+      },
+      {
+       "fact": "director_year",
+       "wrong": true,
+       "text": "The current director took office in 2026."
+      },
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 280 million crowns."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      },
+      {
+       "fact": "city",
+       "wrong": true,
+       "text": "The Ventas Druzu Institute is headquartered in Lormiven."
+      },
+      {
+       "fact": "students",
+       "wrong": true,
+       "text": "It trains 164 doctoral students each year."
+      },
+      {
+       "fact": "patents",
+       "wrong": true,
+       "text": "It holds 414 patents."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 337 researchers."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Venailpel."
+      }
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 5
+    },
+    {
+     "id": "D6S02",
+     "text": "The Ventas Druzu Institute is headquartered in Thewicktas. The Ventas Druzu Institute was founded in 1979. It was founded by Venpel Zutassor. Its main partner university is in Venailpel. The satellite campus opened in 2014. It opened a satellite campus in Zuaillor. 71% of its funding comes from private donors. Its current director is Mizu Nybanrom. It trains 112 doctoral students each year. It has won the Zuwick Prize 11 times. The current director took office in 2020. Its annual budget is 174 million crowns.",
+     "sentences": [
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Venailpel."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 112 doctoral students each year."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zuwick Prize 11 times."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2020."
+      },
+      {
+       "fact": "budget",
+       "wrong": true,
+       "text": "Its annual budget is 174 million crowns."
+      }
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 1
+    },
+    {
+     "id": "D6S12",
+     "text": "Its annual budget is 280 million crowns. The Ventas Druzu Institute is headquartered in Thewicktas. The satellite campus opened in 2014. Its journal, the Gartas Review, publishes 21 issues a year. Its main partner university is in Venailpel. 71% of its funding comes from private donors. It has won the Zuwick Prize 11 times. It opened a satellite campus in Zuaillor. The current director took office in 2020. It holds 624 patents. It employs 337 researchers. It trains 112 doctoral students each year. It was founded by Venpel Zutassor. It operates 20 laboratories. The Ventas Druzu Institute was founded in 1979. Its current director is Mizu Nybanrom.",
+     "sentences": [
+      {
+       "fact": "budget",
+       "wrong": false,
+       "text": "Its annual budget is 280 million crowns."
+      },
+      {
+       "fact": "city",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute is headquartered in Thewicktas."
+      },
+      {
+       "fact": "satellite_year",
+       "wrong": false,
+       "text": "The satellite campus opened in 2014."
+      },
+      {
+       "fact": "journal",
+       "wrong": false,
+       "text": "Its journal, the Gartas Review, publishes 21 issues a year."
+      },
+      {
+       "fact": "partner",
+       "wrong": false,
+       "text": "Its main partner university is in Venailpel."
+      },
+      {
+       "fact": "share",
+       "wrong": false,
+       "text": "71% of its funding comes from private donors."
+      },
+      {
+       "fact": "award",
+       "wrong": false,
+       "text": "It has won the Zuwick Prize 11 times."
+      },
+      {
+       "fact": "satellite",
+       "wrong": false,
+       "text": "It opened a satellite campus in Zuaillor."
+      },
+      {
+       "fact": "director_year",
+       "wrong": false,
+       "text": "The current director took office in 2020."
+      },
+      {
+       "fact": "patents",
+       "wrong": false,
+       "text": "It holds 624 patents."
+      },
+      {
+       "fact": "staff",
+       "wrong": false,
+       "text": "It employs 337 researchers."
+      },
+      {
+       "fact": "students",
+       "wrong": false,
+       "text": "It trains 112 doctoral students each year."
+      },
+      {
+       "fact": "founder",
+       "wrong": false,
+       "text": "It was founded by Venpel Zutassor."
+      },
+      {
+       "fact": "labs",
+       "wrong": false,
+       "text": "It operates 20 laboratories."
+      },
+      {
+       "fact": "founded",
+       "wrong": false,
+       "text": "The Ventas Druzu Institute was founded in 1979."
+      },
+      {
+       "fact": "director",
+       "wrong": false,
+       "text": "Its current director is Mizu Nybanrom."
+      }
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 0
+    }
+   ]
+  }
+ ]
+}

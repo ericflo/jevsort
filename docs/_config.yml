@@ -1,0 +1,18 @@
+title: jevsort
+description: Sort anything with many small pairwise AI judgments, coupled into one ranking with PKPD.
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
+relative_links:
+  enabled: true
+titles_from_headings:
+  strip_title: false
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    disable: true
+exclude:
+  - data/showdown.json.gz

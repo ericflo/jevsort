@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{ page.title | default: site.title }} · jevsort</title>
+<meta name="description" content="{{ site.description }}">
+<link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+</head>
+<body class="doc">
+<header class="top">
+  <a class="brand" href="{{ '/' | relative_url }}">jevsort <span>· docs</span></a>
+  <nav>
+    <a href="{{ '/' | relative_url }}">Showdown</a>
+    <a href="{{ '/showdown.html' | relative_url }}">Results</a>
+    <a href="{{ '/usage.html' | relative_url }}">Usage</a>
+    <a href="{{ '/how-it-works.html' | relative_url }}">How it works</a>
+    <a href="{{ '/judges.html' | relative_url }}">Judges</a>
+    <a href="{{ '/verifiable.html' | relative_url }}">Evals</a>
+    <a href="https://github.com/ericflo/jevsort">GitHub</a>
+  </nav>
+</header>
+<main class="prose">
+{{ content }}
+</main>
+<footer>
+  <p><a href="{{ '/' | relative_url }}">Summary Showdown</a> · <a href="{{ '/usage.html' | relative_url }}">Usage</a> ·
+    <a href="{{ '/how-it-works.html' | relative_url }}">How it works</a> · <a href="{{ '/judges.html' | relative_url }}">Judges</a> ·
+    <a href="{{ '/verifiable.html' | relative_url }}">Verifiable eval</a> · <a href="{{ '/market.html' | relative_url }}">Market eval</a> ·
+    <a href="{{ '/evaluation.html' | relative_url }}">Synthetic + papers eval</a> · <a href="{{ '/humans-vs-judges.html' | relative_url }}">Humans vs judges</a> ·
+    MIT · <a href="https://github.com/ericflo/jevsort">github.com/ericflo/jevsort</a></p>
+</footer>
+<script type="module">
+  const blocks = document.querySelectorAll("pre code.language-mermaid");
+  if (blocks.length) {
+    const { default: mermaid } = await import("https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs");
+    blocks.forEach((c) => { const d = document.createElement("div"); d.className = "mermaid"; d.textContent = c.textContent; c.parentElement.replaceWith(d); });
+    mermaid.initialize({ startOnLoad: false, theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral" });
+    await mermaid.run();
+  }
+</script>
+</body>
+</html>

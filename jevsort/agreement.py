@@ -255,6 +255,9 @@ def plot_agreement(report: dict, path) -> None:
     ax.set_xlabel("agreement with human votes (95% CI)")
     ax.set_title(f"Which judge agrees with humans? ({report['n_votes']} votes, {report['n_ballots']} ballots)",
                  loc="left", fontweight="bold")
+    fig.text(0.01, -0.02, "GROUND TRUTH · human picks from ballots submitted by self-selected site visitors "
+             "(not experts); a judge's pick = the sign of its coupled ranking on that pair.",
+             fontsize=8.5, va="top", bbox={"boxstyle": "round,pad=0.4", "fc": "#fff7e6", "ec": "#eda100"})
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)
     ax.grid(axis="x", color="#e6e5e0")
