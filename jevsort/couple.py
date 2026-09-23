@@ -152,7 +152,8 @@ def couple(m, method: str = "auto", eps: float = EPS, max_pkpd_k: int = 12, **kw
     """Couple with the requested method.
 
     ``auto`` uses PKPD Eq.7 when the matrix is complete and K <= ``max_pkpd_k``
-    (the paper's regime), Bradley–Terry otherwise.
+    (the paper's regime) and the judge's answers are not mostly near-certain; Bradley–Terry otherwise
+    (sparse schedules, large K, or hard votes, where Eq.7 saturates).
     """
     if not isinstance(m, PairwiseMatrix):
         P = np.asarray(m, dtype=float)
@@ -160,7 +161,9 @@ def couple(m, method: str = "auto", eps: float = EPS, max_pkpd_k: int = 12, **kw
         np.fill_diagonal(mask, False)
         m = PairwiseMatrix.from_probabilities(np.nan_to_num(P, nan=0.5), mask=mask)
     if method == "auto":
-        method = "pkpd" if (m.complete and m.k <= max_pkpd_k) else "bt"
+        P = m.P[m.observed]
+        hard = P.size and float(np.mean((P < 0.02) | (P > 0.98))) > 0.5  # mostly near-certain votes: Eq. 7 saturates
+        method = "pkpd" if (m.complete and m.k <= max_pkpd_k and not hard) else "bt"
     if method == "pkpd":
         return pkpd(m, eps=eps)
     if method == "bt":

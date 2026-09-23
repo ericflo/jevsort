@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -58,22 +59,46 @@ def _backend(args):
     return b
 
 
-def _dims(args) -> list[Dimension]:
-    if args.dim:
+def _dims(args, extra=None) -> list[Dimension]:
+    """Questions from: positional QUESTIONs, --dim (NAME="question" or just "question"), --preset, or the items file."""
+    from .api import as_dimensions
+
+    specs = list(getattr(args, "questions", None) or []) + list(args.dim or [])
+    if specs:
         out = []
-        for spec in args.dim:
-            name, _, q = spec.partition("=")
-            if not q:
-                raise SystemExit(f"--dim expects NAME=\"question\", got {spec!r}")
-            out.append(Dimension(name.strip(), q.strip().strip('"')))
-        return out
-    return PRESETS[args.preset]
+        for spec in specs:
+            name, sep, q = spec.partition("=")
+            if sep and re.fullmatch(r"[A-Za-z_][\w-]*", name.strip()) and q.strip():
+                out.append(Dimension(name.strip(), q.strip().strip('"')))
+            else:
+                out += as_dimensions(spec)
+        return as_dimensions(out)
+    if getattr(args, "preset", None):
+        return PRESETS[args.preset]
+    extra = extra or {}
+    by = extra.get("questions") or extra.get("dimensions") or extra.get("preset")
+    if by:
+        return as_dimensions(by)
+    raise SystemExit('error: say what to sort by, e.g.  jevsort sort ideas.txt "Which idea has more impact?"')
+
+
+def _read_items(path):
+    """A file path, or '-' for one item per line on stdin."""
+    from .io import load_items
+    from .sorter import Item
+
+    if path == "-":
+        lines = [ln.strip() for ln in sys.stdin.read().splitlines() if ln.strip()]
+        return [Item(f"item{n + 1}", t) for n, t in enumerate(lines)], {}
+    if not Path(path).exists():
+        raise SystemExit(f"error: no such file: {path}  (use '-' to read items from stdin, one per line)")
+    return load_items(path)
 
 
 def _common(p, backend=True):
     if backend:
         g = p.add_argument_group("judge backend")
-        g.add_argument("--backend", default="openrouter",
+        g.add_argument("--judge", "--backend", dest="backend", default="openrouter",
                        help="openrouter (Jev via OpenRouter) | llm[:MODEL] (generic fallback) | typesafe | "
                             "jev-wire:URL[#MODEL] | laya | decider | nanojev | verdict | hf:REPO")
         g.add_argument("--model", default=None,
@@ -87,11 +112,9 @@ def _common(p, backend=True):
 
 # ----------------------------------------------------------------------------
 def cmd_sort(args) -> int:
-    from .io import load_items
-
-    items, extra = load_items(args.items)
+    items, extra = _read_items(args.items)
     objective = args.objective or extra.get("objective", "")
-    dims = _dims(args)
+    dims = _dims(args, extra)
     profile = Profile.load(args.profile) if args.profile else None
     budget = args.max_pairs
     K = len(items)
@@ -119,8 +142,15 @@ def cmd_sort(args) -> int:
     if args.format == "json":
         print(res.to_json(indent=2))
         return 0
+    ranked = res.ranked[: args.top] if args.top else res.ranked
     if args.format == "ids":
-        print("\n".join(it.id for it in res.ranked))
+        print("\n".join(it.id for it in ranked))
+        return 0
+    if args.format == "text":
+        print("\n".join(it.text for it in ranked))
+        return 0
+    if args.quiet:
+        print(res.table() if not args.top else "\n".join(f"{n + 1}. {it.text}" for n, it in enumerate(ranked)))
         return 0
     print()
     if objective:
@@ -142,6 +172,23 @@ def cmd_sort(args) -> int:
                   f"{' -> order changed' if m.changed else ''}")
     flag = "\033[33mABSTAIN\033[0m" if res.abstained else "\033[32mACCEPT\033[0m"
     print(f"decision: {flag} — {res.reason}")
+    return 0
+
+
+def cmd_compare(args) -> int:
+    from .pairwise import symmetrize
+
+    q = args.question_pos or args.question or "Which is better?"
+    backend = _backend(args)
+    ab = backend.judge(args.objective or "", q, [args.first, args.second])
+    ba = backend.judge(args.objective or "", q, [args.second, args.first])
+    p = float(symmetrize(ab[0], ba[0]))
+    if args.json:
+        print(json.dumps({"question": q, "p_first_better": p, "p_first_shown_first": float(ab[0]),
+                          "p_first_shown_second": float(1 - ba[0]), "judge": backend.describe()}))
+    else:
+        who = "first" if p > 0.5 else "second"
+        print(f"{max(p, 1 - p):.0%} sure the {who} is better  (P(first better) = {p:.3f}; asked both ways)")
     return 0
 
 
@@ -288,24 +335,31 @@ def build_parser() -> argparse.ArgumentParser:
         description=BANNER + "\n\nSort anything by asking a calibrated judge many small pairwise questions,\n"
         "coupling the answers with PKPD (Price et al. 1994) / Bradley-Terry, and blending dimensions.",
         epilog="examples:\n"
-        "  jevsort demo                                   # 16 papers x 3 questions, offline if no key\n"
-        "  jevsort sort examples/data/papers.json         # sort with the default OpenRouter judge\n"
-        "  jevsort sort ideas.txt --dim impact=\"Which idea has more impact?\" --max-pairs 60\n"
-        "  jevsort eval --synthetic --out results.json    # ROC/AUC, ECE, tau-vs-pairs, no key needed\n",
+        "  jevsort sort ideas.txt \"Which idea has more impact?\"          # rank a list\n"
+        "  cat ideas.txt | jevsort sort - \"Which is funnier?\" --top 3     # from stdin, best 3\n"
+        "  jevsort compare \"draft A\" \"draft B\" \"Which is clearer?\"       # one pairwise probability\n"
+        "  jevsort demo                                                   # 16 papers x 3 questions, offline if no key\n",
     )
     p.add_argument("--version", action="version", version=f"jevsort {__version__}")
     sub = p.add_subparsers(dest="cmd", metavar="COMMAND")
 
-    s = sub.add_parser("sort", help="sort items by blended pairwise judgments", formatter_class=_Fmt,
-                       description="Sort ITEMS (.json/.jsonl/.csv/.txt) with a Jev-style judge.")
-    s.add_argument("items", help="items file: JSON list or {objective, items:[{id, text|title+abstract}]}, JSONL, CSV, or TXT (one per line)")
-    s.add_argument("--objective", help="task context every judgment sees (default: from the items file)")
-    s.add_argument("--preset", default="papers", choices=sorted(PRESETS), help="built-in dimension set")
-    s.add_argument("--dim", action="append", metavar='NAME="QUESTION"', help="custom dimension (repeatable); overrides --preset")
+    s = sub.add_parser("sort", help="rank items by one or more pairwise questions", formatter_class=_Fmt,
+                       description="Rank ITEMS by QUESTION(s) with a Jev-style judge.\n\n"
+                                   "  jevsort sort ideas.txt \"Which idea has more impact?\"\n"
+                                   "  cat ideas.txt | jevsort sort - \"Which is funnier?\" --top 3\n"
+                                   "  jevsort sort talks.csv impact=\"Which talk matters more?\" clarity=\"Which is clearer?\"")
+    s.add_argument("items", help="items: .txt (one per line), .csv, .jsonl, .json, or '-' for stdin")
+    s.add_argument("questions", nargs="*", metavar="QUESTION",
+                   help='what to sort by: "Which is clearer?" or name="Which is clearer?" (repeatable)')
+    s.add_argument("--objective", help="context every judgment sees (default: from the items file)")
+    s.add_argument("--preset", default=None, choices=sorted(PRESETS), help="a built-in question set instead of QUESTIONs")
+    s.add_argument("--dim", action="append", metavar='[NAME=]QUESTION', help=argparse.SUPPRESS)
+    s.add_argument("--top", type=int, default=None, help="only show the best N")
     g = s.add_argument_group("pair budget + adaptive stopping")
     g.add_argument("--pair-strategy", default="auto", choices=["auto", "round-robin", "random", "swiss", "active", "referee"],
                    help="auto = round-robin for K<=12 without a budget, else active")
-    g.add_argument("--max-pairs", type=int, default=None, help="max unique pairs to judge (default: all if K<=12, else ~K log2 K)")
+    g.add_argument("--budget", "--max-pairs", dest="max_pairs", type=int, default=None,
+                   help="max pairs to compare (default: all if K<=12, else ~K log2 K, stopping early when stable)")
     g.add_argument("--adaptive", dest="adaptive", action="store_true", default=None, help="force adaptive stopping on")
     g.add_argument("--no-adaptive", dest="adaptive", action="store_false", help="force adaptive stopping off")
     g.add_argument("--tau-threshold", type=float, default=0.98, help="stop when Kendall tau between successive rankings >= this ...")
@@ -322,14 +376,26 @@ def build_parser() -> argparse.ArgumentParser:
     g.add_argument("--state-mode", default="auto", choices=["auto", "pair", "shared"], help="per-pair state or one shared state (Jev servers)")
     g.add_argument("--seed", type=int, default=0)
     g = s.add_argument_group("output")
-    g.add_argument("--format", default="table", choices=["table", "json", "ids"])
+    g.add_argument("--format", default="table", choices=["table", "text", "ids", "json"],
+                   help="text = the items themselves, best first (pipe-friendly)")
     g.add_argument("--json", metavar="FILE", help="also write the full result (ranking, matrices, audit) as JSON")
     g.add_argument("--audit", metavar="FILE", help="write the audit log as JSONL")
     g.add_argument("--dry-run", action="store_true", help="print the call estimate and exit")
     _common(s)
     s.set_defaults(fn=cmd_sort)
 
-    j = sub.add_parser("judge", help="one symmetrized pairwise judgment", formatter_class=_Fmt)
+    cp = sub.add_parser("compare", help="P(A is better than B), asked both ways", formatter_class=_Fmt,
+                        description='  jevsort compare "first draft" "second draft" "Which is clearer?"')
+    cp.add_argument("first")
+    cp.add_argument("second")
+    cp.add_argument("question_pos", nargs="?", metavar="QUESTION", help='default: "Which is better?"')
+    cp.add_argument("--question", default=None, help=argparse.SUPPRESS)
+    cp.add_argument("--objective", default="")
+    cp.add_argument("--json", action="store_true", help="machine-readable output")
+    _common(cp)
+    cp.set_defaults(fn=cmd_compare)
+
+    j = sub.add_parser("judge", help=argparse.SUPPRESS, formatter_class=_Fmt)
     j.add_argument("--a", required=True, help="option A text")
     j.add_argument("--b", required=True, help="option B text")
     j.add_argument("--question", required=True)

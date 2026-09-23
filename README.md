@@ -25,26 +25,35 @@ Price, Knerr, Personnaz & Dreyfus ([NeurIPS 1994](https://proceedings.neurips.cc
 ## Try it in 60 seconds
 
 ```bash
-# offline demo, no key needed
-uvx --from git+https://github.com/ericflo/jevsort jevsort demo
-
-# rank your own list with a real judge
-export OPENROUTER_API_KEY=sk-or-...
-uvx --from git+https://github.com/ericflo/jevsort jevsort sort ideas.txt \
-    --dim impact="Which idea would have more impact?" --dim effort="Which idea is easier to ship?"
+pip install git+https://github.com/ericflo/jevsort
+export OPENROUTER_API_KEY=sk-or-...        # or skip it and bring your own judge function
 ```
 
 ```python
-from jevsort import JevSorter, Dimension, make_backend
+import jevsort
 
-sorter = JevSorter(make_backend("openrouter"),               # Jev via OpenRouter
-                   [Dimension("clarity", "Which explanation is clearer for a beginner?")],
-                   pair_strategy="active", max_pairs=80)     # bounded + stops early
-result = sorter.sort(["explanation one ...", "explanation two ...", "explanation three ..."])
-print(result.table())                                        # ranking + posteriors
+ideas = ["A CLI that turns any CSV into a chart", "A to-do app on a blockchain", "A tool that ranks PRs by urgency"]
+
+result = jevsort.sort(ideas, "Which side project would developers find most useful?")
+result.best        # 'A tool that ranks PRs by urgency'   (your own objects back, best first)
+result.top(2)      # the two best
+result.scores      # {id: probability of being the best}
+
+jevsort.sort(ideas, {"useful": "Which is more useful?", "easy": "Which is easier to build?"})   # blend questions
+jevsort.compare("draft A", "draft B", "Which is clearer?")                                    # -> P(A is better)
+jevsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))               # any function is a judge
 ```
 
-More: [usage & CLI](docs/usage.md).
+```bash
+jevsort sort ideas.txt "Which idea has more impact?"          # from a file
+cat ideas.txt | jevsort sort - "Which is funnier?" --top 3     # from stdin
+jevsort compare "draft A" "draft B" "Which is clearer?"
+```
+
+Nothing is hidden behind the easy path: budgets, active/referee schedules, meta-judges, calibration profiles and
+any backend are all keywords on `jevsort.sort` or steps on the builder (`jevsort.sorter().by(...).budget(60).meta()`).
+[Quickstart](docs/quickstart.md) (runs in ~5 s: `python examples/quickstart.py`) ·
+[Usage & CLI](docs/usage.md)
 
 ## Summary Showdown
 

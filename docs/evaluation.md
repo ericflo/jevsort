@@ -60,7 +60,7 @@ contribution says it is, if anything, *under*confident against these ground-trut
 
 ![Kendall tau vs number of pairs](figures/tau_vs_pairs.png)
 
-Full round robin is only one mode. With a `--max-pairs` budget and **adaptive stopping on diminishing returns**
+Full round robin is only one mode. With a `--budget` and **adaptive stopping on diminishing returns**
 (stop when Kendall τ between successive rankings stays ≥ 0.98 for `--patience` rounds):
 
 | | pairs used | Kendall τ vs truth | round-robin τ |
@@ -70,7 +70,7 @@ Full round robin is only one mode. With a `--max-pairs` budget and **adaptive st
 | Jev, 16 papers, active + adaptive stop | 52 / 120 (43%) | 0.840 | 0.858 |
 | Jev, 16 papers, **Jev as referee says STOP** | 24 / 120 (20%) | 0.788 | 0.858 |
 | DeepSeek, 16 papers, active + adaptive stop | 80 / 120 (67%) | 0.858 | 0.875 |
-| DeepSeek, 16 papers, active, `--max-pairs 60` | 60 / 120 (50%) | same top-4 as round robin | 0.875 |
+| DeepSeek, 16 papers, active, `--budget 60` | 60 / 120 (50%) | same top-4 as round robin | 0.875 |
 | Summary Showdown, 100 summaries, active | 400 / 4,950 (8.1%) | 95% of final agreement with the reference by 300 pairs | n/a (never run all-vs-all) |
 
 ### The mandatory guards, measured

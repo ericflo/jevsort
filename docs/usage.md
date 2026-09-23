@@ -10,7 +10,7 @@ export OPENROUTER_API_KEY=sk-or-...
 
 jevsort demo                                            # 16 papers × 3 questions
 jevsort sort examples/data/papers.json                  # same, via the general CLI
-jevsort sort ideas.txt --dim impact="Which idea would have more impact?" --max-pairs 60
+jevsort sort ideas.txt "Which idea would have more impact?" --budget 60
 jevsort eval --synthetic                                # ROC/AUC, ECE, τ-vs-pairs — no key needed
 python examples/make_plots.py                           # regenerate every figure in this README
 ```
@@ -22,8 +22,8 @@ Items can be `.txt` (one per line), `.csv`, `.jsonl` or `.json` (`[{id, text}]` 
 
 | command | what it does |
 |---|---|
-| `jevsort sort ITEMS` | rank items by blended pairwise judgments (`--dim NAME="QUESTION"`, `--max-pairs`, `--pair-strategy`, `--fusion`) |
-| `jevsort judge --a … --b … --question …` | one symmetrized pairwise judgment |
+| `jevsort sort ITEMS "QUESTION" [name="QUESTION" …]` | rank items (a file, or `-` for stdin) by one or more questions; `--top N`, `--budget N`, `--judge SPEC`, `--format text\|ids\|json` |
+| `jevsort compare A B ["QUESTION"]` | one pairwise probability, asked both ways |
 | `jevsort calibrate LABELED.json` | fit per-question temperatures + blend weights → `profile.json` |
 | `jevsort eval --synthetic` / `--data FILE` | AUC-ROC, calibration, τ-vs-pairs ([Evaluation](evaluation.md)) |
 | `jevsort backends` | which judges are ready on this machine ([Judges](judges.md)) |
@@ -35,27 +35,24 @@ Every command has `--help`.
 
 ## Python API
 
-```python
-from jevsort import JevSorter, Dimension, make_backend
+The [quickstart](quickstart.md) covers the easy path: `jevsort.sort`, `jevsort.compare` and the
+`jevsort.sorter()` builder. Under them sits `JevSorter`, which takes the same flexible questions, items and judges
+plus every option by keyword:
 
-judge = make_backend("openrouter")               # Jev via OpenRouter (falls back to a logprob LLM)
-sorter = JevSorter(
-    judge,
-    dimensions=[Dimension("clarity", "Which explanation is clearer for a beginner?"),
-                Dimension("accuracy", "Which explanation is more technically accurate?")],
-    objective="Explain how TCP congestion control works.",
-    pair_strategy="active", max_pairs=80,        # bounded + adaptive stopping
-    fusion="linear+meta",                        # Option A blend, then Jev as meta-judge
-)
-result = sorter.sort(["explanation one ...", "explanation two ...", "..."])
-print(result.table())
-result.fused.posterior        # P_i, sums to 1
+```python
+from jevsort import JevSorter
+
+sorter = JevSorter("llm:deepseek/deepseek-v4.1-flash",
+                   {"clarity": "Which explanation is clearer for a beginner?",
+                    "accuracy": "Which explanation is more technically accurate?"},
+                   objective="Explain how TCP congestion control works.",
+                   pair_strategy="active", max_pairs=80, fusion="linear+meta")
+result = sorter.sort(explanations)
 result.per_dim["accuracy"]    # Coupled: posterior, log_strength, stderr, implied(i, j)
-result.audit                  # every judgment, meta call, round and stop reason
 ```
 
 Lower level: `pkpd(P)`, `bradley_terry(m)`, `couple(m, "auto")`, `symmetrize(q_ij, q_ji)`,
-`fit_temperature(p, y)`, `LinearBlend().fit_pairwise(...)`, and `backend.judge(state, question, candidates)`.
+`fit_temperature(p, y)`, `LinearBlend().fit_pairwise(...)`, `backend.judge(state, question, candidates)`.
 
 ## Example: sorting research papers on three questions
 
@@ -74,7 +71,7 @@ ground-truth levels (1–5) per dimension so ranking quality can be measured. Th
 20 cherry-picked examples, a rock-solid study on the *wrong* domain, a theory paper with no experiments, and so on.
 
 ```text
-$ jevsort sort examples/data/papers.json --backend llm --pair-strategy active --max-pairs 60 --fusion linear+meta
+$ jevsort sort examples/data/papers.json --judge llm --pair-strategy active --budget 60 --fusion linear+meta
 
   #  id               fused     evidence    relevance contribution  title
 -------------------------------------------------------------------------

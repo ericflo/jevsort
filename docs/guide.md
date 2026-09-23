@@ -2,6 +2,7 @@
 
 | page | what's inside |
 |---|---|
+| [Quickstart](quickstart.md) | rank anything in one line; the 60-second tour |
 | [Summary Showdown results](showdown.md) | 100 popular models summarize the PKPD paper: leaderboard, findings, judges, method |
 | [Usage](usage.md) | install, CLI, input formats, Python API, calibration, the 16-paper worked example |
 | [How it works](how-it-works.md) | pairwise questions, PKPD Eq. 7, Bradley–Terry, the guards, blending, meta-judge, referee, budgets |

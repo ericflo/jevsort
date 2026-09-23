@@ -55,6 +55,13 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
 - Figures: one house style (examples/viz.py, Libre Franklin bundled); generators: eval_figs.py, showdown_figs.py, weather_plots.py.
 - Docs: README is short; details in docs/*.md, rendered as Pages subpages (Jekyll, docs/_layouts/default.html).
 
+## API ergonomics (2026-09-23)
+- `jevsort.sort(items, "question")` one-liner, `jevsort.compare(a, b, q)`, `jevsort.sorter()` builder, `FunctionJudge`
+  (any `f(question, a, b)` is a judge); questions/items/judges accepted in every natural shape; `SortResult.sorted/best/
+  top/scores/ids`, iterable, pretty repr. `JevSorter` accepts the same easy forms. CLI: positional questions, stdin (`-`),
+  `--top`, `--budget`, `--judge`, `--format text`, `jevsort compare`. Auto coupling uses BT for hard votes.
+- docs/quickstart.md == examples/quickstart.py (fresh run 4.1 s on the real judges). tests/test_api.py (17 tests).
+
 ## Next
 - Check the weather resolve Action after 2026-09-25 13:30 UTC; then add the result to README/landing.
 - Collect human ballots (issues labeled `human-ballot`), then `jevsort agreement --github ericflo/jevsort` and commit

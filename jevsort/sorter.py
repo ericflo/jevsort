@@ -95,10 +95,50 @@ class SortResult:
     usage: dict
     config: dict
     meta: list = field(default_factory=list)
+    originals: list | None = None  # the objects the caller passed in (strings, dicts...), same order as items
 
+    # ---- easy access ----------------------------------------------------------------------------------
     @property
     def ranked(self) -> list[Item]:
+        """Items, best first."""
         return [self.items[i] for i in self.order]
+
+    @property
+    def sorted(self) -> list:
+        """The caller's original objects (strings stay strings), best first."""
+        src = self.originals if self.originals is not None else [it.text for it in self.items]
+        return [src[i] for i in self.order]
+
+    @property
+    def ids(self) -> list[str]:
+        """Item ids, best first."""
+        return [self.items[i].id for i in self.order]
+
+    @property
+    def scores(self) -> dict[str, float]:
+        """{id: posterior probability of being best}, best first."""
+        return {self.items[i].id: float(self.fused.posterior[i]) for i in self.order}
+
+    def top(self, k: int = 1) -> list:
+        """The k best, as the caller's original objects."""
+        return self.sorted[:k]
+
+    @property
+    def best(self):
+        return self.sorted[0]
+
+    def __iter__(self):
+        return iter(self.sorted)
+
+    def __len__(self) -> int:
+        return len(self.items)
+
+    def __getitem__(self, i):
+        return self.sorted[i]
+
+    def __repr__(self) -> str:
+        head = f"<SortResult: {len(self.items)} items by {', '.join(self.dims)}; {self.usage.get('pairs', '?')} pairs>"
+        return head + "\n" + self.table()
 
     def rows(self) -> list[dict]:
         out = []
@@ -147,8 +187,10 @@ class JevSorter:
 
     Parameters
     ----------
-    backend: any :class:`~jevsort.backends.JudgeBackend`.
-    dimensions: list of :class:`Dimension` (or a preset name, e.g. ``"papers"``).
+    backend: a :class:`~jevsort.backends.JudgeBackend`, a spec string (``"openrouter"``, ``"llm:MODEL"``...), a plain
+        function ``f(question, a, b) -> P(a better)``, or None for Jev via OpenRouter.
+    dimensions: what to sort by: a question string, a list of them, ``{name: question}``, dicts, :class:`Dimension`
+        objects, or a preset name (``"papers"``).
     objective: the task context every judgment sees (e.g. the research objective).
     coupling: ``auto`` | ``pkpd`` | ``bt``.
     pair_strategy: ``auto`` | ``round_robin`` | ``random`` | ``swiss`` | ``active``
@@ -174,8 +216,8 @@ class JevSorter:
 
     def __init__(
         self,
-        backend: JudgeBackend,
-        dimensions="papers",
+        backend: "JudgeBackend | str | callable | None" = None,
+        dimensions=None,
         objective: str = "",
         *,
         coupling: str = "auto",
@@ -204,8 +246,10 @@ class JevSorter:
         progress=None,
         on_round=None,
     ):
-        self.backend = backend
-        self.dimensions = PRESETS[dimensions] if isinstance(dimensions, str) else list(dimensions)
+        from .api import as_dimensions, as_judge
+
+        self.backend = as_judge(backend)
+        self.dimensions = as_dimensions(dimensions)
         self.objective = objective
         self.coupling = coupling
         if pair_strategy.replace("-", "_") not in ("auto",) + S.STRATEGIES:
@@ -339,8 +383,9 @@ class JevSorter:
     def sort(self, items, pairs=None) -> SortResult:
         """Sort ``items``. ``pairs`` (optional) fixes the exact set of (i, j) index pairs to judge —
         e.g. to have a second judge re-judge the pairs a first judge's adaptive schedule chose."""
-        items = [it if isinstance(it, Item) else Item(**it) if isinstance(it, dict) else Item(str(n), str(it))
-                 for n, it in enumerate(items)]
+        from .api import as_items
+
+        items, originals, _extra = as_items(items)
         K = len(items)
         if K < 2:
             raise ValueError("need at least two items")
@@ -482,6 +527,7 @@ class JevSorter:
         usage["pairs_possible"] = total
         usage["judgments"] = sum(1 for a in audit if a.get("stage") == "pair") * (2 if self.both_orders else 1)
         return SortResult(
+            originals=originals,
             items=items,
             dims=self.dims,
             order=order,

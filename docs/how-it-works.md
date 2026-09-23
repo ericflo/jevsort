@@ -80,7 +80,7 @@ and stop reason — lands in the audit log (`--audit audit.jsonl`, `--json resul
 | `referee` | **Jev as referee**: one Choice call sees the current ranking, uncertainties, the τ-stability trajectory and a shortlist of informative pairs, and answers `pair_k` … or **`STOP`** |
 
 Every strategy except full round robin runs in batches; after each batch the ranking is re-fit and compared with the
-previous one. `--max-pairs` bounds the budget, `--tau-threshold` / `--patience` control the diminishing-returns stop,
+previous one. `--budget` (alias `--max-pairs`) bounds the pairs, `--tau-threshold` / `--patience` control the diminishing-returns stop,
 and `pairs_used / pairs_possible` plus the stop reason are logged.
 
 ## Calibration in practice

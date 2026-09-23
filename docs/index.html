@@ -164,8 +164,9 @@ layout: null
       (or Bradley–Terry) turns pairwise answers into one ranking with probabilities, even when the judge contradicts itself.</li>
     <li><strong>Only ask what matters.</strong> An active schedule picks the informative pairs and stops when the ranking settles.</li>
   </ol>
-  <pre class="install"><code>uvx --from git+https://github.com/ericflo/jevsort jevsort demo</code></pre>
-  <p class="btn-row"><a class="btn primary" href="usage.html">Get started</a> <a class="btn" href="how-it-works.html">How it works</a>
+  <pre class="install"><code>import jevsort
+jevsort.sort(ideas, "Which idea has more impact?").best</code></pre>
+  <p class="btn-row"><a class="btn primary" href="quickstart.html">Quickstart</a> <a class="btn" href="how-it-works.html">How it works</a>
     <a class="btn" href="judges.html">Judges</a> <a class="btn" href="https://github.com/ericflo/jevsort">GitHub</a></p>
 </section>
 </main>
