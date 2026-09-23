@@ -2,7 +2,10 @@
 :func:`make_backend` using a spec string:
 
 =============================  ===========================================
-``openrouter[:MODEL]``         OpenRouter LLM judge (default; needs OPENROUTER_API_KEY)
+``openrouter[:MODEL]``         Jev (typesafe/jev-1.13) via OpenRouter — the default; falls
+                               back to a generic LLM judge if Jev is unreachable
+``jev-openrouter[:MODEL]``     Jev via OpenRouter, no fallback
+``llm[:MODEL]``                FALLBACK generic LLM-as-judge on OpenRouter
 ``typesafe[:MODEL]``           TypeSafe hosted Jev (needs TYPESAFE_API_KEY)
 ``jev-wire:URL[#MODEL]``       any ``/v1/systemone`` server (openjev-sglang,
                                decider.serve, Decision-1.0, ``jevsort serve``)
@@ -20,7 +23,7 @@ from .base import LETTERS, BackendUnavailable, Choice, JudgeBackend, Usage
 from .jev import JevWireJudge, TypeSafeJevJudge
 from .mock import SyntheticJudge
 from .open_models import REGISTRY, HFCausalChoiceJudge, InProcessSystemOne, ModelSpec, VerdictJudge
-from .openrouter import DEFAULT_MODEL, OpenRouterJudge
+from .openrouter import DEFAULT_MODEL, FALLBACK_LLM, JEV_MODEL, FallbackJudge, OpenRouterJevJudge, OpenRouterJudge
 
 __all__ = [
     "LETTERS",
@@ -37,18 +40,37 @@ __all__ = [
     "InProcessSystemOne",
     "VerdictJudge",
     "OpenRouterJudge",
+    "OpenRouterJevJudge",
+    "FallbackJudge",
     "DEFAULT_MODEL",
+    "JEV_MODEL",
+    "FALLBACK_LLM",
     "make_backend",
 ]
 
 
-def make_backend(spec: str = "openrouter", model: str | None = None, cache_dir=None) -> JudgeBackend:
+def _is_jev(model: str | None) -> bool:
+    return model is None or model.startswith("typesafe/") or model.startswith("jev")
+
+
+def make_backend(spec: str = "openrouter", model: str | None = None, cache_dir=None, fallback: bool = True,
+                 warn=None) -> JudgeBackend:
     """Build a backend from a spec string (see module docstring)."""
     kind, _, arg = spec.partition(":")
     kind = kind.strip().lower()
     arg = arg.strip() or None
+    m = model or arg
     if kind == "openrouter":
-        return OpenRouterJudge(model=model or arg, cache_dir=cache_dir)
+        if not _is_jev(m):  # explicit non-Jev model id -> generic LLM fallback judge
+            return OpenRouterJudge(model=m, cache_dir=cache_dir)
+        jev = OpenRouterJevJudge(model=m, cache_dir=cache_dir)
+        if not fallback:
+            return jev
+        return FallbackJudge(jev, OpenRouterJudge(cache_dir=cache_dir), warn=warn)
+    if kind in ("jev-openrouter", "openrouter-jev"):
+        return OpenRouterJevJudge(model=m, cache_dir=cache_dir)
+    if kind in ("llm", "generic-llm", "openrouter-llm"):
+        return OpenRouterJudge(model=m, cache_dir=cache_dir)
     if kind in ("typesafe", "jev"):
         return TypeSafeJevJudge(model=model or arg, cache_dir=cache_dir)
     if kind in ("jev-wire", "wire", "openjev"):

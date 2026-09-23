@@ -21,7 +21,8 @@ prescribes:
 
 * **Option C — pairwise meta.** For *close* adjacent pairs in the fused
   ranking, ask "A vs B overall, given the dimension assessments", both orders,
-  and re-couple everything with Bradley–Terry. Best accuracy per call.
+  and swap the pair when the debiased meta judgment disagrees with the fused
+  order. Only a handful of extra calls, spent exactly where the ranking is unsure.
 """
 
 from __future__ import annotations
@@ -33,8 +34,8 @@ from statistics import NormalDist
 import numpy as np
 
 from .backends.base import Choice
-from .couple import Coupled, bradley_terry
-from .pairwise import PairwiseMatrix, symmetrize
+from .couple import Coupled
+from .pairwise import symmetrize
 
 # ----------------------------------------------------------------------------
 # normalization
@@ -181,7 +182,8 @@ class MetaResult:
     changed: bool = False
 
 
-def meta_judge(backend, objective, items, coupled, dims, fused: Coupled, top_m: int = 5, alpha: float = 0.5):
+def meta_judge(backend, objective, items, coupled, dims, fused: Coupled, top_m: int = 5, alpha: float = 0.5,
+               meta_temperature: float = 2.0):
     """Option B. Returns (new fused Coupled, MetaResult)."""
     order = list(fused.order[: min(top_m, len(items))])
     if len(order) < 2:
@@ -196,14 +198,20 @@ def meta_judge(backend, objective, items, coupled, dims, fused: Coupled, top_m: 
     ans = backend.system_one(state, {"meta_fwd": Choice(META_QUESTION, fwd), "meta_rev": Choice(META_QUESTION, rev)})
     p = np.array([(ans["meta_fwd"][items[i].id] + ans["meta_rev"][items[i].id]) / 2 for i in order])
     p = p / p.sum()
-    top_mass = fused.posterior[order].sum()
-    prior = fused.posterior[order] / top_mass
-    comb = np.exp((1 - alpha) * np.log(np.maximum(prior, 1e-12)) + alpha * np.log(np.maximum(p, 1e-12)))
-    comb = comb / comb.sum() * top_mass
+    # Soften the meta distribution (LLM-style judges are overconfident), blend it
+    # with the fused prior in log space, and use the result ONLY to re-order the
+    # top-m: the block keeps its posterior values, so the meta-judge can promote
+    # the best item without dragging runners-up below the rest of the list.
+    prior = fused.posterior[order] / fused.posterior[order].sum()
+    pm = np.exp(np.log(np.maximum(p, 1e-12)) / meta_temperature)
+    pm = pm / pm.sum()
+    score = (1 - alpha) * np.log(np.maximum(prior, 1e-12)) + alpha * np.log(np.maximum(pm, 1e-12))
+    new_order = [order[n] for n in np.argsort(-score, kind="stable")]
+    values = np.sort(fused.posterior[order])[::-1]
     post = fused.posterior.copy()
-    post[order] = comb
+    post[new_order] = values
     ls = np.log(np.maximum(post, 1e-300))
-    new = Coupled(post / post.sum(), "linear+meta", log_strength=ls - ls.mean())
+    new = Coupled(post, "linear+meta", log_strength=ls - ls.mean())
     res = MetaResult(
         "meta",
         candidates=[int(i) for i in order],
@@ -250,25 +258,26 @@ def pairwise_meta(
         states[(a, b)] = state
         qs[(a, b)] = {"ab": Choice(PAIR_META_QUESTION, {"A": A, "B": B}), "ba": Choice(PAIR_META_QUESTION, {"A": B, "B": A})}
     answers = backend.system_one_many([(states[p], qs[p]) for p in pairs])
-    # Prior: every pair at its fused implied probability, weight 1.
-    K = len(items)
-    m = PairwiseMatrix(K)
     implied = fused.implied()
-    for i in range(K):
-        for j in range(i + 1, K):
-            m.add(i, j, implied[i, j])
+    order = [int(x) for x in fused.order]
     audit, probs = [], []
     for (a, b), ans in zip(pairs, answers):
         q_ab, q_ba = ans["ab"]["A"], ans["ba"]["A"]
-        p = float(symmetrize(q_ab, q_ba))
-        m.add(a, b, p, weight=meta_weight)
+        p = float(symmetrize(q_ab, q_ba))  # P(a beats b) overall, debiased
         probs.append(p)
+        swapped = p < 0.5
+        if swapped:  # local re-order: swap the two adjacent positions only
+            ia, ib = order.index(a), order.index(b)
+            order[ia], order[ib] = order[ib], order[ia]
         audit.append({"stage": "pairwise-meta", "a": items[a].id, "b": items[b].id, "q_ab": q_ab, "q_ba": q_ba, "p": p,
-                      "fused_implied": float(implied[a, b])})
-    new = bradley_terry(m, prior=0.0)
-    new.method = fused.method + "+pairmeta"
+                      "fused_implied": float(implied[a, b]), "swapped": swapped})
+    # keep the fused posterior values, re-assigned along the new order
+    post = fused.posterior.copy()
+    post[order] = np.sort(fused.posterior)[::-1]
+    ls = np.log(np.maximum(post, 1e-300))
+    new = Coupled(post, fused.method + "+pairmeta", log_strength=ls - ls.mean())
     res = MetaResult("pairwise-meta", candidates=[[int(a), int(b)] for a, b in pairs], probs=probs,
-                     changed=bool(list(new.order) != list(fused.order)))
+                     changed=bool(order != [int(x) for x in fused.order]))
     return new, res, audit
 
 

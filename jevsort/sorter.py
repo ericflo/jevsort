@@ -199,6 +199,7 @@ class JevSorter:
         eps: float = EPS,
         seed: int = 0,
         progress=None,
+        on_round=None,
     ):
         self.backend = backend
         self.dimensions = PRESETS[dimensions] if isinstance(dimensions, str) else list(dimensions)
@@ -229,6 +230,7 @@ class JevSorter:
         self.eps = eps
         self.seed = seed
         self.progress = progress or (lambda msg: None)
+        self.on_round = on_round  # callback(pairs_used, fused Coupled) after every batch
 
     # ------------------------------------------------------------------
     @property
@@ -382,7 +384,10 @@ class JevSorter:
             run(nxt)
             # ---- re-fit + diminishing-returns check ------------------------
             per_dim_now = self._couple_all_bt(mats)
-            ls = self._fuse(per_dim_now)[0].log_strength
+            fused_round = self._fuse(per_dim_now)[0]
+            ls = fused_round.log_strength
+            if self.on_round:
+                self.on_round(len(asked), fused_round)
             tau = kendall_tau(prev_ls, ls) if prev_ls is not None else float("nan")
             topk = min(3, K)
             overlap = (len(set(np.argsort(-prev_ls)[:topk]) & set(np.argsort(-ls)[:topk])) / topk

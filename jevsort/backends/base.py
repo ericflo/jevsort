@@ -58,6 +58,7 @@ class Usage:
     cache_hits: int = 0
     input_tokens: int = 0
     output_tokens: int = 0
+    cost_usd: float = 0.0
     lock: threading.Lock = field(default_factory=threading.Lock, repr=False, compare=False)
 
     def add(self, **kw):
@@ -66,7 +67,7 @@ class Usage:
                 setattr(self, k, getattr(self, k) + v)
 
     def as_dict(self) -> dict:
-        return {k: getattr(self, k) for k in ("requests", "questions", "cache_hits", "input_tokens", "output_tokens")}
+        return {k: getattr(self, k) for k in ("requests", "questions", "cache_hits", "input_tokens", "output_tokens", "cost_usd")}
 
 
 def _stable(obj) -> str:

@@ -1,0 +1,103 @@
+{
+  "name": "clinical-hallucination-papers",
+  "description": "16 FICTIONAL paper abstracts written for the jevsort demo. Each has ground-truth levels (1-5) per dimension assigned by construction by the dataset author, so judge accuracy (ROC/AUC, Kendall tau) can be measured. Overall = mean of the three levels. None of these papers exist.",
+  "objective": "Find methods that reliably reduce hallucinated (unsupported) statements in LLM-generated hospital discharge summaries without reducing clinical completeness.",
+  "items": [
+    {
+      "id": "P01",
+      "title": "Retrieval-grounded decoding for discharge summaries: a 12-hospital randomized trial",
+      "abstract": "We randomized 4,812 discharge summaries across 12 hospitals to standard LLM drafting or retrieval-grounded decoding that restricts each generated sentence to spans retrieved from the patient's chart. Blinded attending physicians rated every summary. Unsupported statements fell from 7.9 to 2.1 per 100 sentences (difference 5.8, 95% CI 5.1-6.5, p<0.001) with no loss in a pre-specified completeness score. Effects were consistent across all sites and five note types. We release code, the rating protocol and anonymized ratings.",
+      "labels": {"evidence": 5, "relevance": 5, "contribution": 4}
+    },
+    {
+      "id": "P02",
+      "title": "Citation-constrained generation cuts unsupported claims in clinical summaries",
+      "abstract": "We force the model to attach a chart citation to every clinical claim and reject uncited sentences at decode time. On 400 discharge summaries from one academic center, two blinded clinicians found 61% fewer unsupported statements than a strong prompting baseline (Cohen's kappa 0.78). Ablations show the verifier and the citation format each contribute. Completeness dropped by 2%, within the non-inferiority margin we pre-registered.",
+      "labels": {"evidence": 4, "relevance": 5, "contribution": 4}
+    },
+    {
+      "id": "P03",
+      "title": "HalluGuard: a revolutionary framework that eliminates hallucination in medical AI",
+      "abstract": "HalluGuard is a paradigm-shifting framework that completely eliminates hallucinations in clinical text generation. In our experiments on 20 carefully selected discharge summaries, HalluGuard produced zero hallucinations, demonstrating its transformative potential. HalluGuard combines state-of-the-art prompting with a proprietary knowledge layer. We believe HalluGuard will revolutionize healthcare documentation.",
+      "labels": {"evidence": 1, "relevance": 4, "contribution": 1}
+    },
+    {
+      "id": "P04",
+      "title": "Scaling laws for factual consistency in news summarization",
+      "abstract": "Across 38 models from 70M to 400B parameters and 1.2M CNN/DailyMail and XSum articles, we measure factual consistency with three independent human-validated metrics. Unsupported content decreases as a power law in compute (R^2=0.97), and the fitted law predicts held-out model families within 4%. We release all generations and annotations. We do not study clinical or other specialist domains.",
+      "labels": {"evidence": 5, "relevance": 2, "contribution": 4}
+    },
+    {
+      "id": "P05",
+      "title": "A taxonomy of hallucination types in clinical text generation",
+      "abstract": "Three clinicians annotated 150 LLM-generated discharge summaries and inductively derived a taxonomy of nine hallucination types, from fabricated medications to wrong laterality (Fleiss' kappa 0.71). Medication and follow-up fabrications were most frequent and most clinically dangerous. The taxonomy is descriptive; we do not test mitigation methods.",
+      "labels": {"evidence": 3, "relevance": 4, "contribution": 3}
+    },
+    {
+      "id": "P06",
+      "title": "Entailment-based verification filter for LLM discharge summaries",
+      "abstract": "We add an NLI verifier that deletes generated sentences not entailed by the source notes. On 1,000 discharge summaries the filter improves automatic faithfulness metrics (SummaC +0.14, FactCC +0.11). We did not conduct clinician evaluation, and we did not measure whether deleted sentences removed clinically necessary content.",
+      "labels": {"evidence": 3, "relevance": 5, "contribution": 3}
+    },
+    {
+      "id": "P07",
+      "title": "Ten prompt engineering tips for medical chatbots",
+      "abstract": "Drawing on our experience deploying chatbots, we share ten tips for writing better prompts in healthcare, such as asking the model to be careful and to double-check its answers. Anecdotally these tips reduced mistakes in the conversations we looked at. We hope practitioners find them useful.",
+      "labels": {"evidence": 1, "relevance": 2, "contribution": 1}
+    },
+    {
+      "id": "P08",
+      "title": "Self-consistency sampling reduces hallucination in radiology report summarization",
+      "abstract": "We sample eight impressions per radiology report and keep only findings stated in a majority. Across 2,300 reports from two hospitals, blinded radiologists found 44% fewer unsupported findings than greedy decoding (p<0.001), with a 3% drop in recall of critical findings. Results held for CT and MRI. Discharge summaries were not studied, but the method is domain-agnostic.",
+      "labels": {"evidence": 4, "relevance": 4, "contribution": 3}
+    },
+    {
+      "id": "P09",
+      "title": "Diffusion models for retinal vessel segmentation",
+      "abstract": "We train a conditional diffusion model for retinal vessel segmentation and evaluate on DRIVE, STARE and CHASE with five-fold cross-validation and three seeds. It improves Dice by 1.8 points over the best U-Net baseline (p<0.01) and is robust to acquisition noise. Code and weights are released.",
+      "labels": {"evidence": 4, "relevance": 1, "contribution": 3}
+    },
+    {
+      "id": "P10",
+      "title": "Contrastive fine-tuning on clinician edits: a multi-center study with pre-registered endpoints",
+      "abstract": "We fine-tune a summarizer contrastively on 210,000 pairs of LLM drafts and the clinician-corrected versions, teaching it to rank supported over unsupported statements. In a pre-registered evaluation on 6,000 discharge summaries from 9 health systems, blinded physicians found 72% fewer unsupported statements than the base model and 38% fewer than retrieval-grounded decoding, with completeness non-inferior. Gains replicated in an independent external cohort and in three languages. The method needs no retrieval at inference time.",
+      "labels": {"evidence": 5, "relevance": 5, "contribution": 5}
+    },
+    {
+      "id": "P11",
+      "title": "Does RLHF increase fabrication? Evidence from clinical question answering",
+      "abstract": "We compare one base model with its RLHF-tuned version on 300 clinical questions. Two physicians judged answers; the RLHF model fabricated citations more often (18% vs 11%, p=0.03). We did not study summarization, and results may not generalize to other models.",
+      "labels": {"evidence": 3, "relevance": 3, "contribution": 3}
+    },
+    {
+      "id": "P12",
+      "title": "Knowledge-graph grounded summarization of EHR notes: a pilot",
+      "abstract": "We link EHR notes to a medical knowledge graph and condition the summarizer on linked entities. In a pilot on 25 notes, the authors judged the summaries to contain fewer errors than a baseline. No statistical testing was performed. A larger study is planned.",
+      "labels": {"evidence": 2, "relevance": 5, "contribution": 2}
+    },
+    {
+      "id": "P13",
+      "title": "ClinFaith: a benchmark for faithfulness in clinical summarization",
+      "abstract": "We release ClinFaith, 5,000 discharge summaries generated by nine LLMs with sentence-level support labels from 14 clinicians (inter-annotator agreement 0.81). Existing automatic faithfulness metrics correlate weakly with clinician labels (best Spearman 0.42); we train a verifier reaching 0.71. ClinFaith enables comparable evaluation of hallucination mitigation methods.",
+      "labels": {"evidence": 4, "relevance": 5, "contribution": 4}
+    },
+    {
+      "id": "P14",
+      "title": "Hallucination detection in legal contract drafting",
+      "abstract": "We fine-tune a classifier to flag fabricated clauses in LLM-drafted contracts. On 600 contracts labeled by two lawyers it reaches F1 0.83, versus 0.71 for prompting. We do not evaluate generalization beyond commercial leases.",
+      "labels": {"evidence": 3, "relevance": 2, "contribution": 2}
+    },
+    {
+      "id": "P15",
+      "title": "On the impossibility of hallucination-free language models",
+      "abstract": "We prove that any computable language model trained on finite data must hallucinate on some inputs, and derive a lower bound on the hallucination rate as a function of the model's calibration. The result implies that mitigation must target detection and grounding rather than elimination. We present no experiments.",
+      "labels": {"evidence": 1, "relevance": 3, "contribution": 4}
+    },
+    {
+      "id": "P16",
+      "title": "Bigger is not safer: a failed replication of scale-reduces-hallucination in clinical summaries",
+      "abstract": "A widely cited claim holds that larger models hallucinate less in clinical summarization. We re-ran the original protocol on 1,500 discharge summaries with 6 model sizes and blinded clinician rating. We find no significant relationship between size and unsupported statement rate (slope -0.02, 95% CI -0.09 to 0.05), and show the original effect was driven by a data leak.",
+      "labels": {"evidence": 4, "relevance": 4, "contribution": 3}
+    }
+  ]
+}

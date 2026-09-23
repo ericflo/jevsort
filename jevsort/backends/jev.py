@@ -46,9 +46,11 @@ class JevWireJudge(JudgeBackend):
         timeout: float = 120.0,
         max_retries: int = 6,
         cache_dir=None,
+        path: str = "/v1/systemone",
     ):
         super().__init__(cache_dir=cache_dir)
         self.base_url = base_url.rstrip("/")
+        self.path = path
         self.model = model
         self._key = api_key
         self.max_questions_per_request = max_questions_per_request
@@ -59,7 +61,7 @@ class JevWireJudge(JudgeBackend):
 
     @property
     def cache_id(self) -> str:
-        return f"{self.name}:{self.base_url}:{self.model}"
+        return f"jev-wire:{self.model}"  # same model -> same answers, whichever surface served it
 
     def _http(self):
         if self._client is None:
@@ -76,16 +78,22 @@ class JevWireJudge(JudgeBackend):
         delay, last = 1.0, None
         for _ in range(self.max_retries):
             try:
-                r = self._http().post(f"{self.base_url}/v1/systemone", json=body)
+                r = self._http().post(f"{self.base_url}{self.path}", json=body)
                 if r.status_code in (429, 500, 502, 503, 504):  # 503 = cold start on scale-to-zero servers
                     last = f"HTTP {r.status_code}: {r.text[:200]}"
                 elif r.status_code >= 400:
-                    raise RuntimeError(f"{self.name} HTTP {r.status_code}: {r.text[:300]}")
+                    msg = r.text[:600]
+                    try:
+                        msg = r.json()["error"]["message"]
+                    except Exception:  # noqa: BLE001
+                        pass
+                    raise BackendUnavailable(f"{self.name} HTTP {r.status_code}: {msg}")
                 else:
                     data = r.json()
                     self.usage.add(requests=1)
                     u = data.get("usage") or {}
-                    self.usage.add(input_tokens=int(u.get("input_tokens") or 0), output_tokens=int(u.get("output_tokens") or 0))
+                    self.usage.add(input_tokens=int(u.get("input_tokens") or 0), output_tokens=int(u.get("output_tokens") or 0),
+                                   cost_usd=float(u.get("cost") or 0.0))
                     return {k: parse_answer(data["answers"][k], q.options) for k, q in questions.items()}
             except OSError as e:
                 last = repr(e)

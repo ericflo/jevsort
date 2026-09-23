@@ -1,12 +1,21 @@
-"""OpenRouter LLM-as-judge behind the Jev interface.
+"""OpenRouter judges.
 
-Any chat model on OpenRouter becomes a System-One-style judge:
+**Primary: Jev itself, via OpenRouter.** OpenRouter serves TypeSafe's Jev
+(``typesafe/jev-1.13``) on ``POST https://openrouter.ai/api/v1/systemone`` —
+the same System One wire format as TypeSafe's own API — so
+:class:`OpenRouterJevJudge` is just the Jev-wire client pointed at OpenRouter
+and authenticated with ``OPENROUTER_API_KEY``. Typed, calibrated Choice
+probabilities; nothing is generated or parsed.
+
+**Fallback: generic LLM-as-judge** (:class:`OpenRouterJudge`). Any chat model
+on OpenRouter becomes a System-One-style judge — lacking Jev's typed,
+RLCD-calibrated decisions, so use it only when Jev is unavailable:
 
 1. The typed Choice is rendered as a prompt whose only valid answer is one
    option letter.
 2. We request exactly **one** output token with ``logprobs`` and read the
    probability mass the model puts on each letter — a real distribution, not
-   parsed prose. (Default model: ``deepseek/deepseek-v4-flash``, which exposes
+   parsed prose. (Default fallback model: ``deepseek/deepseek-v4.1-flash``, which exposes
    token logprobs and is cheap enough for thousands of pairwise calls.)
 3. Models without logprobs fall back to a *verbalized* distribution: the model
    is asked for a JSON object of option -> probability.
@@ -28,8 +37,11 @@ import re
 import time
 
 from .base import LETTERS, BackendUnavailable, Choice, JudgeBackend
+from .jev import JevWireJudge
 
-DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
+JEV_MODEL = "typesafe/jev-1.13"  # verified on OpenRouter 2026-09-22 ($0.042/M input tokens, output free)
+DEFAULT_MODEL = JEV_MODEL
+FALLBACK_LLM = "deepseek/deepseek-v4.1-flash"  # has token logprobs; cheap
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 PROMPT_VERSION = "jevsort-choice-v1"
 
@@ -69,9 +81,9 @@ def render_prompt(state, q: Choice) -> tuple[str, list[str]]:
 
 
 class OpenRouterJudge(JudgeBackend):
-    """LLM judge on OpenRouter (logprob readout with verbalized fallback)."""
+    """FALLBACK generic LLM judge on OpenRouter (logprob readout, verbalized fallback)."""
 
-    name = "openrouter"
+    name = "openrouter-llm"
     prefers_shared_state = False
     max_questions_per_request = 1
 
@@ -87,7 +99,7 @@ class OpenRouterJudge(JudgeBackend):
         provider: dict | None = None,
     ):
         super().__init__(cache_dir=cache_dir)
-        self.model = model or os.environ.get("JEVSORT_MODEL") or DEFAULT_MODEL
+        self.model = model or os.environ.get("JEVSORT_LLM_MODEL") or FALLBACK_LLM
         self._key = api_key or os.environ.get("OPENROUTER_API_KEY")
         self.mode = mode
         self.max_concurrency = max_concurrency
@@ -99,7 +111,10 @@ class OpenRouterJudge(JudgeBackend):
 
     @property
     def cache_id(self) -> str:
-        return f"openrouter:{self.model}:{self.mode}:{PROMPT_VERSION}"
+        return f"openrouter-llm:{self.model}:{self.mode}:{PROMPT_VERSION}"
+
+    def describe(self) -> str:
+        return f"generic LLM judge (fallback) {self.model} via OpenRouter"
 
     def available(self) -> bool:
         return bool(self._key)
@@ -145,6 +160,7 @@ class OpenRouterJudge(JudgeBackend):
                         self.usage.add(
                             input_tokens=int(u.get("prompt_tokens") or 0),
                             output_tokens=int(u.get("completion_tokens") or 0),
+                            cost_usd=float(u.get("cost") or 0.0),
                         )
                         return data
             except (OSError, ValueError) as e:  # network / JSON decode
@@ -185,6 +201,8 @@ class OpenRouterJudge(JudgeBackend):
     def _via_logprobs(self, prompt: str, letters: str) -> dict | None:
         body = self._base_body(SYSTEM, prompt)
         body.update(max_tokens=1, logprobs=True, top_logprobs=min(20, max(5, len(letters) + 3)))
+        # only route to providers that actually honour `logprobs`
+        body["provider"] = {**(self.provider or {}), "require_parameters": True}
         data = self._post(body)
         try:
             content = data["choices"][0]["logprobs"]["content"]
@@ -224,3 +242,72 @@ class OpenRouterJudge(JudgeBackend):
         vals = {L: max(dist.get(L, 0.0), 1e-4) for L in letters}
         total = sum(vals.values())
         return {L: v / total for L, v in vals.items()}
+
+
+class OpenRouterJevJudge(JevWireJudge):
+    """Jev via OpenRouter's System One endpoint — the primary judge."""
+
+    name = "openrouter-jev"
+
+    #: OpenRouter exposes Jev on two surfaces with identical request/response
+    #: shapes (https://openrouter.ai/docs/guides/community/jev):
+    SURFACES = {"decisions": "/alpha/decisions", "systemone": "/v1/systemone"}
+
+    def __init__(self, model: str | None = None, api_key: str | None = None, surface: str | None = None, **kw):
+        surface = surface or os.environ.get("JEVSORT_JEV_SURFACE", "decisions")
+        super().__init__(
+            base_url=os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api"),
+            model=model or os.environ.get("JEVSORT_MODEL") or JEV_MODEL,
+            api_key=api_key or os.environ.get("OPENROUTER_API_KEY"),
+            path=self.SURFACES[surface],
+            **kw,
+        )
+        self.surface = surface
+
+    def available(self) -> bool:
+        return bool(self._key)
+
+    def describe(self) -> str:
+        return f"Jev {self.model} via OpenRouter {self.path}"
+
+    def probe(self) -> str | None:
+        """One tiny call; returns None if Jev answers, else the error message."""
+        try:
+            self._answer("probe", {"p": Choice("Which is larger?", {"A": "2", "B": "3"})})
+            return None
+        except Exception as e:  # noqa: BLE001
+            return str(e)
+
+
+class FallbackJudge(JudgeBackend):
+    """Use ``primary`` if it answers a probe, else ``fallback`` (with a warning)."""
+
+    def __init__(self, primary: OpenRouterJevJudge, fallback: JudgeBackend, warn=None):
+        super().__init__()
+        err = primary.probe() if primary.available() else "OPENROUTER_API_KEY is not set"
+        self.active = primary if err is None else fallback
+        self.fallback_reason = err
+        if err is not None and warn:
+            warn(err)
+        # present the active backend's behaviour
+        self.name = self.active.name
+        self.prefers_shared_state = self.active.prefers_shared_state
+        self.max_questions_per_request = self.active.max_questions_per_request
+        self.max_concurrency = self.active.max_concurrency
+        self.usage = self.active.usage
+
+    @property
+    def cache_id(self):
+        return self.active.cache_id
+
+    def describe(self) -> str:
+        return self.active.describe()
+
+    def available(self) -> bool:
+        return self.active.available()
+
+    def system_one(self, state, questions):
+        return self.active.system_one(state, questions)
+
+    def _answer(self, state, questions):  # pragma: no cover - delegated
+        return self.active._answer(state, questions)
