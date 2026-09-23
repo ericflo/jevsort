@@ -5,7 +5,7 @@ Rank anything in one line; reach every knob when you need it. This page is
 (uncached) run against the real judges takes about 4 seconds.
 
 ```bash
-pip install jevsort
+pip install pairsort       # PyPI name; the package is still `import jevsort`
 export OPENROUTER_API_KEY=sk-or-...
 python examples/quickstart.py
 ```

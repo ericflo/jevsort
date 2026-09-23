@@ -25,7 +25,8 @@ Price, Knerr, Personnaz & Dreyfus ([NeurIPS 1994](https://proceedings.neurips.cc
 ## Try it in 60 seconds
 
 ```bash
-pip install jevsort                        # or run the CLI without installing: uvx jevsort demo
+pip install pairsort                       # PyPI name; you `import jevsort` and run `jevsort` (or `pairsort`)
+uvx pairsort demo                          # or run the CLI without installing anything
 export OPENROUTER_API_KEY=sk-or-...        # or skip it and bring your own judge function
 ```
 
@@ -45,7 +46,7 @@ jevsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b)) 
 ```
 
 ```bash
-jevsort sort ideas.txt "Which idea has more impact?"          # from a file
+jevsort sort ideas.txt "Which idea has more impact?"          # from a file (`uvx pairsort sort ...` works too)
 cat ideas.txt | jevsort sort - "Which is funnier?" --top 3     # from stdin
 jevsort compare "draft A" "draft B" "Which is clearer?"
 ```

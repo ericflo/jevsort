@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "jevsort"
+name = "pairsort"
 version = "0.1.0"
 description = "Rank anything with AI judges: many small pairwise questions, coupled into one calibrated ranking (PKPD / Bradley-Terry)"
 readme = "README.md"
@@ -38,6 +38,7 @@ dev = ["pytest>=7", "matplotlib>=3.7"]
 
 [project.scripts]
 jevsort = "jevsort.cli:main"
+pairsort = "jevsort.cli:main"   # same CLI, so `uvx pairsort ...` works (uvx runs the executable named after the package)
 
 [project.urls]
 Homepage = "https://ericflo.github.io/jevsort/"

@@ -329,9 +329,15 @@ def cmd_demo(args) -> int:
 
 
 # ----------------------------------------------------------------------------
+def _prog() -> str:
+    """'jevsort' or 'pairsort', whichever the user typed (both are installed)."""
+    name = Path(sys.argv[0]).name if sys.argv and sys.argv[0] else "jevsort"
+    return name if name in ("jevsort", "pairsort") else "jevsort"
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog="jevsort", formatter_class=_Fmt,
+        prog=_prog(), formatter_class=_Fmt,
         description=BANNER + "\n\nSort anything by asking a calibrated judge many small pairwise questions,\n"
         "coupling the answers with PKPD (Price et al. 1994) / Bradley-Terry, and blending dimensions.",
         epilog="examples:\n"
@@ -340,7 +346,7 @@ def build_parser() -> argparse.ArgumentParser:
         "  jevsort compare \"draft A\" \"draft B\" \"Which is clearer?\"       # one pairwise probability\n"
         "  jevsort demo                                                   # 16 papers x 3 questions, offline if no key\n",
     )
-    p.add_argument("--version", action="version", version=f"jevsort {__version__}")
+    p.add_argument("--version", action="version", version=f"jevsort {__version__} (PyPI: pairsort)")
     sub = p.add_subparsers(dest="cmd", metavar="COMMAND")
 
     s = sub.add_parser("sort", help="rank items by one or more pairwise questions", formatter_class=_Fmt,

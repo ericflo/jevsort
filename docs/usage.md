@@ -5,7 +5,8 @@ Everything you need to sort your own things: CLI, input formats, Python API, cal
 ## Install and try
 
 ```bash
-pip install jevsort        # or: uv tool install jevsort · or run without installing: uvx jevsort demo
+pip install pairsort       # or: uv tool install pairsort · or run without installing: uvx pairsort demo
+# the import name and the CLI are `jevsort` (`pairsort` is installed as a CLI alias too)
 export OPENROUTER_API_KEY=sk-or-...
 
 jevsort demo                                            # 16 papers × 3 questions
