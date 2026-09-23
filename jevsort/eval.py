@@ -193,9 +193,10 @@ def _roc_suite(test_res, test_truth, test_overall, calib_res, calib_truth, calib
 def synthetic_suite(k: int = 40, seed: int = 7, n_seeds: int = 5, judge_kw: dict | None = None, quick: bool = False) -> dict:
     """Everything the figures need, offline. ~1 minute on a laptop."""
     t0 = time.time()
-    judge_kw = judge_kw or {}
-    res: dict = {"mode": "synthetic", "k": k, "judge": {"overconfidence": 3.0, "position_bias": 0.6,
-                                                         "opinion_noise": 0.5, "call_noise": 0.3, **judge_kw}}
+    # a realistically noisy judge: 3x overconfident, position-biased, with
+    # persistent per-pair errors (intransitivity) and per-call noise
+    judge_kw = {"opinion_noise": 1.0, "call_noise": 0.8, **(judge_kw or {})}
+    res: dict = {"mode": "synthetic", "k": k, "judge": {"overconfidence": 3.0, "position_bias": 0.6, **judge_kw}}
     # 1) ROC + calibration: round robin on a test split, temperatures/blend on a calibration split
     items_c, lat_c, ov_c, L_c, O_c = synthetic_world(k, seed=seed + 1000, prefix="c")
     items_t, lat_t, ov_t, L_t, O_t = synthetic_world(k, seed=seed, prefix="t")
