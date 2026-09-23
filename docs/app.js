@@ -25,7 +25,7 @@
     faithfulness: ["Which summary sticks to what the paper actually says?", "Prefer fewer invented details."],
   };
 
-  const tidy = (t) => t.replace(/\\\(|\\\)/g, "").replace(/\\\[|\\\]/g, "");  // drop LaTeX \( \) delimiters for display
+  const tidy = (t) => t.replace(/\\\(|\\\)/g, "").replace(/\\\[|\\\]/g, "").replace(/\$([^$\n]{1,60})\$/g, "$1");  // drop LaTeX \( \) delimiters for display
   let D = null;           // site data
   let byId = {};          // summary id -> summary
   let round = null;       // current round state
@@ -61,59 +61,127 @@
     return { bg: `rgba(42,120,214,${a.toFixed(3)})`, fg: a > 0.5 ? "#fff" : light ? "#0b0b0b" : "#f4f3ef" };
   }
 
+  // P(a beats b) in a head-to-head, from the jury's fitted strengths (Bradley–Terry scale)
+  const beats = (sa, sb) => 1 / (1 + Math.exp(-(sa - sb)));
+
   function renderLeaderboard() {
     const dims = D.dimensions.map((d) => d.name);
-    const cols = [
-      { k: "rank", label: "#", num: true, v: (r) => r.rank },
-      { k: "name", label: "Model", v: (r) => r.name },
-      { k: "pop", label: "Popularity", num: true, v: (r) => r.popularity_rank },
-      ...dims.map((d) => ({ k: d, label: d.slice(0, 11), heat: true, v: (r) => r.per_dim[d].rank })),
-      { k: "words", label: "Words", num: true, v: (r) => r.words },
-      { k: "cost", label: "Cost", num: true, v: (r) => r.summary_cost_usd, fmt: money },
-    ];
-    let sortK = "rank", asc = true, showAll = false;
-    $("#lb-more").addEventListener("click", () => { showAll = !showAll; $("#lb-more").textContent = showAll ? "Show top 20" : `Show all ${D.leaderboard.length}`; draw(); });
-    const thead = $("#lb thead"), tbody = $("#lb tbody");
-    const tr = el("tr");
-    for (const c of cols) {
-      const th = el("th", { class: c.num ? "num" : "", text: c.label, title: c.heat ? D.dimensions.find((d) => d.name === c.k).question : "" });
-      th.addEventListener("click", () => { asc = sortK === c.k ? !asc : true; sortK = c.k; draw(); });
-      tr.append(th);
-    }
-    thead.append(tr);
+    const SHORT = { accuracy: "Acc", completeness: "Comp", faithfulness: "Faith", writing: "Prose", understandability: "Clear", verbosity: "Length" };
     const N = D.leaderboard.length;
+    const scores = D.leaderboard.map((r) => r.score).sort((x, y) => x - y);
+    const median = scores[Math.floor(scores.length / 2)];
+    const byRank = [...D.leaderboard].sort((a, b) => a.rank - b.rank);
+    const next = {}; // vs the next-ranked model (overall ranking)
+    byRank.forEach((r, i) => { next[r.id] = i + 1 < byRank.length ? beats(r.score, byRank[i + 1].score) : null; });
+    const vsTypical = (r) => beats(r.score, median);
+    const sorts = {
+      rank: { label: "Overall", v: (r) => r.rank },
+      ...Object.fromEntries(dims.map((d) => [d, { label: D.dimensions.find((x) => x.name === d).name.replace(/^./, (c) => c.toUpperCase()), v: (r) => r.per_dim[d].rank }])),
+      cost: { label: "Cheapest", v: (r) => r.summary_cost_usd },
+      pop: { label: "Most used", v: (r) => r.popularity_rank },
+      words: { label: "Shortest", v: (r) => r.words },
+    };
+    let sortK = "rank", showAll = false;
+
+    // desktop table
+    const cols = [
+      { k: "rank", label: "#", num: true },
+      { k: "name", label: "Model" },
+      { k: "rank", label: "Strength", bar: true, title: "How often the jury would prefer this summary over a typical (median) one" },
+      { k: "rank", label: "vs next", num: true, next: true, title: "Chance the jury prefers this model over the next one in the ranking" },
+      ...dims.map((d) => ({ k: d, label: SHORT[d] || d, heat: true, title: D.dimensions.find((x) => x.name === d).question })),
+      { k: "cost", label: "Cost", num: true },
+      { k: "pop", label: "Popularity", num: true },
+    ];
+    const thead = $("#lb thead"), tbody = $("#lb tbody");
+    const htr = el("tr");
+    for (const c of cols) {
+      const th = el("th", { class: (c.num ? "num " : "") + (c.bar ? "barcol" : ""), text: c.label, title: c.title || "" });
+      th.addEventListener("click", () => { sortK = c.k; $("#lb-sort").value = c.k; draw(); });
+      htr.append(th);
+    }
+    thead.append(htr);
+
+    // sort control (shared; the only control on phones)
+    const sel = $("#lb-sort");
+    for (const [k, s] of Object.entries(sorts)) sel.append(el("option", { value: k, text: s.label }));
+    sel.addEventListener("change", () => { sortK = sel.value; draw(); });
+    $("#lb-more").addEventListener("click", () => { showAll = !showAll; $("#lb-more").textContent = showAll ? "Show top 20" : `Show all ${N}`; draw(); });
+
+    const strengthBar = (r) => {
+      const v = vsTypical(r);
+      return el("div", { class: "sbar", title: `beats a typical summary ${pct(v)} of the time` },
+        el("div", { class: "sbar-track" }, el("div", { class: "sbar-mid" }), el("div", { class: "sbar-fill", style: `width:${(100 * v).toFixed(1)}%` })),
+        el("span", { class: "sbar-val", text: pct(v) }));
+    };
+    const detail = (r) => {
+      const s = byId[r.id];
+      return el("div", { class: "lb-detail" }, el("p", { text: tidy(s.text) }),
+        el("div", { class: "fine", text: `${r.model} · ${s.words} words · ${money(r.summary_cost_usd)} · popularity #${r.popularity_rank}` }));
+    };
+
     function draw() {
       const q = $("#filter").value.trim().toLowerCase();
-      const col = cols.find((c) => c.k === sortK);
+      const v = sorts[sortK].v;
       const rows = D.leaderboard.filter((r) => !q || r.name.toLowerCase().includes(q) || r.model.toLowerCase().includes(q))
-        .sort((a, b) => { const x = col.v(a), y = col.v(b); return (x < y ? -1 : x > y ? 1 : 0) * (asc ? 1 : -1); });
+        .sort((a, b) => v(a) - v(b) || a.rank - b.rank);
       const shown = showAll || q ? rows : rows.slice(0, 20);
+      const overall = sortK === "rank" && !q;
       tbody.replaceChildren();
-      for (const r of shown) {
-        const row = el("tr", { class: "row" });
+      const cards = $("#lb-cards");
+      cards.replaceChildren();
+      shown.forEach((r, i) => {
+        const nx = next[r.id];
+        const gapAfter = overall && nx !== null && nx >= 0.6 && i < shown.length - 1;
+        // table row
+        const row = el("tr", { class: "row" + (gapAfter ? " gap-after" : "") });
         for (const c of cols) {
-          const v = c.v(r);
           if (c.heat) {
-            const h = heat(v, N);
-            row.append(el("td", { class: "heat", style: `background:${h.bg};color:${h.fg}`, text: v }));
+            const h = heat(r.per_dim[c.k].rank, N);
+            row.append(el("td", { class: "heat", style: `background:${h.bg};color:${h.fg}`, text: r.per_dim[c.k].rank }));
+          } else if (c.bar) {
+            row.append(el("td", { class: "barcol" }, strengthBar(r)));
+          } else if (c.next) {
+            row.append(el("td", { class: "num nextcol" + (nx >= 0.6 ? " strong" : ""), text: nx === null ? "–" : pct(nx) }));
           } else {
-            row.append(el("td", { class: (c.num ? "num" : "") + (c.k === "name" ? " model" : ""), text: c.fmt ? c.fmt(v) : v, title: c.k === "name" ? r.model : "" }));
+            const val = c.k === "name" ? r.name : c.k === "cost" ? money(r.summary_cost_usd) : c.k === "pop" ? `#${r.popularity_rank}` : r.rank;
+            row.append(el("td", { class: (c.num ? "num" : "") + (c.k === "name" ? " model" : ""), text: val, title: c.k === "name" ? r.model : "" }));
           }
         }
         row.addEventListener("click", () => {
-          const next = row.nextElementSibling;
-          if (next && next.classList.contains("detail")) { next.remove(); return; }
-          const s = byId[r.id];
-          const td = el("td", { colspan: cols.length });
-          td.append(el("div", { text: tidy(s.text) }), el("div", { class: "fine", text: `${r.model} · ${s.words} words · ${money(r.summary_cost_usd)}` }));
-          row.after(el("tr", { class: "detail" }, td));
+          const nr = row.nextElementSibling;
+          if (nr && nr.classList.contains("detail")) { nr.remove(); return; }
+          row.after(el("tr", { class: "detail" }, el("td", { colspan: cols.length }, detail(r))));
         });
         tbody.append(row);
-      }
+        // phone card
+        const chips = el("div", { class: "chips" }, ...dims.map((d) => {
+          const h = heat(r.per_dim[d].rank, N);
+          return el("span", { class: "chip", style: `background:${h.bg};color:${h.fg}`, title: D.dimensions.find((x) => x.name === d).question },
+            el("b", { text: SHORT[d] || d }), document.createTextNode(` ${r.per_dim[d].rank}`));
+        }));
+        const card = el("article", { class: "lb-card" + (gapAfter ? " gap-after" : ""), tabindex: "0" },
+          el("div", { class: "lb-head" },
+            el("span", { class: "lb-rank" + (r.rank <= 3 ? " lb-top3" : ""), text: `#${r.rank}` }),
+            el("span", { class: "lb-name", text: r.name }),
+            el("span", { class: "lb-meta", text: `${money(r.summary_cost_usd)} · pop. #${r.popularity_rank}` })),
+          el("div", { class: "lb-strength" }, el("span", { class: "lb-lab", text: "strength" }), strengthBar(r)),
+          el("div", { class: "lb-next", text: nx === null ? "last place" : `vs #${r.rank + 1}: preferred ${pct(nx)} of the time` + (nx < 0.55 ? " (a near coin-flip)" : "") }),
+          chips);
+        card.addEventListener("click", () => {
+          const d = card.querySelector(".lb-detail");
+          if (d) d.remove(); else card.append(detail(r));
+        });
+        cards.append(card);
+      });
       $("#lb-count").textContent = `${shown.length} of ${N} models`;
     }
     $("#filter").addEventListener("input", draw);
     draw();
+    // headline magnitude sentence
+    const [a, b2, c3] = byRank;
+    $("#lb-gap").textContent = `How close is it? The jury would prefer #1 (${a.name}) over #2 (${b2.name}) ${pct(beats(a.score, b2.score))} of the time, ` +
+      `and over #10 ${pct(beats(a.score, byRank[9].score))}. Neighbouring ranks are usually close to a coin-flip; the bars show how far apart models really are.`;
   }
 
   // ---------------------------------------------------------------- game

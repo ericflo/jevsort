@@ -49,7 +49,7 @@ layout: null
   <div class="section-head">
     <h2>Your turn</h2>
     <p>You don't need to know the paper: these summaries were written for exactly you. Pick the better one for the
-      question asked. Keys: <kbd>←</kbd> A · <kbd>→</kbd> B · <kbd>↓</kbd> skip. Models stay anonymous until the end.</p>
+      question asked<span class="keys-hint">. Keys: <kbd>←</kbd> A · <kbd>→</kbd> B · <kbd>↓</kbd> skip</span>. Models stay anonymous until the end.</p>
   </div>
   <div id="game">
     <div class="progress"><div class="bar" id="progress-bar"></div><span id="progress-text"></span></div>
@@ -62,6 +62,11 @@ layout: null
     </div>
     <div class="skip-row"><button class="btn ghost" data-pick="skip">Can't tell / skip</button>
       <a class="fine" id="paper-link-2" href="#" target="_blank" rel="noopener">the paper (PDF)</a></div>
+    <div class="pick-bar" role="group" aria-label="Your pick">
+      <button class="btn pick-a" data-pick="A">A is better</button>
+      <button class="btn ghost" data-pick="skip">Skip</button>
+      <button class="btn pick-b" data-pick="B">B is better</button>
+    </div>
   </div>
   <div id="results" hidden>
     <h3 id="verdict"></h3>
@@ -88,13 +93,17 @@ layout: null
 <section id="leaderboard">
   <div class="section-head">
     <h2>Leaderboard</h2>
-    <p>The AI jury's ranking (4 judges pooled). Cells are ranks on each question; darker is better. Click a row to read the summary.</p>
+    <p>The AI jury's ranking (4 judges pooled). <b>Strength</b> = how often the jury would prefer that summary over a typical
+      one (50% = average). <b>vs next</b> = how often it's preferred over the model ranked just below. Tap a model to read its summary.</p>
+    <p class="gap-note" id="lb-gap"></p>
   </div>
   <div class="table-tools">
     <input type="search" id="filter" placeholder="Find a model…" aria-label="Filter models">
+    <label class="sort-by">Sort by <select id="lb-sort" aria-label="Sort by"></select></label>
     <span class="fine" id="lb-count"></span>
   </div>
   <div class="table-wrap"><table id="lb"><thead></thead><tbody></tbody></table></div>
+  <div id="lb-cards" class="lb-cards"></div>
   <p class="more-row"><button class="btn" id="lb-more">Show all 100</button> <a href="showdown.html">Full results &amp; method →</a></p>
 </section>
 

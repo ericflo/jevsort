@@ -31,6 +31,25 @@
     <a href="{{ '/evaluation.html' | relative_url }}">Synthetic + papers eval</a> · <a href="{{ '/humans-vs-judges.html' | relative_url }}">Humans vs judges</a> ·
     MIT · <a href="https://github.com/ericflo/pairsort">github.com/ericflo/pairsort</a></p>
 </footer>
+<script>
+  // phones: wide tables reflow into cards (each cell labelled with its column); figures open full-size on tap
+  document.querySelectorAll(".prose table").forEach((t) => {
+    const heads = [...t.querySelectorAll("thead th")].map((th) => th.textContent.trim());
+    if (heads.length < 4) return;
+    t.classList.add("stack");
+    t.querySelectorAll("tbody tr").forEach((tr) => [...tr.children].forEach((td, i) => td.setAttribute("data-label", heads[i] || "")));
+  });
+  document.querySelectorAll(".prose img").forEach((img) => {
+    img.classList.add("zoomable");
+    img.addEventListener("click", () => {
+      const o = document.createElement("div");
+      o.className = "zoom-overlay";
+      o.append(Object.assign(document.createElement("img"), { src: img.src, alt: img.alt }));
+      o.addEventListener("click", () => o.remove());
+      document.body.append(o);
+    });
+  });
+</script>
 <script type="module">
   const blocks = document.querySelectorAll("pre code.language-mermaid");
   if (blocks.length) {
