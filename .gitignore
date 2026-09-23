@@ -10,3 +10,4 @@ build/
 *.key
 secrets*
 .jevsort_cache/
+examples/data/.cache/

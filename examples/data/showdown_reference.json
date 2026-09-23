@@ -1,0 +1,1666 @@
+{
+ "grader": "anthropic/claude-sonnet-5",
+ "facts": {
+  "F1": "A K-class problem is split into K(K-1)/2 two-class problems; one (potentially small) neural network per pair of classes, trained only on the data of those two classes.",
+  "F2": "Each pairwise network's output is turned into a probability by class-conditional density estimation on its linear output (Gaussian fits in the application) plus Bayes' rule.",
+  "F3": "The pairwise probabilities are combined into posterior class probabilities with a closed-form formula: P(class i | x) = 1 / (sum over j != i of 1/P_ij - (K-2)).",
+  "F4": "It contrasts with an earlier method that uses only K-1 pairwise probabilities, whose quality depends critically on choosing that subset.",
+  "F5": "Application: pre-segmented cursive handwritten characters from real French postal checks; 27 classes; 351 single-neuron pairwise classifiers; 10x24-pixel inputs.",
+  "F6": "About 55,000 characters split into training (20,000), validation (20,000) and test (15,000) sets.",
+  "F7": "Results: the pairwise classifier reaches 48.9% (equal priors) / 52.2% (true priors) top-1; a Softmax-trained MLP is the most accurate (54.9% / 61.9%) - the pairwise classifier does NOT beat the best MLP on recognition rate.",
+  "F8": "Advantages claimed: training over an order of magnitude faster than MLPs, classes can be added/modified without retraining all pairwise classifiers, and more insight into the problem.",
+  "F9": "The classifier is part of a deployed check-reading system (83.3% of words found in first position; 80% of checks recognized at 1% error)."
+ },
+ "grades": {
+  "z-ai/glm-5.3-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018252
+  },
+  "deepseek/deepseek-v4-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017942
+  },
+  "openai/gpt-5.6-luna": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018066
+  },
+  "z-ai/glm-5.2": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise method 'yields competitive recognition rates compared to standard MLPs and Softmax networks,' but the paper shows the Softmax MLP outperforms the pairwise classifier"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01835
+  },
+  "minimax/minimax-m3": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves recognition performance comparable to MLPs trained with Softmax, but the paper shows Softmax MLP clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.019094
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary states the pairwise method is 'competitive in recognition performance' compared to Softmax networks, but the paper shows the pairwise classifier does NOT beat the best MLP (Softmax) on recognition rate (48.9%/52.2% vs 54.9%/61.9%)."
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018712
+  },
+  "deepseek/deepseek-v4-pro": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [
+    "Summary states the pairwise classifier 'remains competitive in performance' while F7 notes it does NOT beat the best MLP (Softmax) on recognition rate; the summary downplays/misrepresents this gap"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018646
+  },
+  "deepseek/deepseek-v4-flash-0731": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary states the pairwise classifier achieves competitive recognition performance and does not clearly state it underperforms the best MLP (Softmax), whereas the paper shows Softmax clearly outperforms it, making 'competitive' a mischaracterization"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "facts_missing_or_softened": [
+    "F4",
+    "F6",
+    "F7"
+   ],
+   "cost_usd": 0.018988
+  },
+  "anthropic/claude-opus-4.7": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 8,
+   "cost_usd": 0.018138
+  },
+  "stepfun/step-3.7-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 9,
+   "understandability": 9,
+   "cost_usd": 0.017776
+  },
+  "moonshotai/kimi-k3": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018144
+  },
+  "anthropic/claude-opus-4.8": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018248
+  },
+  "google/gemini-3-flash-preview": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017766
+  },
+  "tencent/hy3": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 6,
+   "understandability": 6,
+   "cost_usd": 0.017794
+  },
+  "anthropic/claude-opus-5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.018508
+  },
+  "poolside/laguna-s-2.1:free": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F6",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01768
+  },
+  "nvidia/nemotron-3-ultra-550b-a55b:free": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves recognition rates comparable to MLPs and Softmax networks, but the paper shows Softmax MLP clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018878
+  },
+  "anthropic/claude-sonnet-4.6": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary states the pairwise classifier achieves 'comparable recognition performance' to the Softmax MLP, but the paper shows the Softmax MLP clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%), which the checklist (F7) explicitly notes is NOT beaten by the pairwise classifier"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.019346
+  },
+  "anthropic/claude-sonnet-5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017888
+  },
+  "google/gemini-3.1-flash-lite": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the approach demonstrates 'competitive performance' compared to MLPs, but the paper reports the pairwise classifier does not beat the best MLP (Softmax-trained) on recognition rate"
+   ],
+   "unsupported_claims": [
+    "competitive performance"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018442
+  },
+  "google/gemini-2.5-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017828
+  },
+  "google/gemini-3.7-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01804
+  },
+  "openai/gpt-5.5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01781
+  },
+  "google/gemini-2.5-flash-lite": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "This paper claims the pairwise classifier achieves comparable recognition performance to standard MLPs, but the paper shows the Softmax-trained MLP clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01858
+  },
+  "openai/gpt-oss-120b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F8"
+   ],
+   "factual_errors": [
+    "Summary claims the pairwise classifier performance is 'comparable to' the Softmax model, but the paper shows Softmax clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [
+    "average rank near 2.5 (specific figure not directly stated as a single summary number this way, though close to reported values)"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "facts_missing_note": "F4, F7, F9 not covered",
+   "facts_not_covered": [
+    "F4",
+    "F7",
+    "F9"
+   ],
+   "cost_usd": 0.019502
+  },
+  "google/gemini-3.6-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "achieves competitive classification performance against standard multi-layer perceptrons (MLPs) and Softmax networks"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017976
+  },
+  "z-ai/glm-5.3": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "complete check-reading system recognizes 64.1% of literal amounts at 1% error, or 80% of checks when the numeral amount is included - the paper states 64.1% is the rate of well-recognized literal amounts found in first position, and 80% well-recognized checks at 1% error is a separate figure not conditioned on 'at 1% error' for the 64.1% figure"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01914
+  },
+  "openai/gpt-5.6-terra": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01781
+  },
+  "xiaomi/mimo-v2.5-pro": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017758
+  },
+  "deepseek/deepseek-v4-pro-0813": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017602
+  },
+  "nvidia/nemotron-3-super-120b-a12b:free": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier yields recognition rates comparable to or better than standard MLPs and Softmax networks, but the paper shows the Softmax MLP achieved the best recognition rate (54.9%/61.9%), outperforming the pairwise classifier (48.9%/52.2%)."
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018948
+  },
+  "openai/gpt-5.4": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017756
+  },
+  "google/gemini-3.8-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier's 48.9% accuracy is 'on par with' a standard MLP, but the paper shows the Softmax-trained MLP achieved 54.9%/61.9%, clearly beating the pairwise classifier, and even the standard MLP (100 hid. units) scored 48.9%/60.0%, better on true priors."
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 8,
+   "cost_usd": 0.019016
+  },
+  "google/gemini-3.5-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "yields competitive accuracy compared to standard multi-layer perceptrons (MLPs) and Softmax networks"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01798
+  },
+  "anthropic/claude-haiku-4.5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01776
+  },
+  "openai/gpt-4o-mini": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier outperforms MLPs in speed and provides comparable recognition rates, but the paper shows the Softmax MLP achieves higher recognition rates (54.9%/61.9%) than the pairwise classifier (48.9%/52.2%)"
+   ],
+   "unsupported_claims": [
+    "outperforms traditional multilayer perceptrons (MLPs) in terms of speed and insight into the classification problem while providing comparable recognition rates"
+   ],
+   "writing_quality": 7,
+   "understandability": 6,
+   "cost_usd": 0.01893
+  },
+  "deepseek/deepseek-v3.2": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "yields competitive recognition performance (paper shows it does NOT beat the best MLP/Softmax on recognition rate)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017984
+  },
+  "google/gemma-4-26b-a4b-it": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017686
+  },
+  "openai/gpt-5.6-luna-pro": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017824
+  },
+  "anthropic/claude-opus-4.6": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves comparable recognition performance to standard MLPs, but the paper shows the Softmax-trained MLP outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018414
+  },
+  "google/gemini-3.1-pro-preview": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017788
+  },
+  "moonshotai/kimi-k2.6": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01763
+  },
+  "openai/gpt-6-astra": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017946
+  },
+  "mistralai/mistral-nemo": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves 'high recognition rates and outperforming other neural network approaches', but the paper shows the Softmax-trained MLP achieved higher recognition rates (F7)"
+   ],
+   "unsupported_claims": [
+    "achieving high recognition rates"
+   ],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.01845
+  },
+  "minimax/minimax-m2.7": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves recognition rates competitive with larger MLPs including Softmax-trained networks, but the paper shows the Softmax-trained MLP clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)",
+    "The summary states 64% of checks are correctly identified on first hypothesis for literal amount, but the paper states 64.1% refers to well recognized literal amounts found in first position, not checks, and 83.3% refers to words found in first position at the word level"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.019486
+  },
+  "openai/gpt-5.4-mini": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017848
+  },
+  "openai/gpt-oss-20b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "Comparisons with conventional MLPs and softmax training show comparable or superior performance - the paper actually shows the softmax-trained MLP outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01901
+  },
+  "inclusionai/ling-3.0-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F8",
+    "F7"
+   ],
+   "factual_errors": [
+    "Softmax-trained MLP achieved slightly higher recognition rates (60% first-position accuracy) - actual reported value is 54.9%/61.9%, and paper describes it as clearly the best, not 'slightly' higher"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018592
+  },
+  "openai/gpt-5.4-nano": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier yields strong top-1 recognition performance and is competitive with MLP approaches including Softmax, but the paper shows the pairwise classifier does NOT beat the best MLP (Softmax) on recognition rate, and its performance is lower than several MLP variants"
+   ],
+   "unsupported_claims": [
+    "strong top-1 recognition performance"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01879
+  },
+  "cohere/north-mini-code:free": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier provides 'competitive recognition rates' compared with MLPs, but the paper shows the Softmax MLP (54.9%/61.9%) clearly outperforms the pairwise classifier (48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018648
+  },
+  "google/gemma-4-31b-it": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01762
+  },
+  "qwen/qwen3-235b-a22b-2507": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the approach demonstrates 'competitive performance compared to standard MLPs and softmax-trained networks,' but the paper shows the pairwise classifier actually underperforms the softmax-trained MLP in recognition rate (48.9%/52.2% vs 54.9%/61.9%)."
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018802
+  },
+  "google/gemini-3.5-flash-lite": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "classification performance competitive with standard MLPs and Softmax classifiers (the paper shows Softmax MLP clearly outperforms the pairwise classifier, not merely competitive)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018196
+  },
+  "moonshotai/kimi-k2.7-code": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier yields 'competitive' recognition rates compared with MLPs and Softmax networks, but the paper shows the Softmax MLP clearly outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)."
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018648
+  },
+  "openai/gpt-5-mini": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F8"
+   ],
+   "factual_errors": [
+    "Summary claims pairwise classifier shows 'competitive recognition rates... comparable to single MLPs while being an order of magnitude faster' implying it matches MLP performance, whereas the paper shows the Softmax MLP clearly outperforms the pairwise classifier (F7 not accurately conveyed)"
+   ],
+   "unsupported_claims": [
+    "describing training as 'modular' and emphasizing 'transparency for diagnostic purposes' as directly quoted framing not explicitly stated that way in paper"
+   ],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.019496
+  },
+  "openai/gpt-5.3-codex": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.017848
+  },
+  "deepseek/deepseek-v4-flash-vision-exp": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017802
+  },
+  "openai/gpt-5.2": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "achieves competitive letter recognition compared with several MLP variants"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.018044
+  },
+  "qwen/qwen3.8-27b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "Claims the pairwise classifier achieves comparable or better recognition rates than softmax MLP, when the paper reports softmax MLP as clearly the best (54.9%/61.9% vs pairwise 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018538
+  },
+  "minimax/minimax-m2.5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "Summary claims the pairwise classifier achieves recognition rates comparable to larger MLPs, but the paper shows the Softmax-trained MLP outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018628
+  },
+  "poolside/laguna-xs-2.1:free": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "61.9% first-position accuracy attributed to the pairwise classifier, but that figure is actually the Softmax MLP's true-prior result"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.018258
+  },
+  "openai/gpt-4.1-mini": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "showed competitive recognition performance compared to standard multilayer perceptrons and softmax-trained networks"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.01798
+  },
+  "meta-llama/llama-3.1-8b-instruct": {
+   "facts_covered": [
+    "F1",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier provides better results than other neural network classification algorithms including softmax and MLP, but the paper shows the Softmax-trained MLP achieved higher recognition rates than the pairwise classifier."
+   ],
+   "unsupported_claims": [
+    "The approach is described as 'novel' with no qualification",
+    "The method is described as scalable without specifics matching the paper's claims"
+   ],
+   "writing_quality": 7,
+   "understandability": 6,
+   "cost_usd": 0.018508
+  },
+  "anthropic/claude-sonnet-4.5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "Summary states pairwise classifier achieves 48.9% recognition accuracy 'comparable to MLPs with Softmax training', but the paper reports Softmax MLP outperforms it (54.9%/61.9% vs 48.9%/52.2%), which the summary itself contradicts by omission of the comparison result in F7"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.019006
+  },
+  "openai/gpt-5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.018206
+  },
+  "openai/gpt-5.6-sol-pro": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01786
+  },
+  "google/gemini-2.5-pro": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01783
+  },
+  "openai/gpt-5.1": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise approach produces competitive recognition performance compared to MLPs, but the paper shows the Softmax MLP clearly outperforms the pairwise classifier (F7)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018594
+  },
+  "qwen/qwen3.6-35b-a3b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "yields recognition performance competitive with standard MLPs and Softmax-trained networks (paper shows Softmax MLP clearly outperforms the pairwise classifier, not merely competitive)"
+   ],
+   "unsupported_claims": [
+    "derived closed-form relation described without noting contrast to prior K-1 method (F4 omitted, not necessarily an error but the summary implies novelty without context)"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018986
+  },
+  "openai/gpt-5-nano": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.018012
+  },
+  "z-ai/glm-4.7-flash": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "claims competitive classification performance compared to standard MLP architectures, when the paper shows the Softmax-trained MLP achieved higher recognition rates than the pairwise classifier"
+   ],
+   "unsupported_claims": [
+    "sigmoidal activation functions to generate linear outputs (framed as a defining feature without specifying single-neuron networks)"
+   ],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.01856
+  },
+  "qwen/qwen3-next-80b-a3b-instruct": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [
+    "avoiding the need for complex global optimization or softmax layers",
+    "outperforms standard MLPs and 1-vs-all networks in computational efficiency and flexibility"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018536
+  },
+  "z-ai/glm-5.1": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieved recognition rates competitive with standard MLPs and Softmax-based networks, but the paper shows Softmax MLP clearly outperformed the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)."
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018744
+  },
+  "qwen/qwen3-coder": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the method achieves competitive performance compared to other neural network approaches, but the paper shows the Softmax-trained MLP outperforms the pairwise classifier in recognition rate"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01817
+  },
+  "mistralai/mistral-medium-3-5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017612
+  },
+  "z-ai/glm-4.7": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves 'recognition performance comparable to traditional neural networks,' but the paper reports the Softmax-trained MLP outperforms the pairwise classifier (54.9%/61.9% vs 48.9%/52.2%)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018674
+  },
+  "google/gemma-3-27b-it": {
+   "facts_covered": [
+    "F1",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier maintains competitive performance, while the paper shows it did not beat the best MLP (Softmax) on recognition rate"
+   ],
+   "unsupported_claims": [
+    "promising results in both character and word recognition tasks (vague, glosses over the fact that pairwise classifier underperformed Softmax MLP)"
+   ],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.018502
+  },
+  "anthropic/claude-opus-4.5": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017802
+  },
+  "qwen/qwen3.5-35b-a3b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "This paper presents ... achieves recognition performance comparable to multilayer perceptrons trained with Softmax or one-vs-all strategies (Softmax MLP actually outperforms the pairwise classifier, not comparable)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01845
+  },
+  "qwen/qwen3.5-397b-a17b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01768
+  },
+  "openai/gpt-4.1": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "the pairwise method achieves competitive accuracy compared to alternative neural network strategies like multilayer perceptrons trained with softmax outputs"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01806
+  },
+  "qwen/qwen3.6-27b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "achieves recognition accuracy comparable to or exceeding standard backpropagation MLPs and Softmax networks"
+   ],
+   "unsupported_claims": [
+    "achieves recognition accuracy comparable to or exceeding standard backpropagation MLPs and Softmax networks"
+   ],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.01848
+  },
+  "deepseek/deepseek-chat-v3-0324": {
+   "facts_covered": [
+    "F1",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "showing competitive performance compared to traditional multilayer perceptrons (MLPs)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017878
+  },
+  "minimax/minimax-m2": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "yielding substantial gains in training speed and modularity compared with standard MLPs, while producing competitive recognition performance"
+   ],
+   "unsupported_claims": [
+    "competitive recognition performance (paper shows Softmax MLP outperforms the pairwise classifier, not competitive/comparable framing supported)"
+   ],
+   "writing_quality": 7,
+   "understandability": 6,
+   "cost_usd": 0.018576
+  },
+  "mistralai/devstral-2512": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "Summary claims the method achieves 'competitive recognition performance' without noting it does NOT beat the best MLP (Softmax), contradicting F7 which states the pairwise classifier does not beat the best MLP"
+   ],
+   "unsupported_claims": [
+    "achieves competitive recognition performance (implying parity with best methods)"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018632
+  },
+  "mistralai/mistral-small-3.2-24b-instruct": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "demonstrating competitive performance with other neural network methods"
+   ],
+   "unsupported_claims": [
+    "showcasing its robustness and efficiency in challenging pattern recognition tasks"
+   ],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.018158
+  },
+  "qwen/qwen3-vl-235b-a22b-instruct": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the method 'yields competitive recognition performance' compared to MLPs, but the paper states the Softmax-trained MLP clearly outperformed the pairwise classifier in recognition rate"
+   ],
+   "unsupported_claims": [
+    "competitive recognition performance"
+   ],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.018374
+  },
+  "meta-llama/llama-4-maverick": {
+   "facts_covered": [
+    "F1",
+    "F5"
+   ],
+   "factual_errors": [
+    "demonstrate that it compares favorably to other neural network approaches in terms of recognition performance"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 6,
+   "cost_usd": 0.017582
+  },
+  "meta-llama/llama-3.3-70b-instruct": {
+   "facts_covered": [
+    "F1",
+    "F5",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves competitive results with other neural network approaches, but the paper shows the Softmax-trained MLP outperforms the pairwise classifier on recognition rate"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 7,
+   "understandability": 6,
+   "cost_usd": 0.018104
+  },
+  "deepseek/deepseek-chat-v3.1": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5"
+   ],
+   "factual_errors": [
+    "achieves competitive recognition performance compared to standard MLP and Softmax approaches"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017704
+  },
+  "arcee-ai/trinity-large-thinking": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01767
+  },
+  "moonshotai/kimi-k2-thinking": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "achieves performance comparable to traditional multi-layer perceptrons and Softmax networks (paper shows pairwise classifier underperforms Softmax MLP, not comparable)"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018452
+  },
+  "openai/gpt-4.1-nano": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier outperforms MLPs and Softmax-based models in recognition accuracy, but the paper shows Softmax-trained MLP achieves the best recognition rate (54.9%/61.9%) while the pairwise classifier gets 48.9%/52.2%, so it does NOT outperform them on accuracy."
+   ],
+   "unsupported_claims": [
+    "achieving high recognition accuracy",
+    "outperforms traditional multi-class neural network architectures like MLPs and Softmax-based models"
+   ],
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.019378
+  },
+  "deepseek/deepseek-r1-0528": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.017818
+  },
+  "qwen/qwen3.5-9b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F7",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01792
+  },
+  "google/gemma-3-12b-it": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier demonstrates competitive performance compared to MLPs, but the paper shows the Softmax-trained MLP outperforms the pairwise classifier on recognition rate"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.018036
+  },
+  "nvidia/nemotron-3-nano-30b-a3b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F6",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "Summary claims the pairwise classifier achieves competitive recognition rates and implies it performs comparably to the best methods, when in fact the paper shows the Softmax MLP clearly outperforms the pairwise classifier (F7)"
+   ],
+   "unsupported_claims": [
+    "especially in first‑position accuracy"
+   ],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.01874
+  },
+  "nvidia/nemotron-3.5-lightning:free": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F3",
+    "F5",
+    "F8",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier 'achieves competitive recognition rates' when the paper shows it does not beat the best MLP (Softmax) on recognition rate"
+   ],
+   "unsupported_claims": [],
+   "writing_quality": 8,
+   "understandability": 8,
+   "cost_usd": 0.018314
+  },
+  "deepseek/deepseek-chat": {
+   "facts_covered": [
+    "F1",
+    "F5",
+    "F8"
+   ],
+   "factual_errors": [
+    "showing practical advantages over traditional multilayer perceptrons (MLPs)... achieving competitive results compared to other neural network approaches (the paper shows the pairwise classifier does NOT beat the best MLP/Softmax on recognition rate)"
+   ],
+   "unsupported_claims": [
+    "improve word-level recognition (not specifically attributed with numbers or clear support in this generalized form)"
+   ],
+   "writing_quality": 8,
+   "understandability": 7,
+   "cost_usd": 0.018674
+  },
+  "qwen/qwen3-32b": {
+   "facts_covered": [
+    "F1",
+    "F2",
+    "F5",
+    "F9"
+   ],
+   "factual_errors": [
+    "The summary claims the pairwise classifier achieves competitive recognition rates compared to MLPs and softmax models, but the paper shows the pairwise classifier does not beat the best MLP (softmax) on accuracy, contradicting the 'competitive' framing as if it matched or nearly matched the best."
+   ],
+   "unsupported_claims": [
+    "The approach excels in handling ambiguous, low-quality cursive characters (not explicitly claimed as an advantage in the paper)"
+   ],
+   "factual_errors_detail_note": "See factual_errors field",
+   "writing_quality": 7,
+   "understandability": 7,
+   "cost_usd": 0.01929
+  }
+ }
+}

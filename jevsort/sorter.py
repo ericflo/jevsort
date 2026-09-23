@@ -41,6 +41,9 @@ class Dimension:
     name: str
     question: str
     guidance: str = ""  # evidence pointers: what to look at when deciding
+    #: Optional per-dimension state for per-pair judging (e.g. the source document
+    #: for "accuracy" but not for "writing quality"). Defaults to the objective.
+    context: object = None
 
     @property
     def instructions(self) -> str:
@@ -252,36 +255,53 @@ class JevSorter:
         return "active"
 
     # ------------------------------------------------------------------
-    def _questions(self, items: list[Item], pairs, rng) -> tuple[object, dict[str, Choice], dict]:
-        """Build all Choice questions for these pairs (every dimension, both orders)."""
+    def _questions(self, items: list[Item], pairs, rng):
+        """Build all Choice questions for these pairs (every dimension, both orders).
+
+        Returns ``(groups, plan)`` where ``groups`` is a list of ``(state, {key: Choice})``
+        — one group per distinct state, so a backend sees each state once.
+        """
         shared = self._shared()
         if shared:
-            state = {"objective": self.objective, "items": {it.id: it.text for it in items}}
+            base = {"objective": self.objective, "items": {it.id: it.text for it in items}}
 
             def opt(i):
                 return f"the item at `items.{items[i].id}`"
-        else:
-            state = self.objective or "Compare the two options."
 
+            def state_for(d):
+                return base if d.context is None else {**base, "context": d.context}
+        else:
             def opt(i):
                 return f"[{items[i].id}] {items[i].text}"
 
-        qs: dict[str, Choice] = {}
+            def state_for(d):
+                if d.context is None:
+                    return self.objective or "Compare the two options."
+                return f"{self.objective}\n\n{d.context}" if self.objective else d.context
+
+        groups: dict[str, tuple[object, dict[str, Choice]]] = {}
         plan = {}
         for i, j in pairs:
             orders = [(i, j), (j, i)] if self.both_orders else [((i, j) if rng.random() < 0.5 else (j, i))]
             plan[(i, j)] = orders
             for d in self.dimensions:
+                st = state_for(d)
+                gkey = json.dumps(st, sort_keys=True, default=str)
+                if gkey not in groups:
+                    groups[gkey] = (st, {})
                 for a, b in orders:  # noqa: B007
-                    qs[f"{d.name}|{a}|{b}"] = Choice(d.instructions, {"A": opt(a), "B": opt(b)})
-        return state, qs, plan
+                    groups[gkey][1][f"{d.name}|{a}|{b}"] = Choice(d.instructions, {"A": opt(a), "B": opt(b)})
+        return list(groups.values()), plan
 
     def _judge(self, items, pairs, mats, audit, rng) -> None:
         if not pairs:
             return
-        state, qs, plan = self._questions(items, pairs, rng)
-        self.progress(f"judging {len(pairs)} pairs x {len(self.dimensions)} dims x {2 if self.both_orders else 1} orders = {len(qs)} questions")
-        ans = self.backend.system_one(state, qs)
+        groups, plan = self._questions(items, pairs, rng)
+        n_q = sum(len(q) for _, q in groups)
+        self.progress(f"judging {len(pairs)} pairs x {len(self.dimensions)} dims x {2 if self.both_orders else 1} orders = {n_q} questions")
+        ans = {}
+        for res in self.backend.system_one_many(groups):
+            ans.update(res)
         for (i, j), orders in plan.items():
             for d in self.dims:
                 T = self.profile.temperature(d)
@@ -316,7 +336,9 @@ class JevSorter:
         return False, f"accepted: top posterior {top:.3f}, gap {g:.3f}"
 
     # ------------------------------------------------------------------
-    def sort(self, items) -> SortResult:
+    def sort(self, items, pairs=None) -> SortResult:
+        """Sort ``items``. ``pairs`` (optional) fixes the exact set of (i, j) index pairs to judge —
+        e.g. to have a second judge re-judge the pairs a first judge's adaptive schedule chose."""
         items = [it if isinstance(it, Item) else Item(**it) if isinstance(it, dict) else Item(str(n), str(it))
                  for n, it in enumerate(items)]
         K = len(items)
@@ -326,10 +348,14 @@ class JevSorter:
         mats = {d: PairwiseMatrix(K) for d in self.dims}
         audit: list[dict] = []
         asked: set[tuple[int, int]] = set()
-        strategy = self._strategy(K)
+        strategy = "fixed" if pairs is not None else self._strategy(K)
         total = K * (K - 1) // 2
-        budget = min(self.max_pairs or S.default_budget(K, strategy), total)
-        adaptive = self.adaptive if self.adaptive is not None else strategy != "round_robin"
+        if pairs is not None:
+            pairs = [(min(a, b), max(a, b)) for a, b in pairs]
+            budget = len(set(pairs))
+        else:
+            budget = min(self.max_pairs or S.default_budget(K, strategy), total)
+        adaptive = (self.adaptive if self.adaptive is not None else strategy != "round_robin") and strategy != "fixed"
         batch = self.batch_size or max(2, K // 4 if strategy == "referee" else K // 2)
         min_pairs = min(self.min_pairs if self.min_pairs is not None else K, budget)
         self.progress(f"{K} items, {len(self.dims)} dimensions, strategy={strategy}, "
@@ -352,7 +378,9 @@ class JevSorter:
         first = True
         while len(asked) < budget:
             # ---- choose the next batch -----------------------------------
-            if strategy == "round_robin":
+            if strategy == "fixed":
+                nxt = [p for p in dict.fromkeys(pairs) if p not in asked]
+            elif strategy == "round_robin":
                 n = (budget - len(asked)) if not adaptive else batch
                 nxt = [p for p in rr_queue if p not in asked][:n]
             elif strategy == "random":

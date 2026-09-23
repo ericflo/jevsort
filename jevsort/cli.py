@@ -357,6 +357,8 @@ def build_parser() -> argparse.ArgumentParser:
     _common(e)
     e.set_defaults(fn=cmd_eval)
 
+    sub.add_parser("agreement", help="human-vs-judge agreement from Summary Showdown ballots (see `jevsort agreement -h`)")
+
     b = sub.add_parser("backends", help="list judge backends and open Jev models")
     b.set_defaults(fn=cmd_backends)
 
@@ -380,6 +382,11 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv=None) -> int:
+    argv = sys.argv[1:] if argv is None else list(argv)
+    if argv[:1] == ["agreement"]:  # has its own argparse; forward everything after the subcommand
+        from .agreement import main as agreement_main
+
+        return agreement_main(argv[1:])
     p = build_parser()
     args = p.parse_args(argv)
     if not getattr(args, "fn", None):

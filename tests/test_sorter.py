@@ -223,3 +223,14 @@ def test_make_backend_routing(monkeypatch):
     assert make_backend("jev-wire:http://x:1#m").model == "m"
     with pytest.raises(ValueError):
         make_backend("nope")
+
+
+def test_fixed_pairs_rejudge():
+    items, judge, L, O = world(12, seed=8)
+    first = JevSorter(judge, "papers", pair_strategy="active", max_pairs=30).sort(items)
+    idx = {it.id: n for n, it in enumerate(items)}
+    pairs = {(idx[a["a"]], idx[a["b"]]) for a in first.audit if a["stage"] == "pair"}
+    items2, judge2, _, _ = world(12, seed=8)
+    second = JevSorter(judge2, "papers").sort(items2, pairs=sorted(pairs))
+    assert second.usage["pairs"] == len(pairs) == first.usage["pairs"]
+    assert second.config["pair_strategy"] == "fixed"

@@ -344,10 +344,10 @@ def main():
     real = [json.loads(Path(p).read_text()) for p in sorted(glob.glob(str(RESULTS / "real_eval_*.json")))]
     # Jev first when present
     real.sort(key=lambda r: 0 if "jev" in r.get("backend", "").lower() else 1)
-    fig_roc(syn, real[:1])
-    fig_auc_ladder(syn, real[:1])
-    fig_calibration(syn, real[:1])
-    fig_tau_vs_pairs(syn, real[:1])
+    fig_roc(syn, real)
+    fig_auc_ladder(syn, real)
+    fig_calibration(syn, real)
+    fig_tau_vs_pairs(syn, real)
     fig_guards(syn)
     if real:
         fig_papers(real[0])

@@ -28,6 +28,20 @@ _Last updated: 2026-09-22_
 AUC coupled: evidence 0.931, relevance 0.980, contribution 0.965; fused 0.989, Kendall τ 0.875.
 Active + adaptive stop: τ 0.858 with 80/120 pairs.
 
+## Summary Showdown (Addenda 4 + 5)
+- `examples/summary_showdown.py` (collect → grade → rank → plots): top-100 most-used OpenRouter models (rankings
+  dataset, 365-day window, cost-capped) summarized the PKPD paper ($0.78). Reference grader Claude Sonnet 5 with a
+  9-fact checklist ($1.83, evaluation only). Ranking: 6 pairwise dimensions (3 with the paper in context), active
+  schedule, max 400 of 4,950 pairs, jury of DeepSeek-V4.1-Flash + Gemma-4-31B + Nemotron-3.5-Lightning (same pairs),
+  pooled BT per dimension. Jev joins automatically when reachable.
+- `examples/showdown_plots.py`: figures, `examples/SHOWDOWN.md`, `docs/data/showdown.json`, and the README lead section
+  (generated between `<!-- showdown:start/end -->` markers).
+- GitHub Pages site in `docs/` (enabled: https://ericflo.github.io/jevsort/): hero leaderboard, pairwise voting game,
+  "you agree most with X", prefilled-issue ballot submission (`.github/ISSUE_TEMPLATE/human-ballot.yml`), pluggable
+  `submit_endpoint` in `docs/config.js`.
+- `jevsort/agreement.py` + `jevsort agreement`: per-judge agreement rate (Wilson CI), Cohen's kappa, human-BT vs judge
+  rank correlation, judge-vs-judge baseline, figure + `docs/data/agreement.json`.
+
 ## Blocked / next
 - **Jev via OpenRouter returns 404** for this account: allowed-providers list lacks `typesafe`.
   Eric: allow TypeSafe at https://openrouter.ai/settings/privacy, then run

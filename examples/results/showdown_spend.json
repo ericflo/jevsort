@@ -1,0 +1,9 @@
+{
+ "judges": {
+  "deepseek/deepseek-v4.1-flash": 0.373,
+  "google/gemma-4-31b-it": 1.547,
+  "nvidia/nemotron-3.5-lightning": 0.721,
+  "typesafe/jev-1.13": 0.10652174400000004
+ },
+ "note": "Measured per-run OpenRouter usage.cost, summed. A first Gemma attempt crashed on an upstream timeout; its partial spend is not itemized here but is included in the account-level day total quoted in the README."
+}

@@ -150,7 +150,7 @@ class OpenRouterJudge(JudgeBackend):
                     if r.status_code >= 400 or "error" in data and not data.get("choices"):
                         err = data.get("error", {})
                         code = err.get("code") if isinstance(err, dict) else None
-                        if code in (429, 502, 503) and attempt < self.max_retries - 1:
+                        if code in (408, 429, 500, 502, 503, 504, 524, 529) and attempt < self.max_retries - 1:
                             last = str(err)[:200]
                         else:
                             raise RuntimeError(f"OpenRouter error: {str(err)[:300]}")

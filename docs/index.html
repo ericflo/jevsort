@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Summary Showdown · jevsort</title>
+<meta name="description" content="The most-used models on OpenRouter each summarized the same 1994 paper. jevsort ranked them with a fraction of all pairwise comparisons. Judge them yourself and see which AI judge agrees with you.">
+<meta property="og:title" content="Summary Showdown — which AI summarizes a paper best? You be the judge.">
+<meta property="og:description" content="~100 popular models, one paper, ranked by PKPD pairwise coupling. Vote on pairs and find the AI judge you agree with most.">
+<meta property="og:image" content="https://ericflo.github.io/jevsort/figures/showdown_leaderboard.png">
+<link rel="stylesheet" href="style.css">
+<script src="config.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#">jevsort <span>· summary showdown</span></a>
+  <nav>
+    <a href="#play">Judge</a>
+    <a href="#leaderboard">Leaderboard</a>
+    <a href="#agreement">Humans vs judges</a>
+    <a href="#how">How it works</a>
+    <a href="https://github.com/ericflo/jevsort">GitHub</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <p class="eyebrow">A benchmark you can vote in</p>
+  <h1><span id="n-models">~100</span> of OpenRouter's most-used models summarized the same paper.<br>Which summary is best?</h1>
+  <p class="lede">
+    Every model got the full text of <a id="paper-link" href="#">“Pairwise Neural Network Classifiers with Probabilistic Outputs”</a>
+    (Price, Knerr, Personnaz &amp; Dreyfus, NeurIPS 1994) and was asked for one paragraph.
+    <strong>jevsort</strong> ranked the summaries on six questions by asking AI judges
+    <em>“which of these two is better?”</em>, only <strong id="pairs-used">…</strong> of the
+    <strong id="pairs-possible">…</strong> possible pairs, then coupling the answers with the method from that very paper.
+  </p>
+  <div class="hero-grid">
+    <div class="podium" id="podium" aria-live="polite"></div>
+    <div class="cta-card">
+      <h2>You don't know PKPD?</h2>
+      <p>Then you're the perfect judge. You're exactly who these summaries are for: someone who wants to know what
+        the paper says. Compare <span class="n-votes">8</span> pairs and find out which AI judge thinks like you.</p>
+      <a class="btn primary" href="#play">Start judging →</a>
+      <p class="fine" id="stats-line"></p>
+    </div>
+  </div>
+</section>
+
+<section id="play" class="play">
+  <div class="section-head">
+    <h2>Judge the summaries</h2>
+    <p>Read both, pick the better one for the question asked. Keys: <kbd>←</kbd> A, <kbd>→</kbd> B, <kbd>↓</kbd> skip.
+      Summaries are anonymous until the end.</p>
+  </div>
+  <div id="game">
+    <div class="progress"><div class="bar" id="progress-bar"></div><span id="progress-text"></span></div>
+    <div class="question" id="question"></div>
+    <div class="pair">
+      <article class="card" id="card-a"><header><span class="tag">A</span><span class="meta" id="meta-a"></span></header><p id="text-a"></p>
+        <button class="btn pick" data-pick="A">A is better</button></article>
+      <article class="card" id="card-b"><header><span class="tag">B</span><span class="meta" id="meta-b"></span></header><p id="text-b"></p>
+        <button class="btn pick" data-pick="B">B is better</button></article>
+    </div>
+    <div class="skip-row"><button class="btn ghost" data-pick="skip">Can't tell / skip</button>
+      <a class="fine" id="paper-link-2" href="#" target="_blank" rel="noopener">open the paper (PDF)</a></div>
+  </div>
+  <div id="results" hidden>
+    <h3 id="verdict"></h3>
+    <p class="fine" id="verdict-sub"></p>
+    <div id="judge-bars" class="judge-bars"></div>
+    <details class="reveal" open>
+      <summary>Who wrote the summaries you saw?</summary>
+      <ol id="reveal-list"></ol>
+    </details>
+    <div class="submit-box">
+      <h4>Add your ballot to the study</h4>
+      <p>Your picks help measure which AI judge agrees with people. Submitting opens a prefilled GitHub issue
+        (you need a GitHub account); nothing is sent anywhere until you press submit there.</p>
+      <div class="btn-row">
+        <button class="btn primary" id="submit-btn">Submit ballot</button>
+        <button class="btn" id="copy-btn">Copy ballot JSON</button>
+        <button class="btn" id="download-btn">Download</button>
+        <button class="btn ghost" id="again-btn">Judge 8 more</button>
+      </div>
+      <p class="fine" id="submit-status"></p>
+    </div>
+  </div>
+</section>
+
+<section id="leaderboard">
+  <div class="section-head">
+    <h2>Leaderboard</h2>
+    <p>The <strong>jury</strong> ranking pools every AI judge's pairwise judgments into one Bradley–Terry fit per question, then blends
+      the six questions. Cells show each model's rank on each question (darker = better). Click a row to read its summary.</p>
+  </div>
+  <div class="table-tools">
+    <input type="search" id="filter" placeholder="Filter models…" aria-label="Filter models">
+    <span class="fine" id="lb-count"></span>
+  </div>
+  <div class="table-wrap"><table id="lb"><thead></thead><tbody></tbody></table></div>
+  <figure class="fig"><img src="figures/showdown_leaderboard.png" alt="Leaderboard chart of all summaries" loading="lazy">
+    <figcaption>Overall jury score with per-question ranks.</figcaption></figure>
+</section>
+
+<section id="figures">
+  <div class="section-head"><h2>What the judges found</h2></div>
+  <div class="fig-grid">
+    <figure class="fig"><img src="figures/showdown_cost_quality.png" alt="Summary cost vs quality" loading="lazy">
+      <figcaption>Price isn't quality: cost per summary vs jury score.</figcaption></figure>
+    <figure class="fig"><img src="figures/showdown_popularity.png" alt="Popularity vs quality" loading="lazy">
+      <figcaption>Most-used isn't best-summarizing: popularity rank vs quality rank.</figcaption></figure>
+    <figure class="fig"><img src="figures/showdown_convergence.png" alt="Ranking convergence vs number of pairs" loading="lazy">
+      <figcaption>Adaptive pair selection: the ranking settles long before all-vs-all.</figcaption></figure>
+    <figure class="fig"><img src="figures/showdown_judges.png" alt="Judge agreement with the reference grader" loading="lazy">
+      <figcaption>Each judge (and the jury) vs a reference grader with a hand-written key-fact checklist.</figcaption></figure>
+  </div>
+</section>
+
+<section id="agreement">
+  <div class="section-head">
+    <h2>Humans vs judges</h2>
+    <p>Built from submitted ballots by <code>jevsort agreement</code>: per-judge agreement with human picks, Cohen's κ,
+      and rank correlation between the human-vote ranking and each judge's ranking.</p>
+  </div>
+  <div id="agreement-body"><p class="fine">Loading…</p></div>
+</section>
+
+<section id="how" class="how">
+  <div class="section-head"><h2>How it works</h2></div>
+  <ol class="steps">
+    <li><strong>Many small questions.</strong> Instead of asking a model to score 100 summaries on a 1–10 scale, ask
+      “which of these two is more accurate?”, the question models (and people) answer best. Each answer is a
+      probability <code>P(A beats B)</code>, read from the judge's token probabilities (or a Jev typed decision).</li>
+    <li><strong>Both orders.</strong> Every pair is asked A-first and B-first and averaged, which cancels position bias.</li>
+    <li><strong>Couple, don't count.</strong> The pairwise probabilities are coupled into global posteriors, with Eq. 7 of the
+      very paper being summarized (<code>P<sub>i</sub> = 1 / (Σ<sub>j≠i</sub> 1/P<sub>ij</sub> − (K−2))</code>) or its modern
+      cousin Bradley–Terry, which tolerates missing pairs and intransitive cycles.</li>
+    <li><strong>Not all-vs-all.</strong> An <em>active</em> schedule picks the most informative next pairs and stops when the
+      ranking stops changing (Kendall τ between successive rankings).</li>
+    <li><strong>Several questions, several judges.</strong> Six questions (three checked against the paper text) are blended;
+      several judge models are pooled into a jury. You're the next judge.</li>
+  </ol>
+  <p><a class="btn" href="https://github.com/ericflo/jevsort">jevsort on GitHub</a>
+     <code class="install">uvx --from git+https://github.com/ericflo/jevsort jevsort demo</code></p>
+</section>
+</main>
+
+<footer>
+  <p id="citation"></p>
+  <p>Paper: Price, Knerr, Personnaz &amp; Dreyfus, <em>Pairwise Neural Network Classifiers with Probabilistic Outputs</em>, NeurIPS 7 (1994).
+    Summaries were written by the models named; judgments by the judges named. MIT-licensed code:
+    <a href="https://github.com/ericflo/jevsort">github.com/ericflo/jevsort</a>.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

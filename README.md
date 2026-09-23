@@ -9,14 +9,104 @@ reproductions, or any LLM behind the same typed interface. Ask *"which paper has
 pairs, turn every answer into a calibrated probability `P(A beats B)`, couple them into global posteriors, blend
 several questions, and — the fun part — hand the result back to Jev as a **meta-judge** and **referee**.
 
-![Sorting 16 papers with 3 pairwise questions](examples/figures/paper_ranking.png)
+[![tests](https://github.com/ericflo/jevsort/actions/workflows/ci.yml/badge.svg)](https://github.com/ericflo/jevsort/actions/workflows/ci.yml)
+[![site](https://img.shields.io/badge/play-Summary%20Showdown-2a78d6)](https://ericflo.github.io/jevsort/)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ```console
 $ uvx --from git+https://github.com/ericflo/jevsort jevsort demo
 ```
 
-That is the whole install. With `OPENROUTER_API_KEY` set it sorts 16 (fictional) paper abstracts with a real judge;
-without a key it runs the same pipeline offline on a synthetic judge.
+One command, no install. With `OPENROUTER_API_KEY` set it uses a real judge; without one it runs offline on a synthetic judge.
+
+<!-- showdown:start -->
+## Summary Showdown
+
+**100 of OpenRouter's most-used models each summarized the same paper, the 1994 PKPD paper this library implements.
+jevsort ranked the summaries on six questions from just 400 of the 4,950 possible pairs
+(8.1%).** Then you can [**judge them yourself →**](https://ericflo.github.io/jevsort/)
+and find out which AI judge agrees with you.
+
+[![Summary Showdown: top 20](examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)
+
+* **Contestants**: the top 100 callable models by tokens served on OpenRouter (Source: OpenRouter (openrouter.ai/rankings), as of 2026-09-23T04:24:12.609Z.), each given the
+  full paper text and asked for one paragraph. Cost of all 100 summaries: **$0.78**.
+* **Six pairwise questions**: *accuracy*, *completeness* and *faithfulness* (judged with the paper text in context),
+  *writing*, *understandability* and *verbosity calibration*. Each asked in both orders.
+* **Not all-vs-all**: an `active` schedule picked the most informative pairs and stopped at
+  **400 pairs** (max_pairs budget (400) reached). 19,200 pairwise judgments in total.
+* **A jury of judges**: `deepseek/deepseek-v4.1-flash`, `google/gemma-4-31b-it`, `nvidia/nemotron-3.5-lightning`, `typesafe/jev-1.13`, each reading P(A beats B) from token
+  logprobs, pooled into one Bradley–Terry fit per question (the "jury"). Jev (`typesafe/jev-1.13`) joins
+  automatically once it is reachable from the account running the showdown.
+* **Total spend: $5.36** (summaries $0.78 · judges $2.75 · evaluation-only
+  reference grader $1.83).
+
+| # | model | popularity | accuracy | completeness | faithfulness | writing | understandability | verbosity | words | cost |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | GPT-6 Astra | #86 | 3 | 17 | 2 | 9 | 53 | 4 | 186 | $0.0735 |
+| 2 | Claude Opus 5 | #33 | 1 | 1 | 1 | 4 | 94 | 75 | 272 | $0.0537 |
+| 3 | Nemotron 3 Ultra | #9 | 25 | 8 | 13 | 3 | 84 | 6 | 186 | free |
+| 4 | Kimi K3 | #30 | 11 | 9 | 6 | 5 | 30 | 74 | 215 | $0.0196 |
+| 5 | GPT-5.6 Sol Pro | #192 | 12 | 33 | 19 | 33 | 23 | 10 | 151 | $0.0370 |
+| 6 | DeepSeek V4 Flash 0423 | #2 | 10 | 16 | 12 | 13 | 42 | 42 | 198 | $0.0005 |
+| 7 | Gemini 3.7 Flash | #43 | 4 | 5 | 5 | 6 | 97 | 28 | 172 | $0.0049 |
+| 8 | GLM 5.3 Flash | #7 | 2 | 2 | 8 | 17 | 85 | 79 | 240 | $0.0009 |
+| 9 | Claude Opus 4.8 | #22 | 6 | 4 | 3 | 23 | 63 | 86 | 231 | $0.0505 |
+| 10 | MiniMax M3 | #8 | 9 | 10 | 16 | 1 | 65 | 72 | 234 | $0.0020 |
+
+Full 100-model leaderboard: [examples/SHOWDOWN.md](examples/SHOWDOWN.md) · interactive version:
+[ericflo.github.io/jevsort](https://ericflo.github.io/jevsort/).
+
+**What we found**
+
+* **Popularity vs quality:** Spearman ρ between popularity rank and quality rank = 0.53.
+* **Price vs quality:** Spearman ρ between summary cost and jury score = 0.48. Pricier models
+  tend to do better, but 5 of the top 10 summaries cost under a cent
+  and the cheapest point on the cost–quality frontier is a free model.
+* **The paper has a trap.** Its own Softmax MLP baseline beats the pairwise classifier on recognition rate (54.9% vs 48.9%).
+  Summaries that say the method "outperforms" or is "competitive with" all MLPs are wrong. The reference grader
+  flagged factual errors in 60 of 100 summaries.
+* **The judges track a checklist-based reference.** A separate grader (Claude Sonnet 5) checked every summary against 9
+  hand-extracted key facts. Pairwise AUC of each judge's coupled ranking vs that reference:
+
+| judge | AUC vs reference (overall) | Kendall τ | judge spend |
+|---|---|---|---|
+| DeepSeek V4.1 Flash (`deepseek/deepseek-v4.1-flash`) | 0.781 | 0.41 | $0.37 |
+| Gemma 4 31B (`google/gemma-4-31b-it`) | 0.764 | 0.37 | $1.55 |
+| Nemotron 3.5 Lightning (`nvidia/nemotron-3.5-lightning`) | 0.666 | 0.21 | $0.72 |
+| Jev 1.13 (TypeSafe) (`typesafe/jev-1.13`) | 0.743 | 0.33 | $0.11 |
+| **jury** (all judges pooled) | **0.805** | **0.43** | $2.75 |
+
+<p>
+<img src="examples/figures/showdown_cost_quality.png" width="49%" alt="cost vs quality">
+<img src="examples/figures/showdown_convergence.png" width="49%" alt="ranking convergence vs pairs">
+</p>
+
+Reproduce: `python examples/summary_showdown.py all --n 100` (≈ $5 on OpenRouter; everything is cached, so
+re-runs are free). The paper text is downloaded at runtime and not redistributed.
+
+<!-- showdown:end -->
+
+### Humans vs judges: you're the next judge
+
+Most people who land on this page don't know PKPD, which makes them exactly the audience these summaries were written
+for. That makes them great raters. The [Summary Showdown site](https://ericflo.github.io/jevsort/) (a static GitHub
+Pages app in [`docs/`](docs/), no build step) shows you 8 pairs of anonymized summaries, one question at a time
+(*"which summary helps you understand what this paper does?"*), then instantly tells you **which AI judge you agree
+with most**, using each judge's coupled ranking, entirely in your browser.
+
+To add your picks to the study, press **Submit ballot**. It opens a prefilled GitHub issue from the
+[`human-ballot`](.github/ISSUE_TEMPLATE/human-ballot.yml) template (zero backend). The page also has a pluggable
+`submit_endpoint` in [`docs/config.js`](docs/config.js) for a Worker/Supabase collector. Ballots become the
+**human-agreement graph**:
+
+```bash
+jevsort agreement --judges docs/data/showdown.json --github ericflo/jevsort   # or: --ballots ballots/*.json
+```
+
+which reports per-judge **agreement rate** (with 95% Wilson intervals), **Cohen's κ**, and **Kendall τ / Spearman**
+between a Bradley–Terry ranking fit to *human* votes and each judge's ranking, and writes the site's "Humans vs judges"
+section (`docs/data/agreement.json`, `docs/figures/agreement.png`).
 
 ---
 
@@ -65,7 +155,9 @@ python examples/make_plots.py                           # regenerate every figur
 Items can be `.txt` (one per line), `.csv`, `.jsonl` or `.json` (`[{id, text}]` or
 `{"objective": ..., "items": [{id, title, abstract}]}`).
 
-## The paper-sorting example: three questions
+## Second example: sorting research papers with three questions
+
+![Sorting 16 papers with 3 pairwise questions](examples/figures/paper_ranking.png)
 
 `examples/sort_papers.py` sorts 16 abstracts against the objective *"reduce hallucinated statements in LLM-generated
 discharge summaries without reducing completeness"* by asking, for every pair, in both orders:
@@ -110,10 +202,9 @@ Two evaluations, both reproducible with one command each:
   3× overconfident, position-biased, with persistent per-pair errors that create intransitive cycles. K = 40 items per
   split, a separate calibration split, 5 seeds for the cost curves.
 * **Real judge** (`jevsort eval --data examples/data/papers.json`): the 16 papers above, round robin
-  (120 pairs × 3 questions × 2 orders = 720 judgments), temperatures cross-fitted over two item folds. The results
-  committed here use **DeepSeek-V4.1-Flash via OpenRouter** with token-logprob readout — the generic-LLM fallback
-  (see [the Jev note](#jev-via-openrouter) below). Measured cost of that run: **239,700 input tokens, $0.050 total,
-  ≈ $0.00007 per judgment**.
+  (120 pairs × 3 questions × 2 orders = 720 judgments), temperatures cross-fitted over two item folds, with two judges:
+  **Jev 1.13 via OpenRouter** (`typesafe/jev-1.13`, typed decisions): 720 judgments in **12 requests, $0.0039**; and
+  **DeepSeek-V4.1-Flash** (token-logprob LLM judge, the fallback): 720 requests, 239,700 input tokens, **$0.050**.
 
 ### ROC / AUC
 
@@ -124,6 +215,7 @@ Every item pair is scored by its **coupled** probability `P(i beats j)` and comp
 | | evidence | relevance | contribution | **fused** | Kendall τ (fused) |
 |---|---|---|---|---|---|
 | synthetic judge (K=40) | 0.998 | 0.998 | 0.999 | **0.999** (learned blend) | 0.959 |
+| Jev 1.13, 16 papers | 0.892 | 0.985 | 0.982 | **0.994** (equal blend) | 0.858 |
 | DeepSeek-V4.1-Flash, 16 papers | 0.931 | 0.980 | 0.965 | **0.989** (equal blend) | 0.875 |
 
 Blending matters: on the synthetic benchmark each single dimension alone predicts the *overall* ranking with
@@ -143,8 +235,9 @@ monotone, so it barely moves AUC — its job is calibration:
 ![Reliability diagrams](examples/figures/calibration.png)
 
 Temperature scaling with one parameter per dimension (`jevsort calibrate`) recovers the synthetic judge's 3×
-overconfidence (fitted T ≈ 3.0–3.7) and cuts **ECE from 0.158 to 0.013**. The real judge is already fairly sharp
-(ECE 0.056 → 0.046 cross-fitted); its fitted T of 1.8–2.6 says its raw logprobs are overconfident.
+overconfidence (fitted T ≈ 3.0–3.7) and cuts **ECE from 0.158 to 0.013**. Both real judges are already fairly sharp
+(ECE ≈ 0.05). DeepSeek's fitted T of 1.8–2.6 says its raw logprobs are overconfident; Jev's T below 1 on relevance and
+contribution says it is, if anything, *under*confident against these ground-truth orderings.
 
 ### Cost vs quality: you don't need all K(K−1)/2 pairs
 
@@ -157,8 +250,11 @@ Full round robin is only one mode. With a `--max-pairs` budget and **adaptive st
 |---|---|---|---|
 | synthetic, active + adaptive stop | 356 / 780 (46%) | 0.839 | 0.852 |
 | synthetic, referee says STOP | 170 / 780 (22%) | 0.824 | 0.852 |
-| real judge, active + adaptive stop | 80 / 120 (67%) | 0.858 | 0.875 |
-| real judge, active, `--max-pairs 60` | 60 / 120 (50%) | same top-4 as round robin | 0.875 |
+| Jev, 16 papers, active + adaptive stop | 52 / 120 (43%) | 0.840 | 0.858 |
+| Jev, 16 papers, **Jev as referee says STOP** | 24 / 120 (20%) | 0.788 | 0.858 |
+| DeepSeek, 16 papers, active + adaptive stop | 80 / 120 (67%) | 0.858 | 0.875 |
+| DeepSeek, 16 papers, active, `--max-pairs 60` | 60 / 120 (50%) | same top-4 as round robin | 0.875 |
+| Summary Showdown, 100 summaries, active | 400 / 4,950 (8.1%) | 95% of final agreement with the reference by 300 pairs | n/a (never run all-vs-all) |
 
 ### The mandatory guards, measured
 
@@ -281,12 +377,9 @@ Jev ingests the state once and answers every question against it, so jevsort put
 and batches every pair × question × order into as few calls as possible (up to 64 questions per call) — Jev's
 "speculative fan-out" pattern. LLM backends instead get one small state per pair.
 
-> **Status (2026-09-22):** the Jev integration is wired and unit-tested against the documented wire format, but the
-> committed real-judge figures come from the DeepSeek fallback: the OpenRouter account used to produce them has an
-> allowed-providers list that doesn't include TypeSafe yet, so Jev calls return `404 No allowed providers`. If you see
-> that warning, allow **TypeSafe** at <https://openrouter.ai/settings/privacy>. Then
-> `jevsort eval --data examples/data/papers.json --out examples/results/real_eval_jev.json && python examples/make_plots.py`
-> regenerates every figure with Jev as the judge (Jev results are preferred automatically).
+> **Account note:** Jev on OpenRouter is served by the TypeSafe provider. If your OpenRouter account restricts
+> providers and you see `404 No allowed providers`, allow **TypeSafe** at <https://openrouter.ai/settings/privacy>;
+> until then jevsort falls back to the generic LLM judge with a warning.
 
 ## Calibration
 
