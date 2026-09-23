@@ -65,7 +65,7 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
 ## Rename + PyPI (2026-09-23)
 - Whole project renamed to pairsort (repo ericflo/pairsort, package, CLI, class PairSorter, site ericflo.github.io/pairsort/);
   no aliases; zero old-name references in the tree (grep-verified).
-- PyPI: pairsort 0.1.0 (tag v0.1.0) and 0.2.0 (tag v0.2.0, keyword questions) published via trusted publishing.
+- PyPI: pairsort 0.1.0 (tag v0.1.0) , 0.2.0 (tag v0.2.0, keyword questions) and 0.3.0 (tag v0.3.0, question weights + blended table) published via trusted publishing.
   Next release: bump version in pyproject.toml + pairsort/__init__.py, push tag vX.Y.Z (only when Eric asks).
 
 ## Multi-question UX + site restructure (2026-09-23)
@@ -75,7 +75,7 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
 - Question weights: `Dimension(weight=)`, Python `useful=("Which ...?", 2)` / `{"question": ..., "weight": 2}`, CLI
   `useful:2="Which ...?"`. `SortResult.table()` shows P(best) + each question's rank; `SortResult.shares()`.
   CLI footer in plain English (blend shares, judgments + cost, clear/too-close verdict); help text without
-  "(default: None)" noise; shell-split questions are rejected with a hint. Unreleased (PyPI is 0.2.0).
+  "(default: None)" noise; shell-split questions are rejected with a hint. Released as 0.3.0.
 
 ## Next
 - Check the weather resolve Action after 2026-09-25 13:30 UTC; then add the result to README/landing.

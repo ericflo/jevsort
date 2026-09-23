@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pairsort"
-version = "0.2.0"
+version = "0.3.0"
 description = "Rank anything with AI judges: many small pairwise questions, coupled into one calibrated ranking (PKPD / Bradley-Terry)"
 readme = "README.md"
 license = "MIT"

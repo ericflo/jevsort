@@ -24,7 +24,7 @@ from .couple import Coupled, bradley_terry, couple, pkpd
 from .pairwise import PairwiseMatrix, clip, symmetrize
 from .sorter import PAPER_DIMENSIONS, Dimension, Item, PairSorter, SortResult
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     "sort",
