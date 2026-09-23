@@ -65,8 +65,8 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
 ## Rename + PyPI (2026-09-23)
 - Whole project renamed to pairsort (repo ericflo/pairsort, package, CLI, class PairSorter, site ericflo.github.io/pairsort/);
   no aliases; zero old-name references in the tree (grep-verified).
-- pairsort 0.1.0 published to PyPI via trusted publishing (tag v0.1.0). main is 0.2.0 (keyword questions), unreleased:
-  release with `git tag v0.2.0 && git push origin v0.2.0`.
+- PyPI: pairsort 0.1.0 (tag v0.1.0) and 0.2.0 (tag v0.2.0, keyword questions) published via trusted publishing.
+  Next release: bump version in pyproject.toml + pairsort/__init__.py, push tag vX.Y.Z (only when Eric asks).
 
 ## Next
 - Check the weather resolve Action after 2026-09-25 13:30 UTC; then add the result to README/landing.
