@@ -1,0 +1,496 @@
+{
+ "spec": "Write a Python function\n\n    def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n\n`levels` is a list of integer sound-level readings taken once per second (0 <= level <= 10**6). Return how many\ncontiguous windows of exactly `w` consecutive readings are \"quiet\": the difference between the loudest and the\nquietest reading in the window is at most `limit`. If w > len(levels) the answer is 0. 1 <= w; 0 <= limit.\nYou may use only the Python standard library and numpy.",
+ "styles": {
+  "simple": "Write the most straightforward correct implementation.",
+  "fast": "Write the fastest implementation you can for inputs of up to 300,000 readings and windows of up to 1,000."
+ },
+ "solutions": {
+  "deepseek/deepseek-v4.1-flash|simple": {
+   "model": "deepseek/deepseek-v4.1-flash",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    count = 0\n    for i in range(n - w + 1):\n        window = levels[i:i + w]\n        if max(window) - min(window) <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 0.00014476,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.4056501740124077,
+   "runs": [
+    1.4368431749753654,
+    1.412505917949602,
+    1.4066695501096547,
+    1.400182621087879,
+    1.3963111089542508,
+    1.3896039361134171,
+    1.4056501740124077
+   ]
+  },
+  "deepseek/deepseek-v4.1-flash|fast": {
+   "model": "deepseek/deepseek-v4.1-flash",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    if w == 1:\n        return n\n\n    L = levels\n    maxq = deque()\n    minq = deque()\n\n    for i in range(w):\n        x = L[i]\n        while maxq and L[maxq[-1]] <= x:\n            maxq.pop()\n        maxq.append(i)\n        while minq and L[minq[-1]] >= x:\n            minq.pop()\n        minq.append(i)\n\n    count = 1 if L[maxq[0]] - L[minq[0]] <= limit else 0\n\n    for i in range(w, n):\n        x = L[i]\n        old = i - w\n\n        if maxq[0] == old:\n            maxq.popleft()\n        if minq[0] == old:\n            minq.popleft()\n\n        while maxq and L[maxq[-1]] <= x:\n            maxq.pop()\n        maxq.append(i)\n\n        while minq and L[minq[-1]] >= x:\n            minq.pop()\n        minq.append(i)\n\n        if L[maxq[0]] - L[minq[0]] <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 0.00204235,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.06629005796276033,
+   "runs": [
+    0.06649465090595186,
+    0.06629005796276033,
+    0.06590053904801607,
+    0.06979595916345716,
+    0.06598366587422788,
+    0.06646962184458971,
+    0.06617910997010767
+   ]
+  },
+  "openai/gpt-5.6-luna|simple": {
+   "model": "openai/gpt-5.6-luna",
+   "style": "simple",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    if w > len(levels):\n        return 0\n\n    min_queue = deque()\n    max_queue = deque()\n    quiet_count = 0\n\n    for i, level in enumerate(levels):\n        while min_queue and levels[min_queue[-1]] >= level:\n            min_queue.pop()\n        min_queue.append(i)\n\n        while max_queue and levels[max_queue[-1]] <= level:\n            max_queue.pop()\n        max_queue.append(i)\n\n        window_start = i - w + 1\n        while min_queue and min_queue[0] < window_start:\n            min_queue.popleft()\n        while max_queue and max_queue[0] < window_start:\n            max_queue.popleft()\n\n        if i >= w - 1:\n            if levels[max_queue[0]] - levels[min_queue[0]] <= limit:\n                quiet_count += 1\n\n    return quiet_count",
+   "cost_usd": 0.00035,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.0827896329574287,
+   "runs": [
+    0.08100711391307414,
+    0.08604090195149183,
+    0.08284512185491621,
+    0.08375337603501976,
+    0.08149876981042325,
+    0.08112512086518109,
+    0.0827896329574287
+   ]
+  },
+  "openai/gpt-5.6-luna|fast": {
+   "model": "openai/gpt-5.6-luna",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    mins = deque()\n    maxs = deque()\n    count = 0\n\n    for i, value in enumerate(levels):\n        while mins and levels[mins[-1]] >= value:\n            mins.pop()\n        mins.append(i)\n\n        while maxs and levels[maxs[-1]] <= value:\n            maxs.pop()\n        maxs.append(i)\n\n        first = i - w + 1\n        while mins[0] < first:\n            mins.popleft()\n        while maxs[0] < first:\n            maxs.popleft()\n\n        if i >= w - 1 and levels[maxs[0]] - levels[mins[0]] <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 0.000895,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07855665311217308,
+   "runs": [
+    0.08236070512793958,
+    0.07752230204641819,
+    0.07939024781808257,
+    0.07800063793547451,
+    0.07833373895846307,
+    0.07962899189442396,
+    0.07855665311217308
+   ]
+  },
+  "z-ai/glm-5.3-flash|simple": {
+   "model": "z-ai/glm-5.3-flash",
+   "style": "simple",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    max_dq = deque()  # indices, decreasing levels\n    min_dq = deque()  # indices, increasing levels\n\n    count = 0\n    for i, x in enumerate(levels):\n        while max_dq and levels[max_dq[-1]] <= x:\n            max_dq.pop()\n        max_dq.append(i)\n        while min_dq and levels[min_dq[-1]] >= x:\n            min_dq.pop()\n        min_dq.append(i)\n\n        start = i - w + 1\n        if start >= 0:\n            while max_dq[0] < start:\n                max_dq.popleft()\n            while min_dq[0] < start:\n                min_dq.popleft()\n            if levels[max_dq[0]] - levels[min_dq[0]] <= limit:\n                count += 1\n    return count",
+   "cost_usd": 0.00016162,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07613225001841784,
+   "runs": [
+    0.07680412195622921,
+    0.07613225001841784,
+    0.0766397260595113,
+    0.07578925997950137,
+    0.07485971599817276,
+    0.07688568904995918,
+    0.07556959590874612
+   ]
+  },
+  "z-ai/glm-5.3-flash|fast": {
+   "model": "z-ai/glm-5.3-flash",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    min_dq = deque()  # indices, increasing levels\n    max_dq = deque()  # indices, decreasing levels\n    count = 0\n\n    for i in range(n):\n        v = levels[i]\n\n        # maintain min deque\n        while min_dq and levels[min_dq[-1]] >= v:\n            min_dq.pop()\n        min_dq.append(i)\n\n        # maintain max deque\n        while max_dq and levels[max_dq[-1]] <= v:\n            max_dq.pop()\n        max_dq.append(i)\n\n        # remove indices out of window\n        start = i - w + 1\n        if min_dq[0] < start:\n            min_dq.popleft()\n        if max_dq[0] < start:\n            max_dq.popleft()\n\n        if start >= 0 and levels[max_dq[0]] - levels[min_dq[0]] <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 0.00015865,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.0728989108465612,
+   "runs": [
+    0.07273112586699426,
+    0.07227130909450352,
+    0.07298609893769026,
+    0.0728989108465612,
+    0.07286350289359689,
+    0.07315644389018416,
+    0.07372944802045822
+   ]
+  },
+  "minimax/minimax-m3|simple": {
+   "model": "minimax/minimax-m3",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    count = 0\n    for i in range(n - w + 1):\n        window = levels[i:i + w]\n        if max(window) - min(window) <= limit:\n            count += 1\n    return count",
+   "cost_usd": 0.00477738,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.3974168940912932,
+   "runs": [
+    1.392638502176851,
+    1.4056893438100815,
+    1.3982888809405267,
+    1.3974168940912932,
+    1.4624328650534153,
+    1.3911561570130289,
+    1.392223706934601
+   ]
+  },
+  "minimax/minimax-m3|fast": {
+   "model": "minimax/minimax-m3",
+   "style": "fast",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    from collections import deque\n    maxdq = deque()   # stores indices with decreasing values -> max at front\n    mindq = deque()   # stores indices with increasing values -> min at front\n    count = 0\n    a = levels\n    w1 = w - 1\n    for i in range(n):\n        x = a[i]\n        # maintain decreasing deque for maximum\n        while maxdq and a[maxdq[-1]] <= x:\n            maxdq.pop()\n        maxdq.append(i)\n        # maintain increasing deque for minimum\n        while mindq and a[mindq[-1]] >= x:\n            mindq.pop()\n        mindq.append(i)\n        # remove indices that have left the window\n        if i >= w:\n            out = i - w\n            if maxdq[0] == out:\n                maxdq.popleft()\n            if mindq[0] == out:\n                mindq.popleft()\n        # evaluate the window once it is full\n        if i >= w1:\n            if a[maxdq[0]] - a[mindq[0]] <= limit:\n                count += 1\n    return count",
+   "cost_usd": 0.00524473,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.0721863410435617,
+   "runs": [
+    0.07164503610692918,
+    0.07318786205723882,
+    0.07192406780086458,
+    0.07323563098907471,
+    0.07227151887491345,
+    0.07209105393849313,
+    0.0721863410435617
+   ]
+  },
+  "google/gemini-3.7-flash|simple": {
+   "model": "google/gemini-3.7-flash",
+   "style": "simple",
+   "code": "from collections import deque\n\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    max_dq = deque()\n    min_dq = deque()\n    count = 0\n\n    for i, x in enumerate(levels):\n        while max_dq and levels[max_dq[-1]] <= x:\n            max_dq.pop()\n        max_dq.append(i)\n\n        while min_dq and levels[min_dq[-1]] >= x:\n            min_dq.pop()\n        min_dq.append(i)\n\n        if max_dq[0] <= i - w:\n            max_dq.popleft()\n        if min_dq[0] <= i - w:\n            min_dq.popleft()\n\n        if i >= w - 1:\n            if levels[max_dq[0]] - levels[min_dq[0]] <= limit:\n                count += 1\n\n    return count",
+   "cost_usd": 0.00244275,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07293687993660569,
+   "runs": [
+    0.07305601704865694,
+    0.07522401609458029,
+    0.07477326807565987,
+    0.07261144905351102,
+    0.07248651306144893,
+    0.07259921915829182,
+    0.07293687993660569
+   ]
+  },
+  "google/gemini-3.7-flash|fast": {
+   "model": "google/gemini-3.7-flash",
+   "style": "fast",
+   "code": "import numpy as np\nfrom collections import deque\n\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n or w <= 0:\n        return 0\n    if w == 1:\n        return n\n\n    # Sliding window minimum and maximum using monotonic deques\n    min_dq = deque()\n    max_dq = deque()\n\n    # Pre-populate the first window of size w - 1\n    for i in range(w - 1):\n        val = levels[i]\n        while min_dq and levels[min_dq[-1]] >= val:\n            min_dq.pop()\n        min_dq.append(i)\n\n        while max_dq and levels[max_dq[-1]] <= val:\n            max_dq.pop()\n        max_dq.append(i)\n\n    count = 0\n    for i in range(w - 1, n):\n        val = levels[i]\n\n        while min_dq and levels[min_dq[-1]] >= val:\n            min_dq.pop()\n        min_dq.append(i)\n\n        while max_dq and levels[max_dq[-1]] <= val:\n            max_dq.pop()\n        max_dq.append(i)\n\n        expire = i - w + 1\n        if min_dq[0] < expire:\n            min_dq.popleft()\n        if max_dq[0] < expire:\n            max_dq.popleft()\n\n        if levels[max_dq[0]] - levels[min_dq[0]] <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 0.0016065,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07043845998123288,
+   "runs": [
+    0.07102569309063256,
+    0.06962360301986337,
+    0.06903647887520492,
+    0.07116159913130105,
+    0.07018014695495367,
+    0.07043845998123288,
+    0.07064679404720664
+   ]
+  },
+  "moonshotai/kimi-k3|simple": {
+   "model": "moonshotai/kimi-k3",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    count = 0\n    for i in range(n - w + 1):\n        window = levels[i:i + w]\n        if max(window) - min(window) <= limit:\n            count += 1\n    return count",
+   "cost_usd": 0.002739,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.3974107902031392,
+   "runs": [
+    1.3929841390345246,
+    1.4069307770114392,
+    1.4568693509791046,
+    1.3956003130879253,
+    1.3974107902031392,
+    1.3886513859033585,
+    1.3988162390887737
+   ]
+  },
+  "moonshotai/kimi-k3|fast": {
+   "model": "moonshotai/kimi-k3",
+   "style": "fast",
+   "code": "import numpy as np\nfrom collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    a = np.asarray(levels)\n    if a.dtype != np.int64:\n        a = a.astype(np.int64)\n    a_list = a.tolist()\n\n    count = 0\n    # Process the first window and seed the deques\n    mx = deque()\n    mn = deque()\n    for i in range(w):\n        v = a_list[i]\n        while mx and a_list[mx[-1]] <= v:\n            mx.pop()\n        mx.append(i)\n        while mn and a_list[mn[-1]] >= v:\n            mn.pop()\n        mn.append(i)\n    if a_list[mx[0]] - a_list[mn[0]] <= limit:\n        count = 1\n\n    for i in range(w, n):\n        v = a_list[i]\n        # Remove out-of-window indices\n        if mx[0] <= i - w:\n            mx.popleft()\n        if mn[0] <= i - w:\n            mn.popleft()\n        while mx and a_list[mx[-1]] <= v:\n            mx.pop()\n        mx.append(i)\n        while mn and a_list[mn[-1]] >= v:\n            mn.pop()\n        mn.append(i)\n        if a_list[mx[0]] - a_list[mn[0]] <= limit:\n            count += 1\n    return count",
+   "cost_usd": 0.0061743,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07685701898299158,
+   "runs": [
+    0.07739197392947972,
+    0.07629880518652499,
+    0.0777788229752332,
+    0.07680482091382146,
+    0.08050301694311202,
+    0.07668687403202057,
+    0.07685701898299158
+   ]
+  },
+  "anthropic/claude-sonnet-5|simple": {
+   "model": "anthropic/claude-sonnet-5",
+   "style": "simple",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    \n    max_deque = deque()\n    min_deque = deque()\n    count = 0\n    \n    for i in range(n):\n        while max_deque and levels[max_deque[-1]] <= levels[i]:\n            max_deque.pop()\n        max_deque.append(i)\n        \n        while min_deque and levels[min_deque[-1]] >= levels[i]:\n            min_deque.pop()\n        min_deque.append(i)\n        \n        if max_deque[0] <= i - w:\n            max_deque.popleft()\n        if min_deque[0] <= i - w:\n            min_deque.popleft()\n        \n        if i >= w - 1:\n            if levels[max_deque[0]] - levels[min_deque[0]] <= limit:\n                count += 1\n    \n    return count",
+   "cost_usd": 0.003558,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07424482214264572,
+   "runs": [
+    0.07424482214264572,
+    0.07399345887824893,
+    0.0747308589052409,
+    0.07399092009291053,
+    0.07989183394238353,
+    0.07440495816990733,
+    0.07389757200144231
+   ]
+  },
+  "anthropic/claude-sonnet-5|fast": {
+   "model": "anthropic/claude-sonnet-5",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    \n    maxq = deque()\n    minq = deque()\n    count = 0\n    \n    for i in range(n):\n        val = levels[i]\n        \n        while maxq and levels[maxq[-1]] <= val:\n            maxq.pop()\n        maxq.append(i)\n        \n        while minq and levels[minq[-1]] >= val:\n            minq.pop()\n        minq.append(i)\n        \n        left = i - w + 1\n        while maxq[0] < left:\n            maxq.popleft()\n        while minq[0] < left:\n            minq.popleft()\n        \n        if i >= w - 1:\n            if levels[maxq[0]] - levels[minq[0]] <= limit:\n                count += 1\n    \n    return count",
+   "cost_usd": 0.003432,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07699815486557782,
+   "runs": [
+    0.07645133999176323,
+    0.07797027798369527,
+    0.07733710599131882,
+    0.07693904708139598,
+    0.07700996496714652,
+    0.07664781506173313,
+    0.07699815486557782
+   ]
+  },
+  "qwen/qwen3.8-27b|simple": {
+   "model": "qwen/qwen3.8-27b",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    if w > len(levels):\n        return 0\n    count = 0\n    for i in range(len(levels) - w + 1):\n        window = levels[i:i + w]\n        if max(window) - min(window) <= limit:\n            count += 1\n    return count",
+   "cost_usd": 0.0007251,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.4015103818383068,
+   "runs": [
+    1.40847282204777,
+    1.4689692889805883,
+    1.4036898140329868,
+    1.3980370122008026,
+    1.4015103818383068,
+    1.3922977701295167,
+    1.38135527796112
+   ]
+  },
+  "qwen/qwen3.8-27b|fast": {
+   "model": "qwen/qwen3.8-27b",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    if w == 1:\n        return n\n\n    max_dq = deque()\n    min_dq = deque()\n    count = 0\n    lv = levels\n\n    for i in range(n):\n        val = lv[i]\n\n        while max_dq and lv[max_dq[-1]] <= val:\n            max_dq.pop()\n        max_dq.append(i)\n\n        while min_dq and lv[min_dq[-1]] >= val:\n            min_dq.pop()\n        min_dq.append(i)\n\n        if max_dq[0] <= i - w:\n            max_dq.popleft()\n        if min_dq[0] <= i - w:\n            min_dq.popleft()\n\n        if i >= w - 1 and lv[max_dq[0]] - lv[min_dq[0]] <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 0.004323225,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07284807111136615,
+   "runs": [
+    0.0711751279886812,
+    0.07313189306296408,
+    0.0730266161262989,
+    0.07282227207906544,
+    0.07282962207682431,
+    0.07461563218384981,
+    0.07284807111136615
+   ]
+  },
+  "meta-llama/llama-3.3-70b-instruct|simple": {
+   "model": "meta-llama/llama-3.3-70b-instruct",
+   "style": "simple",
+   "code": "import numpy as np\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    if w > len(levels):\n        return 0\n\n    quiet_count = 0\n    for i in range(len(levels) - w + 1):\n        window = levels[i:i+w]\n        max_level = np.max(window)\n        min_level = np.min(window)\n        if max_level - min_level <= limit:\n            quiet_count += 1\n\n    return quiet_count",
+   "cost_usd": 4.956e-05,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 4.670664308825508,
+   "runs": [
+    4.667674432042986,
+    4.684357261052355,
+    4.657776034902781,
+    4.689121052157134,
+    4.670664308825508,
+    4.680813441053033,
+    4.6666781371459365
+   ]
+  },
+  "meta-llama/llama-3.3-70b-instruct|fast": {
+   "model": "meta-llama/llama-3.3-70b-instruct",
+   "style": "fast",
+   "code": "import numpy as np\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    if w > len(levels):\n        return 0\n    quiet_count = 0\n    for i in range(len(levels) - w + 1):\n        window = levels[i:i+w]\n        if max(window) - min(window) <= limit:\n            quiet_count += 1\n    return quiet_count",
+   "cost_usd": 4.698e-05,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.3943998059257865,
+   "runs": [
+    1.3938924169633538,
+    1.4021211341023445,
+    1.407593698007986,
+    1.3868680109735578,
+    1.3865605180617422,
+    1.4005301140714437,
+    1.3943998059257865
+   ]
+  },
+  "openai/gpt-4.1-nano|simple": {
+   "model": "openai/gpt-4.1-nano",
+   "style": "simple",
+   "code": "import numpy as np\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    levels_np = np.array(levels)\n    count = 0\n\n    for i in range(n - w + 1):\n        window = levels_np[i:i+w]\n        diff = window.max() - window.min()\n        if diff <= limit:\n            count += 1\n\n    return count",
+   "cost_usd": 5.89e-05,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.2924517069477588,
+   "runs": [
+    0.29789162380620837,
+    0.2875439450144768,
+    0.28979220101609826,
+    0.29530992708168924,
+    0.29056506999768317,
+    0.2925275741145015,
+    0.2924517069477588
+   ]
+  },
+  "openai/gpt-4.1-nano|fast": {
+   "model": "openai/gpt-4.1-nano",
+   "style": "fast",
+   "code": "import numpy as np\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    arr = np.array(levels, dtype=np.int64)\n\n    min_q = []\n    max_q = []\n\n    count = 0\n\n    for i in range(n):\n        # Maintain monotonic increasing for min_q\n        while min_q and arr[min_q[-1]] > arr[i]:\n            min_q.pop()\n        min_q.append(i)\n\n        # Maintain monotonic decreasing for max_q\n        while max_q and arr[max_q[-1]] < arr[i]:\n            max_q.pop()\n        max_q.append(i)\n\n        # Remove elements outside the current window\n        if i >= w:\n            if min_q[0] == i - w:\n                min_q.pop(0)\n            if max_q[0] == i - w:\n                max_q.pop(0)\n\n        # Check window once the first window of size w is reached\n        if i >= w - 1:\n            current_min = arr[min_q[0]]\n            current_max = arr[max_q[0]]\n            if current_max - current_min <= limit:\n                count += 1\n\n    return count",
+   "cost_usd": 0.0001256,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.15352979791350663,
+   "runs": [
+    0.15705251903273165,
+    0.15352979791350663,
+    0.1562100020237267,
+    0.15438808291219175,
+    0.15345135889947414,
+    0.14773308020085096,
+    0.15134202898479998
+   ]
+  },
+  "google/gemma-4-31b-it|simple": {
+   "model": "google/gemma-4-31b-it",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    if w > len(levels):\n        return 0\n    \n    count = 0\n    # Iterate through all possible starting positions of a window of length w\n    for i in range(len(levels) - w + 1):\n        window = levels[i : i + w]\n        if max(window) - min(window) <= limit:\n            count += 1\n            \n    return count",
+   "cost_usd": 0.0004242,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.4005984729155898,
+   "runs": [
+    1.4062617761082947,
+    1.4015480179805309,
+    1.3976810751482844,
+    1.4005984729155898,
+    1.3975284080952406,
+    1.3904963249806315,
+    1.4013964168261737
+   ]
+  },
+  "google/gemma-4-31b-it|fast": {
+   "model": "google/gemma-4-31b-it",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    \"\"\"\n    Returns the number of contiguous windows of size w where the difference \n    between the maximum and minimum element is at most 'limit'.\n    \n    The implementation uses the monotonic queue algorithm to achieve O(n) time complexity,\n    which is optimal for the given constraints (n=300,000, w=1,000).\n    \"\"\"\n    n = len(levels)\n    if w > n:\n        return 0\n    if w == 1:\n        return n\n        \n    # Deques to store indices of elements in the current window.\n    # max_dq stores indices in descending order of their corresponding values.\n    # min_dq stores indices in ascending order of their corresponding values.\n    max_dq = deque()\n    min_dq = deque()\n    count = 0\n    \n    # Localize method references to minimize attribute lookup overhead in the loop.\n    max_pop = max_dq.pop\n    max_append = max_dq.append\n    max_popleft = max_dq.popleft\n    min_pop = min_dq.pop\n    min_append = min_dq.append\n    min_popleft = min_dq.popleft\n    \n    for i in range(n):\n        val = levels[i]\n        \n        # Maintain the monotonic property for the maximum deque.\n        while max_dq and levels[max_dq[-1]] <= val:\n            max_pop()\n        max_append(i)\n        \n        # Maintain the monotonic property for the minimum deque.\n        while min_dq and levels[min_dq[-1]] >= val:\n            min_pop()\n        min_append(i)\n        \n        # Remove indices that have fallen outside the sliding window of size w.\n        if max_dq[0] == i - w:\n            max_popleft()\n        if min_dq[0] == i - w:\n            min_popleft()\n            \n        # After the first w-1 elements, we have a full window to evaluate.\n        if i >= w - 1:\n            # The max and min of the window are always at the front of the deques.\n            if levels[max_dq[0]] - levels[min_dq[0]] <= limit:\n                count += 1\n                \n    return count",
+   "cost_usd": 0.00149252,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.06842436292208731,
+   "runs": [
+    0.06835149507969618,
+    0.06842436292208731,
+    0.06841170391999185,
+    0.06872606417164207,
+    0.06824485794641078,
+    0.06921363109722733,
+    0.07299987389706075
+   ]
+  },
+  "deepseek/deepseek-v4-pro|simple": {
+   "model": "deepseek/deepseek-v4-pro",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    \"\"\"\n    Return the number of contiguous windows of length w where the difference\n    between the maximum and minimum sound level is at most limit.\n    \"\"\"\n    if w > len(levels):\n        return 0\n\n    count = 0\n    # Slide a window of size w across the list\n    for i in range(len(levels) - w + 1):\n        window = levels[i:i+w]\n        if max(window) - min(window) <= limit:\n            count += 1\n    return count",
+   "cost_usd": 0.0022048,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.3981070420704782,
+   "runs": [
+    1.4029207220301032,
+    1.3922456321306527,
+    1.4011543998494744,
+    1.3985990311484784,
+    1.394292770884931,
+    1.3926614159718156,
+    1.3981070420704782
+   ]
+  },
+  "stepfun/step-3.7-flash|simple": {
+   "model": "stepfun/step-3.7-flash",
+   "style": "simple",
+   "code": "def quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n    count = 0\n    for i in range(n - w + 1):\n        window = levels[i:i + w]\n        if max(window) - min(window) <= limit:\n            count += 1\n    return count",
+   "cost_usd": 0.00030608,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 1.3987014829181135,
+   "runs": [
+    1.4033703219611198,
+    1.3987014829181135,
+    1.396669849054888,
+    1.4371395581401885,
+    1.3929319819435477,
+    1.4005260169506073,
+    1.380668475991115
+   ]
+  },
+  "stepfun/step-3.7-flash|fast": {
+   "model": "stepfun/step-3.7-flash",
+   "style": "fast",
+   "code": "from collections import deque\n\ndef quiet_windows(levels: list[int], w: int, limit: int) -> int:\n    n = len(levels)\n    if w > n:\n        return 0\n\n    min_d = deque()\n    max_d = deque()\n    count = 0\n\n    for i, val in enumerate(levels):\n        # maintain monotonic increasing deque for minima\n        while min_d and levels[min_d[-1]] >= val:\n            min_d.pop()\n        min_d.append(i)\n\n        # maintain monotonic decreasing deque for maxima\n        while max_d and levels[max_d[-1]] <= val:\n            max_d.pop()\n        max_d.append(i)\n\n        # discard indices that fell out of the current window\n        if min_d[0] <= i - w:\n            min_d.popleft()\n        if max_d[0] <= i - w:\n            max_d.popleft()\n\n        # evaluate window once we have enough elements\n        if i >= w - 1:\n            if levels[max_d[0]] - levels[min_d[0]] <= limit:\n                count += 1\n\n    return count",
+   "cost_usd": 0.000660024,
+   "tests": {
+    "ok": true
+   },
+   "seconds": 0.07236462109722197,
+   "runs": [
+    0.07236462109722197,
+    0.07246951898559928,
+    0.07204024097882211,
+    0.07235708180814981,
+    0.07192804291844368,
+    0.07299569412134588,
+    0.07238874002359807
+   ]
+  }
+ },
+ "bench": {
+  "n": 200000,
+  "w": 400,
+  "limit": 25000,
+  "seed": 7,
+  "runs": 7,
+  "tie_ratio": 1.15,
+  "python": "3.13.7",
+  "machine": "x86_64",
+  "cpu": "AMD RYZEN AI MAX+ 395 w/ Radeon 8060S",
+  "agreeing_answers": true
+ }
+}

@@ -15,16 +15,16 @@ dataset author assigned. This eval removes the judgment call entirely.
 
 <!-- verifiable:start -->
 
-| judge | accuracy τ | accuracy: pairs right | completeness τ | completeness: pairs right | cost |
-|---|---|---|---|---|---|
-| Gemma 4 31B | 0.88 ± 0.04 | 97.2% | 0.99 ± 0.01 | 99.7% | $0.097 |
-| Claude Sonnet 5, pointwise rubric | 0.93 ± 0.11 | 96.2% | 0.92 ± 0.12 | 94.9% | $0.100 |
-| Jev 1.13 (TypeSafe) | 0.82 ± 0.07 | 96.4% | 0.89 ± 0.03 | 94.4% | $0.022 |
-| jury (pairwise judges pooled) | 0.83 ± 0.06 | 95.0% | 0.78 ± 0.05 | 95.2% | $0.259 |
-| DeepSeek V4.1 Flash | 0.42 ± 0.13 | 57.2% | 0.92 ± 0.06 | 91.2% | $0.073 |
-| Nemotron 3.5 Lightning | 0.75 ± 0.05 | 86.7% | 0.53 ± 0.10 | 75.3% | $0.068 |
+| judge | accuracy τ | accuracy τ (BT) | accuracy: pairs right | completeness τ | completeness τ (BT) | completeness: pairs right | cost |
+|---|---|---|---|---|---|---|---|
+| Gemma 4 31B | 0.88 ± 0.04 | 0.90 | 97.2% | 0.99 ± 0.01 | 0.99 | 99.7% | $0.097 |
+| Claude Sonnet 5, pointwise rubric | 0.93 ± 0.11 | – | 96.2% | 0.92 ± 0.12 | – | 94.9% | $0.100 |
+| Jev 1.13 (TypeSafe) | 0.82 ± 0.07 | 0.88 | 96.4% | 0.89 ± 0.03 | 0.88 | 94.4% | $0.022 |
+| jury (pairwise judges pooled) | 0.83 ± 0.06 | 0.86 | 95.0% | 0.78 ± 0.05 | 0.86 | 95.2% | $0.259 |
+| DeepSeek V4.1 Flash | 0.42 ± 0.13 | 0.44 | 57.2% | 0.92 ± 0.06 | 0.92 | 91.2% | $0.073 |
+| Nemotron 3.5 Lightning | 0.75 ± 0.05 | 0.74 | 86.7% | 0.53 ± 0.10 | 0.49 | 75.3% | $0.068 |
 
-Measured correlation between the two true counts (errors vs facts mentioned) across all 72 summaries: r = 0.02. Error counts and fact counts are assigned independently, so answering one question (or preferring longer summaries) does not answer the other.
+Measured correlation between the two true counts (errors vs facts mentioned) across all 72 summaries: r = 0.02. Error counts and fact counts are assigned independently, so answering one question (or preferring longer summaries) does not answer the other. τ uses PKPD Eq. 7 (the paper's formula); τ (BT) couples the same answers with Bradley–Terry, which is more robust when a judge gives near-certain answers (Eq. 7 then saturates and produces ties).
 
 <!-- verifiable:end -->
 

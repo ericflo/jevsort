@@ -268,7 +268,7 @@ def run_pointwise(model: str, data: dict) -> dict:
 
 def score(data: dict, judge: dict) -> dict:
     """Pairwise accuracy / AUC of raw judgments and Kendall τ of the coupled ranking, vs the true counts."""
-    per = {d.name: {"tau": [], "pair_acc_hits": 0, "pair_n": 0, "scores": [], "labels": [], "top1": 0} for d in DIMS}
+    per = {d.name: {"tau": [], "tau_bt": [], "pair_acc_hits": 0, "pair_n": 0, "scores": [], "labels": [], "top1": 0} for d in DIMS}
     for doc in data["docs"]:
         jd = judge["docs"][doc["doc"]]
         ids = [s["id"] for s in doc["summaries"]]
@@ -278,6 +278,16 @@ def score(data: dict, judge: dict) -> dict:
             t = np.array([truth[d][i] for i in ids], dtype=float)
             ls = np.array([jd["log_strength"][d][i] for i in ids], dtype=float)
             per[d]["tau"].append(kendall_tau(ls, t))
+            if "pairs" in jd:  # same answers coupled with Bradley–Terry (robust to near-certain votes)
+                from jevsort.couple import bradley_terry
+                from jevsort.pairwise import PairwiseMatrix
+
+                idx = {x: n for n, x in enumerate(ids)}
+                m = PairwiseMatrix(len(ids))
+                for p in jd["pairs"]:
+                    if p["dim"] == d:
+                        m.add(idx[p["a"]], idx[p["b"]], p["p_sym"])
+                per[d]["tau_bt"].append(kendall_tau(bradley_terry(m).log_strength, t))
             per[d]["top1"] += int(ids[int(np.argmax(ls))] == ids[int(np.argmax(t))])
             if "pairs" in jd:  # direct pairwise judgments
                 for p in jd["pairs"]:
@@ -306,10 +316,21 @@ def score(data: dict, judge: dict) -> dict:
     out = {}
     for d, v in per.items():
         out[d] = {"kendall_tau_mean": float(np.mean(v["tau"])), "kendall_tau_sd": float(np.std(v["tau"])),
+                  "kendall_tau_bt_mean": float(np.mean(v["tau_bt"])) if v["tau_bt"] else None,
                   "kendall_tau_per_doc": [float(x) for x in v["tau"]],
                   "pairwise_accuracy": v["pair_acc_hits"] / max(1, v["pair_n"]), "pairs": v["pair_n"],
                   "auc": roc_auc(v["scores"], v["labels"]), "top1_hits": v["top1"], "docs": len(data["docs"])}
     return out
+
+
+def cmd_rescore(args):
+    """Recompute scores from stored judgments (no API calls)."""
+    data = json.loads(DATA.read_text())
+    res = json.loads(RESULT.read_text())
+    for k, j in res["judges"].items():
+        j["score"] = score(data, j)
+    RESULT.write_text(json.dumps(res, indent=1) + "\n")
+    print("rescored")
 
 
 def cmd_judge(args):
@@ -372,6 +393,7 @@ def main():
     j.add_argument("--judges", default="typesafe/jev-1.13,deepseek/deepseek-v4.1-flash,google/gemma-4-31b-it,nvidia/nemotron-3.5-lightning")
     j.add_argument("--pointwise", default="anthropic/claude-sonnet-5", help="pointwise LLM grader to score ('' to skip)")
     sub.add_parser("plots")
+    sub.add_parser("rescore")
     args = ap.parse_args()
     if args.cmd == "generate":
         data = generate()
@@ -384,6 +406,8 @@ def main():
         sys.exit(0 if ok else 1)
     elif args.cmd == "judge":
         cmd_judge(args)
+    elif args.cmd == "rescore":
+        cmd_rescore(args)
     elif args.cmd == "plots":
         import verifiable_plots
 

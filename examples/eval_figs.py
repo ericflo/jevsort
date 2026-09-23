@@ -24,6 +24,13 @@ T_PAP = ("16-paper panels use 16 fictional abstracts whose 1–5 quality levels 
          "author when writing them (examples/data/papers.json) — a designed answer key, not expert ratings.")
 
 
+def matplotlib_blend(c1, c2, t):
+    from matplotlib.colors import to_rgb
+
+    a, b = np.array(to_rgb(c1)), np.array(to_rgb(c2))
+    return tuple(a + (b - a) * float(np.clip(t, 0, 1)))
+
+
 def _judge_label(res):
     b = res.get("backend", "")
     return "Jev" if "jev" in b.lower() else ("DeepSeek V4.1 Flash" if "deepseek" in b.lower() else b)
@@ -408,7 +415,152 @@ def main():
         verifiable()
     if (RES / "market_eval.json").exists():
         market()
+    for name, fn in (("ladder_eval.json", ladder), ("runtime_eval.json", runtime), ("crosslingual_eval.json", crosslingual)):
+        if (RES / name).exists():
+            fn()
 
 
 if __name__ == "__main__":
     main()
+
+
+# ------------------------------------------------------------------------------------------------ ladder
+def ladder():
+    R = json.loads((RES / "ladder_eval.json").read_text())
+    ks = [k for k in ("typesafe/jev-1.13", "google/gemma-4-31b-it", "deepseek/deepseek-v4.1-flash", "nvidia/nemotron-3.5-lightning")
+          if k in R["judges"]]
+    fig, axes = viz.canvas(14, 3.6, "Heavier damage is easier to spot, and most judges are about as sure as they should be",
+                           "Each panel: how often a judge picks the less-damaged summary (solid) and how confident it says it is "
+                           "(dashed), by how many damage steps apart the two summaries are. When the lines meet, the judge's "
+                           "confidence is honest.",
+                           truth="rung number on a ladder built by code: rung 0 is a real, error-free summary of the paper; each rung "
+                                 "adds ONE logged damage step (a planted factual error, a deleted sentence, or two swapped sentences) "
+                                 "to the rung below, so higher rungs are strictly worse. Replay the log with "
+                                 "python examples/ladder_eval.py verify.",
+                           source="6 ladders × 10 rungs; all 45 pairs per ladder, both orders, paper in context. τ: rankings coupled "
+                                  "with Bradley–Terry.", ncols=len(ks), wspace=0.55, top_extra=0.55, sharey=True)
+    for ax, k in zip(axes, ks):
+        s = R["judges"][k]["score"]
+        g = sorted(int(x) for x in s["by_gap"])
+        acc = [s["by_gap"][str(x)]["accuracy"] if str(x) in s["by_gap"] else s["by_gap"][x]["accuracy"] for x in g]
+        conf = [s["by_gap"][str(x)]["confidence"] if str(x) in s["by_gap"] else s["by_gap"][x]["confidence"] for x in g]
+        col = viz.JUDGE[k]
+        viz.clean(ax)
+        ax.fill_between(g, acc, conf, color=col, alpha=0.1, lw=0)
+        ax.plot(g, acc, color=col, lw=2.6)
+        ax.plot(g, conf, color=col, lw=1.6, ls=(0, (3, 2)))
+        ax.set_ylim(0.5, 1.01)
+        ax.set_xticks([1, 3, 5, 7, 9])
+        ax.set_yticks([0.5, 0.75, 1.0], ["50%", "75%", "100%"])
+        ax.set_xlabel("damage steps apart")
+        _panel_title(ax, viz.JUDGE_NAME[k], f"ranking τ {s['kendall_tau_mean']:.2f} · ECE {s['ece']:.3f}")
+    axes[0].set_ylabel("share / confidence")
+    k0 = ks[-1]
+    s = R["judges"][k0]["score"]
+    viz.note(axes[-1], (1, s["by_gap"]["1"]["confidence"] if "1" in s["by_gap"] else s["by_gap"][1]["confidence"]), (3.2, 0.58),
+             "less sure than it\nshould be on close calls", rad=-0.2, color=viz.JUDGE[k0])
+    axes[0].text(1, 0.54, "solid = how often right\ndashed = how sure it said it was", fontsize=9.5, color=viz.INK2)
+    viz.save(fig, "ladder_eval.png", also=DOCS_FIG)
+
+
+# ------------------------------------------------------------------------------------------------ runtime
+def runtime():
+    R = json.loads((RES / "runtime_eval.json").read_text())
+    items = R["items"]
+    ks = list(R["judges"])
+    fig, (a1, a2) = viz.canvas(13.5, 4.6, "Judges can tell slow code from fast code before it runs",
+                               f"{len(items)} correct implementations of the same new function, written by popular models (each asked "
+                               f"for a simple and a fast version). Left: how long each actually took. Right: how often each judge, "
+                               f"reading two implementations, picked the one that really was faster.",
+                               truth=f"measured wall-clock time of one call on a fixed seeded input ({R['bench']['n']:,} readings, "
+                                     f"window {R['bench']['w']}): median of {R['bench']['runs']} runs, each in a fresh sandboxed "
+                                     f"Python {R['bench']['python']} process on an {R['bench']['cpu']}. All solutions passed the same "
+                                     f"hidden tests and returned the same answer.",
+                               source="Pairs within 15% of each other count as ties and are not scored. python examples/runtime_eval.py bench",
+                               ncols=2, wspace=1.6, width_ratios=[1.25, 1], left=2.2, top_extra=0.55)
+    order = sorted(items, key=lambda i: items[i]["seconds"])
+    y = np.arange(len(order))[::-1]
+    viz.clean(a1, grid="x", baseline=False)
+    for yy, i in zip(y, order):
+        it = items[i]
+        col = viz.BLUE if it["style"] == "fast" else viz.BRICK
+        a1.plot([1e-2, it["seconds"]], [yy, yy], color=viz.FAINT, lw=3, zorder=1)
+        viz.dot(a1, [it["seconds"]], [yy], col, size=46)
+    a1.set_xscale("log")
+    a1.set_xlim(0.04, 8)
+    a1.set_xticks([0.05, 0.1, 0.3, 1, 3], ["0.05 s", "0.1 s", "0.3 s", "1 s", "3 s"])
+    a1.set_yticks(y, [f"{items[i]['model'].split('/')[-1][:24]} · {items[i]['style']}" for i in order], fontsize=8.6)
+    a1.tick_params(axis="y", colors=viz.INK2)
+    a1.set_xlabel("measured time (log scale)")
+    _panel_title(a1, "How long each implementation took", "blue = asked for fast · red = asked for simple")
+    slow = [i for i in order if items[i]["seconds"] > 1]
+    if slow:
+        viz.note(a1, (items[slow[0]]["seconds"], y[order.index(slow[0])]), (2.5, y[order.index(slow[0])] + 5),
+                 "~20× slower", rad=0.25)
+    viz.clean(a2, grid="x", baseline=False)
+    yk = np.arange(len(ks))[::-1]
+    for yy, k in zip(yk, ks):
+        s = R["judges"][k]["score"]
+        col = viz.JUDGE.get(k, viz.INK3)
+        a2.plot([0.5, s["pairs_right"]], [yy, yy], color=col, lw=6, alpha=0.25, solid_capstyle="round")
+        viz.dot(a2, [s["pairs_right"]], [yy], col, size=110)
+        a2.text(s["pairs_right"] - 0.012, yy + 0.28, f"{s['pairs_right']:.0%} right · τ {s['kendall_tau']:.2f}", ha="right",
+                fontsize=9.5, color=col, fontweight="semibold")
+    a2.set_yticks(yk, [viz.JUDGE_NAME.get(k, k) for k in ks], fontsize=10.5)
+    a2.tick_params(axis="y", colors=viz.INK)
+    a2.set_xlim(0.5, 1.0)
+    a2.set_ylim(-0.6, len(ks) - 0.3)
+    a2.set_xticks([0.5, 0.75, 1], ["50% · guessing", "75%", "100%"])
+    _panel_title(a2, "Picked the faster one", f"{ks and R['judges'][ks[0]]['score']['decisive_pairs']} clearly different pairs")
+    viz.save(fig, "runtime_eval.png", also=DOCS_FIG)
+
+
+# ------------------------------------------------------------------------------------------------ cross-lingual
+def crosslingual():
+    R = json.loads((RES / "crosslingual_eval.json").read_text())
+    langs = ["en", "es", "de", "ja"]
+    lname = {"en": "EN", "es": "ES", "de": "DE", "ja": "JA"}
+    ks = sorted(R["judges"], key=lambda k: -R["judges"][k]["score"]["same_answer_in_all_languages"])
+    fig, (a1, a2) = viz.canvas(13.5, 0.75 * len(ks) + 0.8,
+                               "The best judges answer the same way in English, Spanish, German and Japanese",
+                               "Left: how well each judge ranks the summaries in each language (Kendall τ, averaged over the two "
+                               "questions). Right: for the same pair of summaries, how often the judge gave the same answer in all "
+                               "four languages.",
+                               truth="exact counts of planted false statements and of facts mentioned, identical in every language by "
+                                     "construction: each language version is rendered from hand-written templates with the same "
+                                     "invented names, numbers and planted errors (no machine translation). Recount with "
+                                     "python examples/crosslingual_eval.py verify.",
+                               source="3 fictional documents × 12 summaries × 4 languages; questions asked in each language; all pairs, "
+                                      "both orders, Bradley–Terry coupling.",
+                               ncols=2, wspace=1.3, width_ratios=[1.5, 1], left=2.3, top_extra=0.55, sharey=True)
+    y = np.arange(len(ks))[::-1]
+    from matplotlib.patches import FancyBboxPatch
+
+    a1.grid(False)
+    a1.spines["bottom"].set_visible(False)
+    for yy, k in zip(y, ks):
+        col = viz.JUDGE.get(k, viz.INK3)
+        for c, l in enumerate(langs):
+            t = float(np.mean(list(R["judges"][k]["score"]["tau"][l].values())))
+            shade = matplotlib_blend(viz.PAPER, col, 0.15 + 0.85 * max(0.0, (t - 0.5) / 0.5))
+            a1.add_patch(FancyBboxPatch((c - 0.42, yy - 0.34), 0.84, 0.68, boxstyle="round,pad=0,rounding_size=0.08",
+                                        facecolor=shade, edgecolor="none"))
+            a1.text(c, yy, f"{t:.2f}", ha="center", va="center", fontsize=11, fontweight="semibold",
+                    color="white" if t > 0.78 else viz.INK)
+    a1.set_xlim(-0.55, len(langs) - 0.45)
+    a1.set_ylim(-0.6, len(ks) - 0.4)
+    a1.set_xticks(range(len(langs)), ["English", "Spanish", "German", "Japanese"], fontsize=10.5, color=viz.INK)
+    a1.set_yticks(y, [viz.JUDGE_NAME.get(k, k) for k in ks], fontsize=10.5)
+    a1.tick_params(axis="y", colors=viz.INK)
+    _panel_title(a1, "Ranking quality in each language (τ)", "1 = perfect order · a row that changes color = the language matters")
+    viz.clean(a2, grid="x", baseline=False)
+    for yy, k in zip(y, ks):
+        v = R["judges"][k]["score"]["same_answer_in_all_languages"]
+        col = viz.JUDGE.get(k, viz.INK3)
+        a2.barh(yy, v, height=0.46, color=col, zorder=3)
+        a2.text(v + 0.01, yy, f"{v:.0%}", va="center", fontsize=10.5, color=col, fontweight="bold")
+    a2.set_xlim(0, 1.1)
+    a2.set_xticks([0, 0.5, 1], ["0%", "50%", "100%"])
+    a2.tick_params(axis="y", labelleft=False)
+    _panel_title(a2, "Same answer in all 4 languages", "share of pairs")
+    viz.save(fig, "crosslingual_eval.png", also=DOCS_FIG)

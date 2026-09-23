@@ -36,13 +36,15 @@ def main():
 
     eval_figs.verifiable()
 
-    rows = ["| judge | accuracy τ | accuracy: pairs right | completeness τ | completeness: pairs right | cost |", "|---|---|---|---|---|---|"]
+    rows = ["| judge | accuracy τ | accuracy τ (BT) | accuracy: pairs right | completeness τ | completeness τ (BT) | completeness: pairs right | cost |",
+            "|---|---|---|---|---|---|---|---|"]
     for k in judges:
         s = R["judges"][k]["score"]
         cost = R["judges"][k].get("usage", {}).get("cost_usd", 0)
+        bt = lambda d: (f"{s[d]['kendall_tau_bt_mean']:.2f}" if s[d].get("kendall_tau_bt_mean") is not None else "–")  # noqa: E731
         rows.append(f"| {LABELS.get(k, k)} | {s['accuracy']['kendall_tau_mean']:.2f} ± {s['accuracy']['kendall_tau_sd']:.2f} | "
-                    f"{s['accuracy']['pairwise_accuracy']:.1%} | {s['completeness']['kendall_tau_mean']:.2f} ± "
-                    f"{s['completeness']['kendall_tau_sd']:.2f} | {s['completeness']['pairwise_accuracy']:.1%} | ${cost:.3f} |")
+                    f"{bt('accuracy')} | {s['accuracy']['pairwise_accuracy']:.1%} | {s['completeness']['kendall_tau_mean']:.2f} ± "
+                    f"{s['completeness']['kendall_tau_sd']:.2f} | {bt('completeness')} | {s['completeness']['pairwise_accuracy']:.1%} | ${cost:.3f} |")
     table = "\n".join(rows)
     page = ROOT / "docs" / "verifiable.md"
     text = page.read_text()
@@ -50,7 +52,9 @@ def main():
     page.write_text(text[: text.index(a) + len(a)] + "\n\n" + table + "\n\n" +
                     f"Measured correlation between the two true counts (errors vs facts mentioned) across all 72 summaries: "
                     f"r = {R['truth_correlation']:.2f}. Error counts and fact counts are assigned independently, so answering "
-                    "one question (or preferring longer summaries) does not answer the other.\n\n" + text[text.index(b):])
+                    "one question (or preferring longer summaries) does not answer the other. τ uses PKPD Eq. 7 (the paper's formula); "
+                    "τ (BT) couples the same answers with Bradley–Terry, which is more robust when a judge gives near-certain "
+                    "answers (Eq. 7 then saturates and produces ties).\n\n" + text[text.index(b):])
     print("updated docs/verifiable.md")
 
 

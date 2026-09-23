@@ -6556,6 +6556,7 @@
     "accuracy": {
      "kendall_tau_mean": 0.8157402152434511,
      "kendall_tau_sd": 0.06783488238537705,
+     "kendall_tau_bt_mean": 0.8846014022445217,
      "kendall_tau_per_doc": [
       0.8581163303210331,
       0.9216805029374059,
@@ -6573,6 +6574,7 @@
     "completeness": {
      "kendall_tau_mean": 0.893939393939394,
      "kendall_tau_sd": 0.0338798178409059,
+     "kendall_tau_bt_mean": 0.883838383838384,
      "kendall_tau_per_doc": [
       0.8484848484848485,
       0.9090909090909091,
@@ -13145,6 +13147,7 @@
     "accuracy": {
      "kendall_tau_mean": 0.4177105082116501,
      "kendall_tau_sd": 0.12886728654452861,
+     "kendall_tau_bt_mean": 0.44033737182675226,
      "kendall_tau_per_doc": [
       0.5410563145217612,
       0.5674615217055269,
@@ -13162,6 +13165,7 @@
     "completeness": {
      "kendall_tau_mean": 0.9245316689049536,
      "kendall_tau_sd": 0.0563594775557029,
+     "kendall_tau_bt_mean": 0.9171825142212618,
      "kendall_tau_per_doc": [
       0.9459922805717786,
       0.9007896044148773,
@@ -19734,6 +19738,7 @@
     "accuracy": {
      "kendall_tau_mean": 0.8846014022445218,
      "kendall_tau_sd": 0.04270589526587818,
+     "kendall_tau_bt_mean": 0.8951954310139172,
      "kendall_tau_per_doc": [
       0.8898984166292194,
       0.8581163303210331,
@@ -19751,6 +19756,7 @@
     "completeness": {
      "kendall_tau_mean": 0.9936820494324526,
      "kendall_tau_sd": 0.011080054920852773,
+     "kendall_tau_bt_mean": 0.9949494949494949,
      "kendall_tau_per_doc": [
       1.0,
       1.0,
@@ -26323,6 +26329,7 @@
     "accuracy": {
      "kendall_tau_mean": 0.7521760426270784,
      "kendall_tau_sd": 0.050807177131148656,
+     "kendall_tau_bt_mean": 0.7362849994729851,
      "kendall_tau_per_doc": [
       0.7945521577046603,
       0.7945521577046603,
@@ -26340,6 +26347,7 @@
     "completeness": {
      "kendall_tau_mean": 0.5252525252525252,
      "kendall_tau_sd": 0.1015138951628373,
+     "kendall_tau_bt_mean": 0.4898989898989899,
      "kendall_tau_per_doc": [
       0.6060606060606061,
       0.3333333333333333,
@@ -26926,6 +26934,7 @@
     "accuracy": {
      "kendall_tau_mean": 0.9327683039737535,
      "kendall_tau_sd": 0.1095622852806454,
+     "kendall_tau_bt_mean": null,
      "kendall_tau_per_doc": [
       0.9660917830792959,
       0.6890999615891347,
@@ -26943,6 +26952,7 @@
     "completeness": {
      "kendall_tau_mean": 0.9179966331338534,
      "kendall_tau_sd": 0.12216208763211572,
+     "kendall_tau_bt_mean": null,
      "kendall_tau_per_doc": [
       0.9847319278346618,
       0.6462303276414968,
@@ -31922,6 +31932,7 @@
     "accuracy": {
      "kendall_tau_mean": 0.8263342440128466,
      "kendall_tau_sd": 0.06085806194501844,
+     "kendall_tau_bt_mean": 0.8581163303210331,
      "kendall_tau_per_doc": [
       0.8581163303210331,
       0.8898984166292194,
@@ -31939,6 +31950,7 @@
     "completeness": {
      "kendall_tau_mean": 0.7828282828282829,
      "kendall_tau_sd": 0.05368760511482144,
+     "kendall_tau_bt_mean": 0.8636363636363638,
      "kendall_tau_per_doc": [
       0.7575757575757576,
       0.8787878787878788,

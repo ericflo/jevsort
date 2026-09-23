@@ -1,0 +1,1675 @@
+{
+ "seed": 20260925,
+ "languages": [
+  "en",
+  "es",
+  "de",
+  "ja"
+ ],
+ "k": 12,
+ "docs": [
+  {
+   "doc": "X1",
+   "values": {
+    "founded": [
+     "1963",
+     "1950"
+    ],
+    "city": [
+     "Thetasny",
+     "Bankathe"
+    ],
+    "founder": [
+     "Nyqui Ailtheel",
+     "Kaven Venbanfen"
+    ],
+    "staff": [
+     "161",
+     "241"
+    ],
+    "labs": [
+     "22",
+     "10"
+    ],
+    "budget": [
+     "237",
+     "348"
+    ],
+    "director": [
+     "Sorsor Ailostfen",
+     "Kaven Venbanfen"
+    ],
+    "director_year": [
+     "2010",
+     "1999"
+    ],
+    "satellite": [
+     "Miailsor",
+     "Bankathe"
+    ],
+    "satellite_year": [
+     "2005",
+     "1991"
+    ],
+    "patents": [
+     "514",
+     "773"
+    ],
+    "share": [
+     "16%",
+     "39%"
+    ],
+    "journal": [
+     "19",
+     "8"
+    ],
+    "partner": [
+     "Ostromven",
+     "Bankathe"
+    ],
+    "award": [
+     "11",
+     "14"
+    ],
+    "students": [
+     "47",
+     "71"
+    ]
+   },
+   "names": {
+    "A": "Aillor",
+    "B": "Misor",
+    "j": "Romsor",
+    "a": "Elny"
+   },
+   "plan": [
+    {
+     "id": "X1S03",
+     "seq": [
+      0,
+      7,
+      5,
+      2,
+      1,
+      6,
+      4,
+      12,
+      11,
+      10,
+      8,
+      9
+     ],
+     "wrong": [
+      2,
+      8,
+      9,
+      10,
+      11
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 5
+    },
+    {
+     "id": "X1S01",
+     "seq": [
+      2,
+      15,
+      7,
+      0,
+      3,
+      1,
+      13,
+      11,
+      9
+     ],
+     "wrong": [
+      9
+     ],
+     "n_mentioned": 9,
+     "n_wrong": 1
+    },
+    {
+     "id": "X1S04",
+     "seq": [
+      14,
+      11,
+      12,
+      2,
+      5,
+      6,
+      15,
+      10,
+      1,
+      7,
+      9,
+      8,
+      0,
+      4,
+      13
+     ],
+     "wrong": [
+      7,
+      8
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 2
+    },
+    {
+     "id": "X1S07",
+     "seq": [
+      1,
+      3,
+      13,
+      12,
+      6
+     ],
+     "wrong": [
+      3,
+      6,
+      12,
+      13
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 4
+    },
+    {
+     "id": "X1S10",
+     "seq": [
+      4,
+      13,
+      12,
+      1,
+      3,
+      7
+     ],
+     "wrong": [
+      1,
+      4,
+      12,
+      13
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 4
+    },
+    {
+     "id": "X1S02",
+     "seq": [
+      13,
+      12,
+      11,
+      3,
+      4,
+      7,
+      8,
+      9,
+      15,
+      2,
+      5,
+      14,
+      0,
+      1
+     ],
+     "wrong": [],
+     "n_mentioned": 14,
+     "n_wrong": 0
+    },
+    {
+     "id": "X1S09",
+     "seq": [
+      5,
+      0,
+      13,
+      4,
+      6,
+      9,
+      8,
+      7,
+      10,
+      1,
+      14
+     ],
+     "wrong": [
+      9,
+      14
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 2
+    },
+    {
+     "id": "X1S06",
+     "seq": [
+      6,
+      15,
+      14,
+      1,
+      12,
+      4,
+      0
+     ],
+     "wrong": [
+      1,
+      4,
+      14
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 3
+    },
+    {
+     "id": "X1S05",
+     "seq": [
+      9,
+      7,
+      0,
+      11,
+      6,
+      1,
+      8,
+      2,
+      15,
+      4
+     ],
+     "wrong": [
+      0,
+      1,
+      2
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 3
+    },
+    {
+     "id": "X1S11",
+     "seq": [
+      14,
+      11,
+      8,
+      4,
+      15,
+      1,
+      0,
+      5,
+      13,
+      7,
+      2,
+      12,
+      6,
+      3,
+      9,
+      10
+     ],
+     "wrong": [
+      0,
+      3,
+      7,
+      13,
+      15
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 5
+    },
+    {
+     "id": "X1S08",
+     "seq": [
+      6,
+      15,
+      1,
+      2,
+      10,
+      0,
+      5,
+      12
+     ],
+     "wrong": [],
+     "n_mentioned": 8,
+     "n_wrong": 0
+    },
+    {
+     "id": "X1S12",
+     "seq": [
+      10,
+      4,
+      2,
+      8,
+      12,
+      0,
+      9,
+      3,
+      7,
+      1,
+      14,
+      13,
+      11
+     ],
+     "wrong": [
+      9
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 1
+    }
+   ],
+   "lang": {
+    "en": {
+     "source": "Report on the Aillor Misor Institute.\n\nThe Aillor Misor Institute was founded in 1963. The Aillor Misor Institute is headquartered in Thetasny. It was founded by Nyqui Ailtheel. It employs 161 researchers. The organisation publishes an annual report describing its activities. It operates 22 laboratories. Its annual budget is 237 million crowns. Its current director is Sorsor Ailostfen. The current director took office in 2010. It opened a satellite campus in Miailsor. Its research spans several scientific disciplines. The satellite campus opened in 2005. It holds 514 patents. 16% of its funding comes from private donors. Its journal, the Romsor Review, publishes 19 issues a year. Visitors can tour parts of the main building by appointment. Its main partner university is in Ostromven. It has won the Elny Prize 11 times. It trains 47 doctoral students each year.",
+     "summaries": [
+      {
+       "id": "X1S03",
+       "text": "The Aillor Misor Institute was founded in 1963. The current director took office in 2010. Its annual budget is 237 million crowns. It was founded by Kaven Venbanfen. The Aillor Misor Institute is headquartered in Thetasny. Its current director is Sorsor Ailostfen. It operates 22 laboratories. Its journal, the Romsor Review, publishes 19 issues a year. 39% of its funding comes from private donors. It holds 773 patents. It opened a satellite campus in Bankathe. The satellite campus opened in 1991."
+      },
+      {
+       "id": "X1S01",
+       "text": "It was founded by Nyqui Ailtheel. It trains 47 doctoral students each year. The current director took office in 2010. The Aillor Misor Institute was founded in 1963. It employs 161 researchers. The Aillor Misor Institute is headquartered in Thetasny. Its main partner university is in Ostromven. 16% of its funding comes from private donors. The satellite campus opened in 1991."
+      },
+      {
+       "id": "X1S04",
+       "text": "It has won the Elny Prize 11 times. 16% of its funding comes from private donors. Its journal, the Romsor Review, publishes 19 issues a year. It was founded by Nyqui Ailtheel. Its annual budget is 237 million crowns. Its current director is Sorsor Ailostfen. It trains 47 doctoral students each year. It holds 514 patents. The Aillor Misor Institute is headquartered in Thetasny. The current director took office in 1999. The satellite campus opened in 2005. It opened a satellite campus in Bankathe. The Aillor Misor Institute was founded in 1963. It operates 22 laboratories. Its main partner university is in Ostromven."
+      },
+      {
+       "id": "X1S07",
+       "text": "The Aillor Misor Institute is headquartered in Thetasny. It employs 241 researchers. Its main partner university is in Bankathe. Its journal, the Romsor Review, publishes 8 issues a year. Its current director is Kaven Venbanfen."
+      },
+      {
+       "id": "X1S10",
+       "text": "It operates 10 laboratories. Its main partner university is in Bankathe. Its journal, the Romsor Review, publishes 8 issues a year. The Aillor Misor Institute is headquartered in Bankathe. It employs 161 researchers. The current director took office in 2010."
+      },
+      {
+       "id": "X1S02",
+       "text": "Its main partner university is in Ostromven. Its journal, the Romsor Review, publishes 19 issues a year. 16% of its funding comes from private donors. It employs 161 researchers. It operates 22 laboratories. The current director took office in 2010. It opened a satellite campus in Miailsor. The satellite campus opened in 2005. It trains 47 doctoral students each year. It was founded by Nyqui Ailtheel. Its annual budget is 237 million crowns. It has won the Elny Prize 11 times. The Aillor Misor Institute was founded in 1963. The Aillor Misor Institute is headquartered in Thetasny."
+      },
+      {
+       "id": "X1S09",
+       "text": "Its annual budget is 237 million crowns. The Aillor Misor Institute was founded in 1963. Its main partner university is in Ostromven. It operates 22 laboratories. Its current director is Sorsor Ailostfen. The satellite campus opened in 1991. It opened a satellite campus in Miailsor. The current director took office in 2010. It holds 514 patents. The Aillor Misor Institute is headquartered in Thetasny. It has won the Elny Prize 14 times."
+      },
+      {
+       "id": "X1S06",
+       "text": "Its current director is Sorsor Ailostfen. It trains 47 doctoral students each year. It has won the Elny Prize 14 times. The Aillor Misor Institute is headquartered in Bankathe. Its journal, the Romsor Review, publishes 19 issues a year. It operates 10 laboratories. The Aillor Misor Institute was founded in 1963."
+      },
+      {
+       "id": "X1S05",
+       "text": "The satellite campus opened in 2005. The current director took office in 2010. The Aillor Misor Institute was founded in 1950. 16% of its funding comes from private donors. Its current director is Sorsor Ailostfen. The Aillor Misor Institute is headquartered in Bankathe. It opened a satellite campus in Miailsor. It was founded by Kaven Venbanfen. It trains 47 doctoral students each year. It operates 22 laboratories."
+      },
+      {
+       "id": "X1S11",
+       "text": "It has won the Elny Prize 11 times. 16% of its funding comes from private donors. It opened a satellite campus in Miailsor. It operates 22 laboratories. It trains 71 doctoral students each year. The Aillor Misor Institute is headquartered in Thetasny. The Aillor Misor Institute was founded in 1950. Its annual budget is 237 million crowns. Its main partner university is in Bankathe. The current director took office in 1999. It was founded by Nyqui Ailtheel. Its journal, the Romsor Review, publishes 19 issues a year. Its current director is Sorsor Ailostfen. It employs 241 researchers. The satellite campus opened in 2005. It holds 514 patents."
+      },
+      {
+       "id": "X1S08",
+       "text": "Its current director is Sorsor Ailostfen. It trains 47 doctoral students each year. The Aillor Misor Institute is headquartered in Thetasny. It was founded by Nyqui Ailtheel. It holds 514 patents. The Aillor Misor Institute was founded in 1963. Its annual budget is 237 million crowns. Its journal, the Romsor Review, publishes 19 issues a year."
+      },
+      {
+       "id": "X1S12",
+       "text": "It holds 514 patents. It operates 22 laboratories. It was founded by Nyqui Ailtheel. It opened a satellite campus in Miailsor. Its journal, the Romsor Review, publishes 19 issues a year. The Aillor Misor Institute was founded in 1963. The satellite campus opened in 1991. It employs 161 researchers. The current director took office in 2010. The Aillor Misor Institute is headquartered in Thetasny. It has won the Elny Prize 11 times. Its main partner university is in Ostromven. 16% of its funding comes from private donors."
+      }
+     ]
+    },
+    "es": {
+     "source": "Informe sobre el Instituto Aillor Misor.\n\nEl Instituto Aillor Misor fue fundado en 1963. El Instituto Aillor Misor tiene su sede en Thetasny. Fue fundado por Nyqui Ailtheel. Emplea a 161 investigadores. La organización publica un informe anual sobre sus actividades. Opera 22 laboratorios. Su presupuesto anual es de 237 millones de coronas. Su director actual es Sorsor Ailostfen. El director actual asumió el cargo en 2010. Abrió un campus satélite en Miailsor. Su investigación abarca varias disciplinas científicas. El campus satélite se inauguró en 2005. Posee 514 patentes. El 16% de su financiación procede de donantes privados. Su revista, la Romsor Review, publica 19 números al año. Los visitantes pueden recorrer parte del edificio principal con cita previa. Su principal universidad asociada está en Ostromven. Ha ganado el Premio Elny 11 veces. Forma a 47 doctorandos cada año.",
+     "summaries": [
+      {
+       "id": "X1S03",
+       "text": "El Instituto Aillor Misor fue fundado en 1963. El director actual asumió el cargo en 2010. Su presupuesto anual es de 237 millones de coronas. Fue fundado por Kaven Venbanfen. El Instituto Aillor Misor tiene su sede en Thetasny. Su director actual es Sorsor Ailostfen. Opera 22 laboratorios. Su revista, la Romsor Review, publica 19 números al año. El 39% de su financiación procede de donantes privados. Posee 773 patentes. Abrió un campus satélite en Bankathe. El campus satélite se inauguró en 1991."
+      },
+      {
+       "id": "X1S01",
+       "text": "Fue fundado por Nyqui Ailtheel. Forma a 47 doctorandos cada año. El director actual asumió el cargo en 2010. El Instituto Aillor Misor fue fundado en 1963. Emplea a 161 investigadores. El Instituto Aillor Misor tiene su sede en Thetasny. Su principal universidad asociada está en Ostromven. El 16% de su financiación procede de donantes privados. El campus satélite se inauguró en 1991."
+      },
+      {
+       "id": "X1S04",
+       "text": "Ha ganado el Premio Elny 11 veces. El 16% de su financiación procede de donantes privados. Su revista, la Romsor Review, publica 19 números al año. Fue fundado por Nyqui Ailtheel. Su presupuesto anual es de 237 millones de coronas. Su director actual es Sorsor Ailostfen. Forma a 47 doctorandos cada año. Posee 514 patentes. El Instituto Aillor Misor tiene su sede en Thetasny. El director actual asumió el cargo en 1999. El campus satélite se inauguró en 2005. Abrió un campus satélite en Bankathe. El Instituto Aillor Misor fue fundado en 1963. Opera 22 laboratorios. Su principal universidad asociada está en Ostromven."
+      },
+      {
+       "id": "X1S07",
+       "text": "El Instituto Aillor Misor tiene su sede en Thetasny. Emplea a 241 investigadores. Su principal universidad asociada está en Bankathe. Su revista, la Romsor Review, publica 8 números al año. Su director actual es Kaven Venbanfen."
+      },
+      {
+       "id": "X1S10",
+       "text": "Opera 10 laboratorios. Su principal universidad asociada está en Bankathe. Su revista, la Romsor Review, publica 8 números al año. El Instituto Aillor Misor tiene su sede en Bankathe. Emplea a 161 investigadores. El director actual asumió el cargo en 2010."
+      },
+      {
+       "id": "X1S02",
+       "text": "Su principal universidad asociada está en Ostromven. Su revista, la Romsor Review, publica 19 números al año. El 16% de su financiación procede de donantes privados. Emplea a 161 investigadores. Opera 22 laboratorios. El director actual asumió el cargo en 2010. Abrió un campus satélite en Miailsor. El campus satélite se inauguró en 2005. Forma a 47 doctorandos cada año. Fue fundado por Nyqui Ailtheel. Su presupuesto anual es de 237 millones de coronas. Ha ganado el Premio Elny 11 veces. El Instituto Aillor Misor fue fundado en 1963. El Instituto Aillor Misor tiene su sede en Thetasny."
+      },
+      {
+       "id": "X1S09",
+       "text": "Su presupuesto anual es de 237 millones de coronas. El Instituto Aillor Misor fue fundado en 1963. Su principal universidad asociada está en Ostromven. Opera 22 laboratorios. Su director actual es Sorsor Ailostfen. El campus satélite se inauguró en 1991. Abrió un campus satélite en Miailsor. El director actual asumió el cargo en 2010. Posee 514 patentes. El Instituto Aillor Misor tiene su sede en Thetasny. Ha ganado el Premio Elny 14 veces."
+      },
+      {
+       "id": "X1S06",
+       "text": "Su director actual es Sorsor Ailostfen. Forma a 47 doctorandos cada año. Ha ganado el Premio Elny 14 veces. El Instituto Aillor Misor tiene su sede en Bankathe. Su revista, la Romsor Review, publica 19 números al año. Opera 10 laboratorios. El Instituto Aillor Misor fue fundado en 1963."
+      },
+      {
+       "id": "X1S05",
+       "text": "El campus satélite se inauguró en 2005. El director actual asumió el cargo en 2010. El Instituto Aillor Misor fue fundado en 1950. El 16% de su financiación procede de donantes privados. Su director actual es Sorsor Ailostfen. El Instituto Aillor Misor tiene su sede en Bankathe. Abrió un campus satélite en Miailsor. Fue fundado por Kaven Venbanfen. Forma a 47 doctorandos cada año. Opera 22 laboratorios."
+      },
+      {
+       "id": "X1S11",
+       "text": "Ha ganado el Premio Elny 11 veces. El 16% de su financiación procede de donantes privados. Abrió un campus satélite en Miailsor. Opera 22 laboratorios. Forma a 71 doctorandos cada año. El Instituto Aillor Misor tiene su sede en Thetasny. El Instituto Aillor Misor fue fundado en 1950. Su presupuesto anual es de 237 millones de coronas. Su principal universidad asociada está en Bankathe. El director actual asumió el cargo en 1999. Fue fundado por Nyqui Ailtheel. Su revista, la Romsor Review, publica 19 números al año. Su director actual es Sorsor Ailostfen. Emplea a 241 investigadores. El campus satélite se inauguró en 2005. Posee 514 patentes."
+      },
+      {
+       "id": "X1S08",
+       "text": "Su director actual es Sorsor Ailostfen. Forma a 47 doctorandos cada año. El Instituto Aillor Misor tiene su sede en Thetasny. Fue fundado por Nyqui Ailtheel. Posee 514 patentes. El Instituto Aillor Misor fue fundado en 1963. Su presupuesto anual es de 237 millones de coronas. Su revista, la Romsor Review, publica 19 números al año."
+      },
+      {
+       "id": "X1S12",
+       "text": "Posee 514 patentes. Opera 22 laboratorios. Fue fundado por Nyqui Ailtheel. Abrió un campus satélite en Miailsor. Su revista, la Romsor Review, publica 19 números al año. El Instituto Aillor Misor fue fundado en 1963. El campus satélite se inauguró en 1991. Emplea a 161 investigadores. El director actual asumió el cargo en 2010. El Instituto Aillor Misor tiene su sede en Thetasny. Ha ganado el Premio Elny 11 veces. Su principal universidad asociada está en Ostromven. El 16% de su financiación procede de donantes privados."
+      }
+     ]
+    },
+    "de": {
+     "source": "Bericht über das Aillor-Misor-Institut.\n\nDas Aillor-Misor-Institut wurde 1963 gegründet. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Es wurde von Nyqui Ailtheel gegründet. Es beschäftigt 161 Forschende. Die Organisation veröffentlicht jährlich einen Tätigkeitsbericht. Es betreibt 22 Labore. Sein Jahresbudget beträgt 237 Millionen Kronen. Derzeitiger Direktor ist Sorsor Ailostfen. Der derzeitige Direktor trat sein Amt 2010 an. Es eröffnete einen Außencampus in Miailsor. Seine Forschung umfasst mehrere wissenschaftliche Disziplinen. Der Außencampus wurde 2005 eröffnet. Es hält 514 Patente. 16% seiner Finanzierung stammen von privaten Spendern. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. Besucher können Teile des Hauptgebäudes nach Vereinbarung besichtigen. Seine wichtigste Partneruniversität befindet sich in Ostromven. Es hat den Elny-Preis 11-mal gewonnen. Es bildet jedes Jahr 47 Doktoranden aus.",
+     "summaries": [
+      {
+       "id": "X1S03",
+       "text": "Das Aillor-Misor-Institut wurde 1963 gegründet. Der derzeitige Direktor trat sein Amt 2010 an. Sein Jahresbudget beträgt 237 Millionen Kronen. Es wurde von Kaven Venbanfen gegründet. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Derzeitiger Direktor ist Sorsor Ailostfen. Es betreibt 22 Labore. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. 39% seiner Finanzierung stammen von privaten Spendern. Es hält 773 Patente. Es eröffnete einen Außencampus in Bankathe. Der Außencampus wurde 1991 eröffnet."
+      },
+      {
+       "id": "X1S01",
+       "text": "Es wurde von Nyqui Ailtheel gegründet. Es bildet jedes Jahr 47 Doktoranden aus. Der derzeitige Direktor trat sein Amt 2010 an. Das Aillor-Misor-Institut wurde 1963 gegründet. Es beschäftigt 161 Forschende. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Seine wichtigste Partneruniversität befindet sich in Ostromven. 16% seiner Finanzierung stammen von privaten Spendern. Der Außencampus wurde 1991 eröffnet."
+      },
+      {
+       "id": "X1S04",
+       "text": "Es hat den Elny-Preis 11-mal gewonnen. 16% seiner Finanzierung stammen von privaten Spendern. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. Es wurde von Nyqui Ailtheel gegründet. Sein Jahresbudget beträgt 237 Millionen Kronen. Derzeitiger Direktor ist Sorsor Ailostfen. Es bildet jedes Jahr 47 Doktoranden aus. Es hält 514 Patente. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Der derzeitige Direktor trat sein Amt 1999 an. Der Außencampus wurde 2005 eröffnet. Es eröffnete einen Außencampus in Bankathe. Das Aillor-Misor-Institut wurde 1963 gegründet. Es betreibt 22 Labore. Seine wichtigste Partneruniversität befindet sich in Ostromven."
+      },
+      {
+       "id": "X1S07",
+       "text": "Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Es beschäftigt 241 Forschende. Seine wichtigste Partneruniversität befindet sich in Bankathe. Seine Zeitschrift, die Romsor Review, erscheint 8-mal im Jahr. Derzeitiger Direktor ist Kaven Venbanfen."
+      },
+      {
+       "id": "X1S10",
+       "text": "Es betreibt 10 Labore. Seine wichtigste Partneruniversität befindet sich in Bankathe. Seine Zeitschrift, die Romsor Review, erscheint 8-mal im Jahr. Das Aillor-Misor-Institut hat seinen Sitz in Bankathe. Es beschäftigt 161 Forschende. Der derzeitige Direktor trat sein Amt 2010 an."
+      },
+      {
+       "id": "X1S02",
+       "text": "Seine wichtigste Partneruniversität befindet sich in Ostromven. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. 16% seiner Finanzierung stammen von privaten Spendern. Es beschäftigt 161 Forschende. Es betreibt 22 Labore. Der derzeitige Direktor trat sein Amt 2010 an. Es eröffnete einen Außencampus in Miailsor. Der Außencampus wurde 2005 eröffnet. Es bildet jedes Jahr 47 Doktoranden aus. Es wurde von Nyqui Ailtheel gegründet. Sein Jahresbudget beträgt 237 Millionen Kronen. Es hat den Elny-Preis 11-mal gewonnen. Das Aillor-Misor-Institut wurde 1963 gegründet. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny."
+      },
+      {
+       "id": "X1S09",
+       "text": "Sein Jahresbudget beträgt 237 Millionen Kronen. Das Aillor-Misor-Institut wurde 1963 gegründet. Seine wichtigste Partneruniversität befindet sich in Ostromven. Es betreibt 22 Labore. Derzeitiger Direktor ist Sorsor Ailostfen. Der Außencampus wurde 1991 eröffnet. Es eröffnete einen Außencampus in Miailsor. Der derzeitige Direktor trat sein Amt 2010 an. Es hält 514 Patente. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Es hat den Elny-Preis 14-mal gewonnen."
+      },
+      {
+       "id": "X1S06",
+       "text": "Derzeitiger Direktor ist Sorsor Ailostfen. Es bildet jedes Jahr 47 Doktoranden aus. Es hat den Elny-Preis 14-mal gewonnen. Das Aillor-Misor-Institut hat seinen Sitz in Bankathe. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. Es betreibt 10 Labore. Das Aillor-Misor-Institut wurde 1963 gegründet."
+      },
+      {
+       "id": "X1S05",
+       "text": "Der Außencampus wurde 2005 eröffnet. Der derzeitige Direktor trat sein Amt 2010 an. Das Aillor-Misor-Institut wurde 1950 gegründet. 16% seiner Finanzierung stammen von privaten Spendern. Derzeitiger Direktor ist Sorsor Ailostfen. Das Aillor-Misor-Institut hat seinen Sitz in Bankathe. Es eröffnete einen Außencampus in Miailsor. Es wurde von Kaven Venbanfen gegründet. Es bildet jedes Jahr 47 Doktoranden aus. Es betreibt 22 Labore."
+      },
+      {
+       "id": "X1S11",
+       "text": "Es hat den Elny-Preis 11-mal gewonnen. 16% seiner Finanzierung stammen von privaten Spendern. Es eröffnete einen Außencampus in Miailsor. Es betreibt 22 Labore. Es bildet jedes Jahr 71 Doktoranden aus. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Das Aillor-Misor-Institut wurde 1950 gegründet. Sein Jahresbudget beträgt 237 Millionen Kronen. Seine wichtigste Partneruniversität befindet sich in Bankathe. Der derzeitige Direktor trat sein Amt 1999 an. Es wurde von Nyqui Ailtheel gegründet. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. Derzeitiger Direktor ist Sorsor Ailostfen. Es beschäftigt 241 Forschende. Der Außencampus wurde 2005 eröffnet. Es hält 514 Patente."
+      },
+      {
+       "id": "X1S08",
+       "text": "Derzeitiger Direktor ist Sorsor Ailostfen. Es bildet jedes Jahr 47 Doktoranden aus. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Es wurde von Nyqui Ailtheel gegründet. Es hält 514 Patente. Das Aillor-Misor-Institut wurde 1963 gegründet. Sein Jahresbudget beträgt 237 Millionen Kronen. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr."
+      },
+      {
+       "id": "X1S12",
+       "text": "Es hält 514 Patente. Es betreibt 22 Labore. Es wurde von Nyqui Ailtheel gegründet. Es eröffnete einen Außencampus in Miailsor. Seine Zeitschrift, die Romsor Review, erscheint 19-mal im Jahr. Das Aillor-Misor-Institut wurde 1963 gegründet. Der Außencampus wurde 1991 eröffnet. Es beschäftigt 161 Forschende. Der derzeitige Direktor trat sein Amt 2010 an. Das Aillor-Misor-Institut hat seinen Sitz in Thetasny. Es hat den Elny-Preis 11-mal gewonnen. Seine wichtigste Partneruniversität befindet sich in Ostromven. 16% seiner Finanzierung stammen von privaten Spendern."
+      }
+     ]
+    },
+    "ja": {
+     "source": "Aillor Misor研究所に関する報告書。\n\nAillor Misor研究所は1963年に設立された。Aillor Misor研究所の本部はThetasnyにある。創設者はNyqui Ailtheelである。研究者161人を雇用している。同組織は活動に関する年次報告書を発行している。22の研究室を運営している。年間予算は237百万クローネである。現在の所長はSorsor Ailostfenである。現所長は2010年に就任した。Miailsorにサテライトキャンパスを開設した。研究は複数の科学分野にまたがっている。サテライトキャンパスは2005年に開設された。514件の特許を保有している。資金の16%は民間の寄付者によるものである。機関誌『Romsor Review』は年に19号発行される。見学者は予約制で本館の一部を見学できる。主な提携大学はOstromvenにある。Elny賞を11回受賞している。毎年47人の博士課程学生を育成している。",
+     "summaries": [
+      {
+       "id": "X1S03",
+       "text": "Aillor Misor研究所は1963年に設立された。現所長は2010年に就任した。年間予算は237百万クローネである。創設者はKaven Venbanfenである。Aillor Misor研究所の本部はThetasnyにある。現在の所長はSorsor Ailostfenである。22の研究室を運営している。機関誌『Romsor Review』は年に19号発行される。資金の39%は民間の寄付者によるものである。773件の特許を保有している。Bankatheにサテライトキャンパスを開設した。サテライトキャンパスは1991年に開設された。"
+      },
+      {
+       "id": "X1S01",
+       "text": "創設者はNyqui Ailtheelである。毎年47人の博士課程学生を育成している。現所長は2010年に就任した。Aillor Misor研究所は1963年に設立された。研究者161人を雇用している。Aillor Misor研究所の本部はThetasnyにある。主な提携大学はOstromvenにある。資金の16%は民間の寄付者によるものである。サテライトキャンパスは1991年に開設された。"
+      },
+      {
+       "id": "X1S04",
+       "text": "Elny賞を11回受賞している。資金の16%は民間の寄付者によるものである。機関誌『Romsor Review』は年に19号発行される。創設者はNyqui Ailtheelである。年間予算は237百万クローネである。現在の所長はSorsor Ailostfenである。毎年47人の博士課程学生を育成している。514件の特許を保有している。Aillor Misor研究所の本部はThetasnyにある。現所長は1999年に就任した。サテライトキャンパスは2005年に開設された。Bankatheにサテライトキャンパスを開設した。Aillor Misor研究所は1963年に設立された。22の研究室を運営している。主な提携大学はOstromvenにある。"
+      },
+      {
+       "id": "X1S07",
+       "text": "Aillor Misor研究所の本部はThetasnyにある。研究者241人を雇用している。主な提携大学はBankatheにある。機関誌『Romsor Review』は年に8号発行される。現在の所長はKaven Venbanfenである。"
+      },
+      {
+       "id": "X1S10",
+       "text": "10の研究室を運営している。主な提携大学はBankatheにある。機関誌『Romsor Review』は年に8号発行される。Aillor Misor研究所の本部はBankatheにある。研究者161人を雇用している。現所長は2010年に就任した。"
+      },
+      {
+       "id": "X1S02",
+       "text": "主な提携大学はOstromvenにある。機関誌『Romsor Review』は年に19号発行される。資金の16%は民間の寄付者によるものである。研究者161人を雇用している。22の研究室を運営している。現所長は2010年に就任した。Miailsorにサテライトキャンパスを開設した。サテライトキャンパスは2005年に開設された。毎年47人の博士課程学生を育成している。創設者はNyqui Ailtheelである。年間予算は237百万クローネである。Elny賞を11回受賞している。Aillor Misor研究所は1963年に設立された。Aillor Misor研究所の本部はThetasnyにある。"
+      },
+      {
+       "id": "X1S09",
+       "text": "年間予算は237百万クローネである。Aillor Misor研究所は1963年に設立された。主な提携大学はOstromvenにある。22の研究室を運営している。現在の所長はSorsor Ailostfenである。サテライトキャンパスは1991年に開設された。Miailsorにサテライトキャンパスを開設した。現所長は2010年に就任した。514件の特許を保有している。Aillor Misor研究所の本部はThetasnyにある。Elny賞を14回受賞している。"
+      },
+      {
+       "id": "X1S06",
+       "text": "現在の所長はSorsor Ailostfenである。毎年47人の博士課程学生を育成している。Elny賞を14回受賞している。Aillor Misor研究所の本部はBankatheにある。機関誌『Romsor Review』は年に19号発行される。10の研究室を運営している。Aillor Misor研究所は1963年に設立された。"
+      },
+      {
+       "id": "X1S05",
+       "text": "サテライトキャンパスは2005年に開設された。現所長は2010年に就任した。Aillor Misor研究所は1950年に設立された。資金の16%は民間の寄付者によるものである。現在の所長はSorsor Ailostfenである。Aillor Misor研究所の本部はBankatheにある。Miailsorにサテライトキャンパスを開設した。創設者はKaven Venbanfenである。毎年47人の博士課程学生を育成している。22の研究室を運営している。"
+      },
+      {
+       "id": "X1S11",
+       "text": "Elny賞を11回受賞している。資金の16%は民間の寄付者によるものである。Miailsorにサテライトキャンパスを開設した。22の研究室を運営している。毎年71人の博士課程学生を育成している。Aillor Misor研究所の本部はThetasnyにある。Aillor Misor研究所は1950年に設立された。年間予算は237百万クローネである。主な提携大学はBankatheにある。現所長は1999年に就任した。創設者はNyqui Ailtheelである。機関誌『Romsor Review』は年に19号発行される。現在の所長はSorsor Ailostfenである。研究者241人を雇用している。サテライトキャンパスは2005年に開設された。514件の特許を保有している。"
+      },
+      {
+       "id": "X1S08",
+       "text": "現在の所長はSorsor Ailostfenである。毎年47人の博士課程学生を育成している。Aillor Misor研究所の本部はThetasnyにある。創設者はNyqui Ailtheelである。514件の特許を保有している。Aillor Misor研究所は1963年に設立された。年間予算は237百万クローネである。機関誌『Romsor Review』は年に19号発行される。"
+      },
+      {
+       "id": "X1S12",
+       "text": "514件の特許を保有している。22の研究室を運営している。創設者はNyqui Ailtheelである。Miailsorにサテライトキャンパスを開設した。機関誌『Romsor Review』は年に19号発行される。Aillor Misor研究所は1963年に設立された。サテライトキャンパスは1991年に開設された。研究者161人を雇用している。現所長は2010年に就任した。Aillor Misor研究所の本部はThetasnyにある。Elny賞を11回受賞している。主な提携大学はOstromvenにある。資金の16%は民間の寄付者によるものである。"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "doc": "X2",
+   "values": {
+    "founded": [
+     "1971",
+     "1984"
+    ],
+    "city": [
+     "Quinyny",
+     "Romventas"
+    ],
+    "founder": [
+     "Tasgar Bankathe",
+     "Sormi Zuzumi"
+    ],
+    "staff": [
+     "342",
+     "213"
+    ],
+    "labs": [
+     "7",
+     "10"
+    ],
+    "budget": [
+     "199",
+     "284"
+    ],
+    "director": [
+     "Lorka Ostsorthe",
+     "Taszu Sorsorsor"
+    ],
+    "director_year": [
+     "2014",
+     "2018"
+    ],
+    "satellite": [
+     "Banlorlor",
+     "Zuromka"
+    ],
+    "satellite_year": [
+     "1992",
+     "2002"
+    ],
+    "patents": [
+     "258",
+     "155"
+    ],
+    "share": [
+     "14%",
+     "23%"
+    ],
+    "journal": [
+     "5",
+     "3"
+    ],
+    "partner": [
+     "Sortaska",
+     "Lortasail"
+    ],
+    "award": [
+     "15",
+     "9"
+    ],
+    "students": [
+     "85",
+     "117"
+    ]
+   },
+   "names": {
+    "A": "Mirom",
+    "B": "Banrom",
+    "j": "Romfen",
+    "a": "Karom"
+   },
+   "plan": [
+    {
+     "id": "X2S04",
+     "seq": [
+      9,
+      7,
+      3,
+      2,
+      15,
+      12
+     ],
+     "wrong": [
+      2,
+      12
+     ],
+     "n_mentioned": 6,
+     "n_wrong": 2
+    },
+    {
+     "id": "X2S07",
+     "seq": [
+      3,
+      7,
+      6,
+      4,
+      8
+     ],
+     "wrong": [
+      3,
+      4,
+      6,
+      7,
+      8
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 5
+    },
+    {
+     "id": "X2S12",
+     "seq": [
+      14,
+      2,
+      13,
+      3,
+      7,
+      9,
+      5,
+      15,
+      0,
+      8,
+      6
+     ],
+     "wrong": [
+      5,
+      9
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 2
+    },
+    {
+     "id": "X2S10",
+     "seq": [
+      10,
+      3,
+      11,
+      4,
+      2,
+      8,
+      14,
+      9,
+      5,
+      15
+     ],
+     "wrong": [
+      4,
+      9,
+      10,
+      14
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 4
+    },
+    {
+     "id": "X2S02",
+     "seq": [
+      9,
+      11,
+      6,
+      0,
+      7,
+      15,
+      8,
+      12,
+      5
+     ],
+     "wrong": [],
+     "n_mentioned": 9,
+     "n_wrong": 0
+    },
+    {
+     "id": "X2S09",
+     "seq": [
+      0,
+      13,
+      6,
+      3,
+      11,
+      9,
+      12,
+      4,
+      8,
+      1,
+      5,
+      7,
+      15,
+      10,
+      2
+     ],
+     "wrong": [
+      0,
+      1,
+      2,
+      3,
+      8
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 5
+    },
+    {
+     "id": "X2S11",
+     "seq": [
+      13,
+      6,
+      9,
+      15,
+      2,
+      11,
+      8
+     ],
+     "wrong": [
+      8
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 1
+    },
+    {
+     "id": "X2S05",
+     "seq": [
+      3,
+      1,
+      7,
+      9,
+      14,
+      5,
+      2,
+      15,
+      10,
+      8,
+      0,
+      4
+     ],
+     "wrong": [
+      0,
+      2,
+      4,
+      14
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 4
+    },
+    {
+     "id": "X2S03",
+     "seq": [
+      13,
+      8,
+      6,
+      5,
+      14,
+      1,
+      12,
+      4,
+      11,
+      7,
+      0,
+      9,
+      3,
+      2
+     ],
+     "wrong": [
+      2,
+      7,
+      11
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 3
+    },
+    {
+     "id": "X2S06",
+     "seq": [
+      14,
+      9,
+      11,
+      5,
+      13,
+      7,
+      2,
+      10,
+      3,
+      1,
+      8,
+      4,
+      6,
+      12,
+      0,
+      15
+     ],
+     "wrong": [],
+     "n_mentioned": 16,
+     "n_wrong": 0
+    },
+    {
+     "id": "X2S08",
+     "seq": [
+      12,
+      3,
+      8,
+      1,
+      4,
+      7,
+      5,
+      6,
+      10,
+      15,
+      13,
+      2,
+      0
+     ],
+     "wrong": [
+      0,
+      8,
+      13
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 3
+    },
+    {
+     "id": "X2S01",
+     "seq": [
+      7,
+      8,
+      12,
+      13,
+      0,
+      9,
+      14,
+      4
+     ],
+     "wrong": [
+      12
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 1
+    }
+   ],
+   "lang": {
+    "en": {
+     "source": "Report on the Mirom Banrom Institute.\n\nThe Mirom Banrom Institute was founded in 1971. The Mirom Banrom Institute is headquartered in Quinyny. It was founded by Tasgar Bankathe. It employs 342 researchers. It operates 7 laboratories. Its annual budget is 199 million crowns. Its current director is Lorka Ostsorthe. The current director took office in 2014. It opened a satellite campus in Banlorlor. The organisation publishes an annual report describing its activities. The satellite campus opened in 1992. It holds 258 patents. 14% of its funding comes from private donors. Its journal, the Romfen Review, publishes 5 issues a year. Its research spans several scientific disciplines. Its main partner university is in Sortaska. It has won the Karom Prize 15 times. Visitors can tour parts of the main building by appointment. It trains 85 doctoral students each year.",
+     "summaries": [
+      {
+       "id": "X2S04",
+       "text": "The satellite campus opened in 1992. The current director took office in 2014. It employs 342 researchers. It was founded by Sormi Zuzumi. It trains 85 doctoral students each year. Its journal, the Romfen Review, publishes 3 issues a year."
+      },
+      {
+       "id": "X2S07",
+       "text": "It employs 213 researchers. The current director took office in 2018. Its current director is Taszu Sorsorsor. It operates 10 laboratories. It opened a satellite campus in Zuromka."
+      },
+      {
+       "id": "X2S12",
+       "text": "It has won the Karom Prize 15 times. It was founded by Tasgar Bankathe. Its main partner university is in Sortaska. It employs 342 researchers. The current director took office in 2014. The satellite campus opened in 2002. Its annual budget is 284 million crowns. It trains 85 doctoral students each year. The Mirom Banrom Institute was founded in 1971. It opened a satellite campus in Banlorlor. Its current director is Lorka Ostsorthe."
+      },
+      {
+       "id": "X2S10",
+       "text": "It holds 155 patents. It employs 342 researchers. 14% of its funding comes from private donors. It operates 10 laboratories. It was founded by Tasgar Bankathe. It opened a satellite campus in Banlorlor. It has won the Karom Prize 9 times. The satellite campus opened in 2002. Its annual budget is 199 million crowns. It trains 85 doctoral students each year."
+      },
+      {
+       "id": "X2S02",
+       "text": "The satellite campus opened in 1992. 14% of its funding comes from private donors. Its current director is Lorka Ostsorthe. The Mirom Banrom Institute was founded in 1971. The current director took office in 2014. It trains 85 doctoral students each year. It opened a satellite campus in Banlorlor. Its journal, the Romfen Review, publishes 5 issues a year. Its annual budget is 199 million crowns."
+      },
+      {
+       "id": "X2S09",
+       "text": "The Mirom Banrom Institute was founded in 1984. Its main partner university is in Sortaska. Its current director is Lorka Ostsorthe. It employs 213 researchers. 14% of its funding comes from private donors. The satellite campus opened in 1992. Its journal, the Romfen Review, publishes 5 issues a year. It operates 7 laboratories. It opened a satellite campus in Zuromka. The Mirom Banrom Institute is headquartered in Romventas. Its annual budget is 199 million crowns. The current director took office in 2014. It trains 85 doctoral students each year. It holds 258 patents. It was founded by Sormi Zuzumi."
+      },
+      {
+       "id": "X2S11",
+       "text": "Its main partner university is in Sortaska. Its current director is Lorka Ostsorthe. The satellite campus opened in 1992. It trains 85 doctoral students each year. It was founded by Tasgar Bankathe. 14% of its funding comes from private donors. It opened a satellite campus in Zuromka."
+      },
+      {
+       "id": "X2S05",
+       "text": "It employs 342 researchers. The Mirom Banrom Institute is headquartered in Quinyny. The current director took office in 2014. The satellite campus opened in 1992. It has won the Karom Prize 9 times. Its annual budget is 199 million crowns. It was founded by Sormi Zuzumi. It trains 85 doctoral students each year. It holds 258 patents. It opened a satellite campus in Banlorlor. The Mirom Banrom Institute was founded in 1984. It operates 10 laboratories."
+      },
+      {
+       "id": "X2S03",
+       "text": "Its main partner university is in Sortaska. It opened a satellite campus in Banlorlor. Its current director is Lorka Ostsorthe. Its annual budget is 199 million crowns. It has won the Karom Prize 15 times. The Mirom Banrom Institute is headquartered in Quinyny. Its journal, the Romfen Review, publishes 5 issues a year. It operates 7 laboratories. 23% of its funding comes from private donors. The current director took office in 2018. The Mirom Banrom Institute was founded in 1971. The satellite campus opened in 1992. It employs 342 researchers. It was founded by Sormi Zuzumi."
+      },
+      {
+       "id": "X2S06",
+       "text": "It has won the Karom Prize 15 times. The satellite campus opened in 1992. 14% of its funding comes from private donors. Its annual budget is 199 million crowns. Its main partner university is in Sortaska. The current director took office in 2014. It was founded by Tasgar Bankathe. It holds 258 patents. It employs 342 researchers. The Mirom Banrom Institute is headquartered in Quinyny. It opened a satellite campus in Banlorlor. It operates 7 laboratories. Its current director is Lorka Ostsorthe. Its journal, the Romfen Review, publishes 5 issues a year. The Mirom Banrom Institute was founded in 1971. It trains 85 doctoral students each year."
+      },
+      {
+       "id": "X2S08",
+       "text": "Its journal, the Romfen Review, publishes 5 issues a year. It employs 342 researchers. It opened a satellite campus in Zuromka. The Mirom Banrom Institute is headquartered in Quinyny. It operates 7 laboratories. The current director took office in 2014. Its annual budget is 199 million crowns. Its current director is Lorka Ostsorthe. It holds 258 patents. It trains 85 doctoral students each year. Its main partner university is in Lortasail. It was founded by Tasgar Bankathe. The Mirom Banrom Institute was founded in 1984."
+      },
+      {
+       "id": "X2S01",
+       "text": "The current director took office in 2014. It opened a satellite campus in Banlorlor. Its journal, the Romfen Review, publishes 3 issues a year. Its main partner university is in Sortaska. The Mirom Banrom Institute was founded in 1971. The satellite campus opened in 1992. It has won the Karom Prize 15 times. It operates 7 laboratories."
+      }
+     ]
+    },
+    "es": {
+     "source": "Informe sobre el Instituto Mirom Banrom.\n\nEl Instituto Mirom Banrom fue fundado en 1971. El Instituto Mirom Banrom tiene su sede en Quinyny. Fue fundado por Tasgar Bankathe. Emplea a 342 investigadores. Opera 7 laboratorios. Su presupuesto anual es de 199 millones de coronas. Su director actual es Lorka Ostsorthe. El director actual asumió el cargo en 2014. Abrió un campus satélite en Banlorlor. La organización publica un informe anual sobre sus actividades. El campus satélite se inauguró en 1992. Posee 258 patentes. El 14% de su financiación procede de donantes privados. Su revista, la Romfen Review, publica 5 números al año. Su investigación abarca varias disciplinas científicas. Su principal universidad asociada está en Sortaska. Ha ganado el Premio Karom 15 veces. Los visitantes pueden recorrer parte del edificio principal con cita previa. Forma a 85 doctorandos cada año.",
+     "summaries": [
+      {
+       "id": "X2S04",
+       "text": "El campus satélite se inauguró en 1992. El director actual asumió el cargo en 2014. Emplea a 342 investigadores. Fue fundado por Sormi Zuzumi. Forma a 85 doctorandos cada año. Su revista, la Romfen Review, publica 3 números al año."
+      },
+      {
+       "id": "X2S07",
+       "text": "Emplea a 213 investigadores. El director actual asumió el cargo en 2018. Su director actual es Taszu Sorsorsor. Opera 10 laboratorios. Abrió un campus satélite en Zuromka."
+      },
+      {
+       "id": "X2S12",
+       "text": "Ha ganado el Premio Karom 15 veces. Fue fundado por Tasgar Bankathe. Su principal universidad asociada está en Sortaska. Emplea a 342 investigadores. El director actual asumió el cargo en 2014. El campus satélite se inauguró en 2002. Su presupuesto anual es de 284 millones de coronas. Forma a 85 doctorandos cada año. El Instituto Mirom Banrom fue fundado en 1971. Abrió un campus satélite en Banlorlor. Su director actual es Lorka Ostsorthe."
+      },
+      {
+       "id": "X2S10",
+       "text": "Posee 155 patentes. Emplea a 342 investigadores. El 14% de su financiación procede de donantes privados. Opera 10 laboratorios. Fue fundado por Tasgar Bankathe. Abrió un campus satélite en Banlorlor. Ha ganado el Premio Karom 9 veces. El campus satélite se inauguró en 2002. Su presupuesto anual es de 199 millones de coronas. Forma a 85 doctorandos cada año."
+      },
+      {
+       "id": "X2S02",
+       "text": "El campus satélite se inauguró en 1992. El 14% de su financiación procede de donantes privados. Su director actual es Lorka Ostsorthe. El Instituto Mirom Banrom fue fundado en 1971. El director actual asumió el cargo en 2014. Forma a 85 doctorandos cada año. Abrió un campus satélite en Banlorlor. Su revista, la Romfen Review, publica 5 números al año. Su presupuesto anual es de 199 millones de coronas."
+      },
+      {
+       "id": "X2S09",
+       "text": "El Instituto Mirom Banrom fue fundado en 1984. Su principal universidad asociada está en Sortaska. Su director actual es Lorka Ostsorthe. Emplea a 213 investigadores. El 14% de su financiación procede de donantes privados. El campus satélite se inauguró en 1992. Su revista, la Romfen Review, publica 5 números al año. Opera 7 laboratorios. Abrió un campus satélite en Zuromka. El Instituto Mirom Banrom tiene su sede en Romventas. Su presupuesto anual es de 199 millones de coronas. El director actual asumió el cargo en 2014. Forma a 85 doctorandos cada año. Posee 258 patentes. Fue fundado por Sormi Zuzumi."
+      },
+      {
+       "id": "X2S11",
+       "text": "Su principal universidad asociada está en Sortaska. Su director actual es Lorka Ostsorthe. El campus satélite se inauguró en 1992. Forma a 85 doctorandos cada año. Fue fundado por Tasgar Bankathe. El 14% de su financiación procede de donantes privados. Abrió un campus satélite en Zuromka."
+      },
+      {
+       "id": "X2S05",
+       "text": "Emplea a 342 investigadores. El Instituto Mirom Banrom tiene su sede en Quinyny. El director actual asumió el cargo en 2014. El campus satélite se inauguró en 1992. Ha ganado el Premio Karom 9 veces. Su presupuesto anual es de 199 millones de coronas. Fue fundado por Sormi Zuzumi. Forma a 85 doctorandos cada año. Posee 258 patentes. Abrió un campus satélite en Banlorlor. El Instituto Mirom Banrom fue fundado en 1984. Opera 10 laboratorios."
+      },
+      {
+       "id": "X2S03",
+       "text": "Su principal universidad asociada está en Sortaska. Abrió un campus satélite en Banlorlor. Su director actual es Lorka Ostsorthe. Su presupuesto anual es de 199 millones de coronas. Ha ganado el Premio Karom 15 veces. El Instituto Mirom Banrom tiene su sede en Quinyny. Su revista, la Romfen Review, publica 5 números al año. Opera 7 laboratorios. El 23% de su financiación procede de donantes privados. El director actual asumió el cargo en 2018. El Instituto Mirom Banrom fue fundado en 1971. El campus satélite se inauguró en 1992. Emplea a 342 investigadores. Fue fundado por Sormi Zuzumi."
+      },
+      {
+       "id": "X2S06",
+       "text": "Ha ganado el Premio Karom 15 veces. El campus satélite se inauguró en 1992. El 14% de su financiación procede de donantes privados. Su presupuesto anual es de 199 millones de coronas. Su principal universidad asociada está en Sortaska. El director actual asumió el cargo en 2014. Fue fundado por Tasgar Bankathe. Posee 258 patentes. Emplea a 342 investigadores. El Instituto Mirom Banrom tiene su sede en Quinyny. Abrió un campus satélite en Banlorlor. Opera 7 laboratorios. Su director actual es Lorka Ostsorthe. Su revista, la Romfen Review, publica 5 números al año. El Instituto Mirom Banrom fue fundado en 1971. Forma a 85 doctorandos cada año."
+      },
+      {
+       "id": "X2S08",
+       "text": "Su revista, la Romfen Review, publica 5 números al año. Emplea a 342 investigadores. Abrió un campus satélite en Zuromka. El Instituto Mirom Banrom tiene su sede en Quinyny. Opera 7 laboratorios. El director actual asumió el cargo en 2014. Su presupuesto anual es de 199 millones de coronas. Su director actual es Lorka Ostsorthe. Posee 258 patentes. Forma a 85 doctorandos cada año. Su principal universidad asociada está en Lortasail. Fue fundado por Tasgar Bankathe. El Instituto Mirom Banrom fue fundado en 1984."
+      },
+      {
+       "id": "X2S01",
+       "text": "El director actual asumió el cargo en 2014. Abrió un campus satélite en Banlorlor. Su revista, la Romfen Review, publica 3 números al año. Su principal universidad asociada está en Sortaska. El Instituto Mirom Banrom fue fundado en 1971. El campus satélite se inauguró en 1992. Ha ganado el Premio Karom 15 veces. Opera 7 laboratorios."
+      }
+     ]
+    },
+    "de": {
+     "source": "Bericht über das Mirom-Banrom-Institut.\n\nDas Mirom-Banrom-Institut wurde 1971 gegründet. Das Mirom-Banrom-Institut hat seinen Sitz in Quinyny. Es wurde von Tasgar Bankathe gegründet. Es beschäftigt 342 Forschende. Es betreibt 7 Labore. Sein Jahresbudget beträgt 199 Millionen Kronen. Derzeitiger Direktor ist Lorka Ostsorthe. Der derzeitige Direktor trat sein Amt 2014 an. Es eröffnete einen Außencampus in Banlorlor. Die Organisation veröffentlicht jährlich einen Tätigkeitsbericht. Der Außencampus wurde 1992 eröffnet. Es hält 258 Patente. 14% seiner Finanzierung stammen von privaten Spendern. Seine Zeitschrift, die Romfen Review, erscheint 5-mal im Jahr. Seine Forschung umfasst mehrere wissenschaftliche Disziplinen. Seine wichtigste Partneruniversität befindet sich in Sortaska. Es hat den Karom-Preis 15-mal gewonnen. Besucher können Teile des Hauptgebäudes nach Vereinbarung besichtigen. Es bildet jedes Jahr 85 Doktoranden aus.",
+     "summaries": [
+      {
+       "id": "X2S04",
+       "text": "Der Außencampus wurde 1992 eröffnet. Der derzeitige Direktor trat sein Amt 2014 an. Es beschäftigt 342 Forschende. Es wurde von Sormi Zuzumi gegründet. Es bildet jedes Jahr 85 Doktoranden aus. Seine Zeitschrift, die Romfen Review, erscheint 3-mal im Jahr."
+      },
+      {
+       "id": "X2S07",
+       "text": "Es beschäftigt 213 Forschende. Der derzeitige Direktor trat sein Amt 2018 an. Derzeitiger Direktor ist Taszu Sorsorsor. Es betreibt 10 Labore. Es eröffnete einen Außencampus in Zuromka."
+      },
+      {
+       "id": "X2S12",
+       "text": "Es hat den Karom-Preis 15-mal gewonnen. Es wurde von Tasgar Bankathe gegründet. Seine wichtigste Partneruniversität befindet sich in Sortaska. Es beschäftigt 342 Forschende. Der derzeitige Direktor trat sein Amt 2014 an. Der Außencampus wurde 2002 eröffnet. Sein Jahresbudget beträgt 284 Millionen Kronen. Es bildet jedes Jahr 85 Doktoranden aus. Das Mirom-Banrom-Institut wurde 1971 gegründet. Es eröffnete einen Außencampus in Banlorlor. Derzeitiger Direktor ist Lorka Ostsorthe."
+      },
+      {
+       "id": "X2S10",
+       "text": "Es hält 155 Patente. Es beschäftigt 342 Forschende. 14% seiner Finanzierung stammen von privaten Spendern. Es betreibt 10 Labore. Es wurde von Tasgar Bankathe gegründet. Es eröffnete einen Außencampus in Banlorlor. Es hat den Karom-Preis 9-mal gewonnen. Der Außencampus wurde 2002 eröffnet. Sein Jahresbudget beträgt 199 Millionen Kronen. Es bildet jedes Jahr 85 Doktoranden aus."
+      },
+      {
+       "id": "X2S02",
+       "text": "Der Außencampus wurde 1992 eröffnet. 14% seiner Finanzierung stammen von privaten Spendern. Derzeitiger Direktor ist Lorka Ostsorthe. Das Mirom-Banrom-Institut wurde 1971 gegründet. Der derzeitige Direktor trat sein Amt 2014 an. Es bildet jedes Jahr 85 Doktoranden aus. Es eröffnete einen Außencampus in Banlorlor. Seine Zeitschrift, die Romfen Review, erscheint 5-mal im Jahr. Sein Jahresbudget beträgt 199 Millionen Kronen."
+      },
+      {
+       "id": "X2S09",
+       "text": "Das Mirom-Banrom-Institut wurde 1984 gegründet. Seine wichtigste Partneruniversität befindet sich in Sortaska. Derzeitiger Direktor ist Lorka Ostsorthe. Es beschäftigt 213 Forschende. 14% seiner Finanzierung stammen von privaten Spendern. Der Außencampus wurde 1992 eröffnet. Seine Zeitschrift, die Romfen Review, erscheint 5-mal im Jahr. Es betreibt 7 Labore. Es eröffnete einen Außencampus in Zuromka. Das Mirom-Banrom-Institut hat seinen Sitz in Romventas. Sein Jahresbudget beträgt 199 Millionen Kronen. Der derzeitige Direktor trat sein Amt 2014 an. Es bildet jedes Jahr 85 Doktoranden aus. Es hält 258 Patente. Es wurde von Sormi Zuzumi gegründet."
+      },
+      {
+       "id": "X2S11",
+       "text": "Seine wichtigste Partneruniversität befindet sich in Sortaska. Derzeitiger Direktor ist Lorka Ostsorthe. Der Außencampus wurde 1992 eröffnet. Es bildet jedes Jahr 85 Doktoranden aus. Es wurde von Tasgar Bankathe gegründet. 14% seiner Finanzierung stammen von privaten Spendern. Es eröffnete einen Außencampus in Zuromka."
+      },
+      {
+       "id": "X2S05",
+       "text": "Es beschäftigt 342 Forschende. Das Mirom-Banrom-Institut hat seinen Sitz in Quinyny. Der derzeitige Direktor trat sein Amt 2014 an. Der Außencampus wurde 1992 eröffnet. Es hat den Karom-Preis 9-mal gewonnen. Sein Jahresbudget beträgt 199 Millionen Kronen. Es wurde von Sormi Zuzumi gegründet. Es bildet jedes Jahr 85 Doktoranden aus. Es hält 258 Patente. Es eröffnete einen Außencampus in Banlorlor. Das Mirom-Banrom-Institut wurde 1984 gegründet. Es betreibt 10 Labore."
+      },
+      {
+       "id": "X2S03",
+       "text": "Seine wichtigste Partneruniversität befindet sich in Sortaska. Es eröffnete einen Außencampus in Banlorlor. Derzeitiger Direktor ist Lorka Ostsorthe. Sein Jahresbudget beträgt 199 Millionen Kronen. Es hat den Karom-Preis 15-mal gewonnen. Das Mirom-Banrom-Institut hat seinen Sitz in Quinyny. Seine Zeitschrift, die Romfen Review, erscheint 5-mal im Jahr. Es betreibt 7 Labore. 23% seiner Finanzierung stammen von privaten Spendern. Der derzeitige Direktor trat sein Amt 2018 an. Das Mirom-Banrom-Institut wurde 1971 gegründet. Der Außencampus wurde 1992 eröffnet. Es beschäftigt 342 Forschende. Es wurde von Sormi Zuzumi gegründet."
+      },
+      {
+       "id": "X2S06",
+       "text": "Es hat den Karom-Preis 15-mal gewonnen. Der Außencampus wurde 1992 eröffnet. 14% seiner Finanzierung stammen von privaten Spendern. Sein Jahresbudget beträgt 199 Millionen Kronen. Seine wichtigste Partneruniversität befindet sich in Sortaska. Der derzeitige Direktor trat sein Amt 2014 an. Es wurde von Tasgar Bankathe gegründet. Es hält 258 Patente. Es beschäftigt 342 Forschende. Das Mirom-Banrom-Institut hat seinen Sitz in Quinyny. Es eröffnete einen Außencampus in Banlorlor. Es betreibt 7 Labore. Derzeitiger Direktor ist Lorka Ostsorthe. Seine Zeitschrift, die Romfen Review, erscheint 5-mal im Jahr. Das Mirom-Banrom-Institut wurde 1971 gegründet. Es bildet jedes Jahr 85 Doktoranden aus."
+      },
+      {
+       "id": "X2S08",
+       "text": "Seine Zeitschrift, die Romfen Review, erscheint 5-mal im Jahr. Es beschäftigt 342 Forschende. Es eröffnete einen Außencampus in Zuromka. Das Mirom-Banrom-Institut hat seinen Sitz in Quinyny. Es betreibt 7 Labore. Der derzeitige Direktor trat sein Amt 2014 an. Sein Jahresbudget beträgt 199 Millionen Kronen. Derzeitiger Direktor ist Lorka Ostsorthe. Es hält 258 Patente. Es bildet jedes Jahr 85 Doktoranden aus. Seine wichtigste Partneruniversität befindet sich in Lortasail. Es wurde von Tasgar Bankathe gegründet. Das Mirom-Banrom-Institut wurde 1984 gegründet."
+      },
+      {
+       "id": "X2S01",
+       "text": "Der derzeitige Direktor trat sein Amt 2014 an. Es eröffnete einen Außencampus in Banlorlor. Seine Zeitschrift, die Romfen Review, erscheint 3-mal im Jahr. Seine wichtigste Partneruniversität befindet sich in Sortaska. Das Mirom-Banrom-Institut wurde 1971 gegründet. Der Außencampus wurde 1992 eröffnet. Es hat den Karom-Preis 15-mal gewonnen. Es betreibt 7 Labore."
+      }
+     ]
+    },
+    "ja": {
+     "source": "Mirom Banrom研究所に関する報告書。\n\nMirom Banrom研究所は1971年に設立された。Mirom Banrom研究所の本部はQuinynyにある。創設者はTasgar Bankatheである。研究者342人を雇用している。7の研究室を運営している。年間予算は199百万クローネである。現在の所長はLorka Ostsortheである。現所長は2014年に就任した。Banlorlorにサテライトキャンパスを開設した。同組織は活動に関する年次報告書を発行している。サテライトキャンパスは1992年に開設された。258件の特許を保有している。資金の14%は民間の寄付者によるものである。機関誌『Romfen Review』は年に5号発行される。研究は複数の科学分野にまたがっている。主な提携大学はSortaskaにある。Karom賞を15回受賞している。見学者は予約制で本館の一部を見学できる。毎年85人の博士課程学生を育成している。",
+     "summaries": [
+      {
+       "id": "X2S04",
+       "text": "サテライトキャンパスは1992年に開設された。現所長は2014年に就任した。研究者342人を雇用している。創設者はSormi Zuzumiである。毎年85人の博士課程学生を育成している。機関誌『Romfen Review』は年に3号発行される。"
+      },
+      {
+       "id": "X2S07",
+       "text": "研究者213人を雇用している。現所長は2018年に就任した。現在の所長はTaszu Sorsorsorである。10の研究室を運営している。Zuromkaにサテライトキャンパスを開設した。"
+      },
+      {
+       "id": "X2S12",
+       "text": "Karom賞を15回受賞している。創設者はTasgar Bankatheである。主な提携大学はSortaskaにある。研究者342人を雇用している。現所長は2014年に就任した。サテライトキャンパスは2002年に開設された。年間予算は284百万クローネである。毎年85人の博士課程学生を育成している。Mirom Banrom研究所は1971年に設立された。Banlorlorにサテライトキャンパスを開設した。現在の所長はLorka Ostsortheである。"
+      },
+      {
+       "id": "X2S10",
+       "text": "155件の特許を保有している。研究者342人を雇用している。資金の14%は民間の寄付者によるものである。10の研究室を運営している。創設者はTasgar Bankatheである。Banlorlorにサテライトキャンパスを開設した。Karom賞を9回受賞している。サテライトキャンパスは2002年に開設された。年間予算は199百万クローネである。毎年85人の博士課程学生を育成している。"
+      },
+      {
+       "id": "X2S02",
+       "text": "サテライトキャンパスは1992年に開設された。資金の14%は民間の寄付者によるものである。現在の所長はLorka Ostsortheである。Mirom Banrom研究所は1971年に設立された。現所長は2014年に就任した。毎年85人の博士課程学生を育成している。Banlorlorにサテライトキャンパスを開設した。機関誌『Romfen Review』は年に5号発行される。年間予算は199百万クローネである。"
+      },
+      {
+       "id": "X2S09",
+       "text": "Mirom Banrom研究所は1984年に設立された。主な提携大学はSortaskaにある。現在の所長はLorka Ostsortheである。研究者213人を雇用している。資金の14%は民間の寄付者によるものである。サテライトキャンパスは1992年に開設された。機関誌『Romfen Review』は年に5号発行される。7の研究室を運営している。Zuromkaにサテライトキャンパスを開設した。Mirom Banrom研究所の本部はRomventasにある。年間予算は199百万クローネである。現所長は2014年に就任した。毎年85人の博士課程学生を育成している。258件の特許を保有している。創設者はSormi Zuzumiである。"
+      },
+      {
+       "id": "X2S11",
+       "text": "主な提携大学はSortaskaにある。現在の所長はLorka Ostsortheである。サテライトキャンパスは1992年に開設された。毎年85人の博士課程学生を育成している。創設者はTasgar Bankatheである。資金の14%は民間の寄付者によるものである。Zuromkaにサテライトキャンパスを開設した。"
+      },
+      {
+       "id": "X2S05",
+       "text": "研究者342人を雇用している。Mirom Banrom研究所の本部はQuinynyにある。現所長は2014年に就任した。サテライトキャンパスは1992年に開設された。Karom賞を9回受賞している。年間予算は199百万クローネである。創設者はSormi Zuzumiである。毎年85人の博士課程学生を育成している。258件の特許を保有している。Banlorlorにサテライトキャンパスを開設した。Mirom Banrom研究所は1984年に設立された。10の研究室を運営している。"
+      },
+      {
+       "id": "X2S03",
+       "text": "主な提携大学はSortaskaにある。Banlorlorにサテライトキャンパスを開設した。現在の所長はLorka Ostsortheである。年間予算は199百万クローネである。Karom賞を15回受賞している。Mirom Banrom研究所の本部はQuinynyにある。機関誌『Romfen Review』は年に5号発行される。7の研究室を運営している。資金の23%は民間の寄付者によるものである。現所長は2018年に就任した。Mirom Banrom研究所は1971年に設立された。サテライトキャンパスは1992年に開設された。研究者342人を雇用している。創設者はSormi Zuzumiである。"
+      },
+      {
+       "id": "X2S06",
+       "text": "Karom賞を15回受賞している。サテライトキャンパスは1992年に開設された。資金の14%は民間の寄付者によるものである。年間予算は199百万クローネである。主な提携大学はSortaskaにある。現所長は2014年に就任した。創設者はTasgar Bankatheである。258件の特許を保有している。研究者342人を雇用している。Mirom Banrom研究所の本部はQuinynyにある。Banlorlorにサテライトキャンパスを開設した。7の研究室を運営している。現在の所長はLorka Ostsortheである。機関誌『Romfen Review』は年に5号発行される。Mirom Banrom研究所は1971年に設立された。毎年85人の博士課程学生を育成している。"
+      },
+      {
+       "id": "X2S08",
+       "text": "機関誌『Romfen Review』は年に5号発行される。研究者342人を雇用している。Zuromkaにサテライトキャンパスを開設した。Mirom Banrom研究所の本部はQuinynyにある。7の研究室を運営している。現所長は2014年に就任した。年間予算は199百万クローネである。現在の所長はLorka Ostsortheである。258件の特許を保有している。毎年85人の博士課程学生を育成している。主な提携大学はLortasailにある。創設者はTasgar Bankatheである。Mirom Banrom研究所は1984年に設立された。"
+      },
+      {
+       "id": "X2S01",
+       "text": "現所長は2014年に就任した。Banlorlorにサテライトキャンパスを開設した。機関誌『Romfen Review』は年に3号発行される。主な提携大学はSortaskaにある。Mirom Banrom研究所は1971年に設立された。サテライトキャンパスは1992年に開設された。Karom賞を15回受賞している。7の研究室を運営している。"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "doc": "X3",
+   "values": {
+    "founded": [
+     "1947",
+     "1958"
+    ],
+    "city": [
+     "Ventasrom",
+     "Theostka"
+    ],
+    "founder": [
+     "Lorfen Gargardru",
+     "Sorzu Nyquitas"
+    ],
+    "staff": [
+     "745",
+     "1021"
+    ],
+    "labs": [
+     "16",
+     "26"
+    ],
+    "budget": [
+     "190",
+     "103"
+    ],
+    "director": [
+     "Druka Tassorel",
+     "Sorzu Nyquitas"
+    ],
+    "director_year": [
+     "2018",
+     "2006"
+    ],
+    "satellite": [
+     "Nyostel",
+     "Fenostny"
+    ],
+    "satellite_year": [
+     "2000",
+     "1991"
+    ],
+    "patents": [
+     "54",
+     "36"
+    ],
+    "share": [
+     "83%",
+     "68%"
+    ],
+    "journal": [
+     "11",
+     "5"
+    ],
+    "partner": [
+     "Banromzu",
+     "Ailtheail"
+    ],
+    "award": [
+     "7",
+     "12"
+    ],
+    "students": [
+     "145",
+     "217"
+    ]
+   },
+   "names": {
+    "A": "Quifen",
+    "B": "Venel",
+    "j": "Misor",
+    "a": "Lorqui"
+   },
+   "plan": [
+    {
+     "id": "X3S12",
+     "seq": [
+      12,
+      10,
+      3,
+      1,
+      0,
+      4,
+      13,
+      6,
+      2,
+      7,
+      14,
+      5,
+      8,
+      9,
+      11,
+      15
+     ],
+     "wrong": [
+      9,
+      14
+     ],
+     "n_mentioned": 16,
+     "n_wrong": 2
+    },
+    {
+     "id": "X3S02",
+     "seq": [
+      0,
+      11,
+      1,
+      8,
+      5,
+      14,
+      15,
+      10,
+      12,
+      6,
+      7,
+      2,
+      4,
+      13,
+      3
+     ],
+     "wrong": [
+      1,
+      3,
+      7
+     ],
+     "n_mentioned": 15,
+     "n_wrong": 3
+    },
+    {
+     "id": "X3S05",
+     "seq": [
+      12,
+      3,
+      6,
+      14,
+      1,
+      9,
+      2,
+      0,
+      5,
+      11,
+      13
+     ],
+     "wrong": [
+      12
+     ],
+     "n_mentioned": 11,
+     "n_wrong": 1
+    },
+    {
+     "id": "X3S10",
+     "seq": [
+      13,
+      3,
+      5,
+      12,
+      8,
+      6,
+      14,
+      0,
+      4,
+      7
+     ],
+     "wrong": [
+      4,
+      6,
+      7,
+      13
+     ],
+     "n_mentioned": 10,
+     "n_wrong": 4
+    },
+    {
+     "id": "X3S04",
+     "seq": [
+      8,
+      1,
+      5,
+      15,
+      6
+     ],
+     "wrong": [
+      1,
+      5,
+      6,
+      8,
+      15
+     ],
+     "n_mentioned": 5,
+     "n_wrong": 5
+    },
+    {
+     "id": "X3S03",
+     "seq": [
+      3,
+      5,
+      7,
+      0,
+      1,
+      6
+     ],
+     "wrong": [],
+     "n_mentioned": 6,
+     "n_wrong": 0
+    },
+    {
+     "id": "X3S09",
+     "seq": [
+      0,
+      12,
+      9,
+      13,
+      15,
+      5,
+      11
+     ],
+     "wrong": [
+      5,
+      12
+     ],
+     "n_mentioned": 7,
+     "n_wrong": 2
+    },
+    {
+     "id": "X3S07",
+     "seq": [
+      15,
+      14,
+      11,
+      5,
+      4,
+      6,
+      7,
+      10,
+      8
+     ],
+     "wrong": [],
+     "n_mentioned": 9,
+     "n_wrong": 0
+    },
+    {
+     "id": "X3S11",
+     "seq": [
+      15,
+      11,
+      8,
+      5,
+      12,
+      7,
+      2,
+      10,
+      1,
+      3,
+      4,
+      0,
+      9,
+      6
+     ],
+     "wrong": [
+      0,
+      7,
+      8,
+      9,
+      12
+     ],
+     "n_mentioned": 14,
+     "n_wrong": 5
+    },
+    {
+     "id": "X3S01",
+     "seq": [
+      8,
+      9,
+      14,
+      1,
+      13,
+      2,
+      11,
+      0,
+      4,
+      6,
+      10,
+      5,
+      7
+     ],
+     "wrong": [
+      4
+     ],
+     "n_mentioned": 13,
+     "n_wrong": 1
+    },
+    {
+     "id": "X3S06",
+     "seq": [
+      4,
+      15,
+      11,
+      12,
+      14,
+      7,
+      5,
+      0
+     ],
+     "wrong": [
+      0,
+      4,
+      12
+     ],
+     "n_mentioned": 8,
+     "n_wrong": 3
+    },
+    {
+     "id": "X3S08",
+     "seq": [
+      10,
+      6,
+      12,
+      13,
+      5,
+      0,
+      9,
+      4,
+      14,
+      11,
+      2,
+      8
+     ],
+     "wrong": [
+      5,
+      8,
+      9,
+      10
+     ],
+     "n_mentioned": 12,
+     "n_wrong": 4
+    }
+   ],
+   "lang": {
+    "en": {
+     "source": "Report on the Quifen Venel Institute.\n\nThe Quifen Venel Institute was founded in 1947. The Quifen Venel Institute is headquartered in Ventasrom. It was founded by Lorfen Gargardru. The organisation publishes an annual report describing its activities. It employs 745 researchers. It operates 16 laboratories. Its annual budget is 190 million crowns. Its current director is Druka Tassorel. Its research spans several scientific disciplines. The current director took office in 2018. It opened a satellite campus in Nyostel. The satellite campus opened in 2000. It holds 54 patents. 83% of its funding comes from private donors. Its journal, the Misor Review, publishes 11 issues a year. Visitors can tour parts of the main building by appointment. Its main partner university is in Banromzu. It has won the Lorqui Prize 7 times. It trains 145 doctoral students each year.",
+     "summaries": [
+      {
+       "id": "X3S12",
+       "text": "Its journal, the Misor Review, publishes 11 issues a year. It holds 54 patents. It employs 745 researchers. The Quifen Venel Institute is headquartered in Ventasrom. The Quifen Venel Institute was founded in 1947. It operates 16 laboratories. Its main partner university is in Banromzu. Its current director is Druka Tassorel. It was founded by Lorfen Gargardru. The current director took office in 2018. It has won the Lorqui Prize 12 times. Its annual budget is 190 million crowns. It opened a satellite campus in Nyostel. The satellite campus opened in 1991. 83% of its funding comes from private donors. It trains 145 doctoral students each year."
+      },
+      {
+       "id": "X3S02",
+       "text": "The Quifen Venel Institute was founded in 1947. 83% of its funding comes from private donors. The Quifen Venel Institute is headquartered in Theostka. It opened a satellite campus in Nyostel. Its annual budget is 190 million crowns. It has won the Lorqui Prize 7 times. It trains 145 doctoral students each year. It holds 54 patents. Its journal, the Misor Review, publishes 11 issues a year. Its current director is Druka Tassorel. The current director took office in 2006. It was founded by Lorfen Gargardru. It operates 16 laboratories. Its main partner university is in Banromzu. It employs 1021 researchers."
+      },
+      {
+       "id": "X3S05",
+       "text": "Its journal, the Misor Review, publishes 5 issues a year. It employs 745 researchers. Its current director is Druka Tassorel. It has won the Lorqui Prize 7 times. The Quifen Venel Institute is headquartered in Ventasrom. The satellite campus opened in 2000. It was founded by Lorfen Gargardru. The Quifen Venel Institute was founded in 1947. Its annual budget is 190 million crowns. 83% of its funding comes from private donors. Its main partner university is in Banromzu."
+      },
+      {
+       "id": "X3S10",
+       "text": "Its main partner university is in Ailtheail. It employs 745 researchers. Its annual budget is 190 million crowns. Its journal, the Misor Review, publishes 11 issues a year. It opened a satellite campus in Nyostel. Its current director is Sorzu Nyquitas. It has won the Lorqui Prize 7 times. The Quifen Venel Institute was founded in 1947. It operates 26 laboratories. The current director took office in 2006."
+      },
+      {
+       "id": "X3S04",
+       "text": "It opened a satellite campus in Fenostny. The Quifen Venel Institute is headquartered in Theostka. Its annual budget is 103 million crowns. It trains 217 doctoral students each year. Its current director is Sorzu Nyquitas."
+      },
+      {
+       "id": "X3S03",
+       "text": "It employs 745 researchers. Its annual budget is 190 million crowns. The current director took office in 2018. The Quifen Venel Institute was founded in 1947. The Quifen Venel Institute is headquartered in Ventasrom. Its current director is Druka Tassorel."
+      },
+      {
+       "id": "X3S09",
+       "text": "The Quifen Venel Institute was founded in 1947. Its journal, the Misor Review, publishes 5 issues a year. The satellite campus opened in 2000. Its main partner university is in Banromzu. It trains 145 doctoral students each year. Its annual budget is 103 million crowns. 83% of its funding comes from private donors."
+      },
+      {
+       "id": "X3S07",
+       "text": "It trains 145 doctoral students each year. It has won the Lorqui Prize 7 times. 83% of its funding comes from private donors. Its annual budget is 190 million crowns. It operates 16 laboratories. Its current director is Druka Tassorel. The current director took office in 2018. It holds 54 patents. It opened a satellite campus in Nyostel."
+      },
+      {
+       "id": "X3S11",
+       "text": "It trains 145 doctoral students each year. 83% of its funding comes from private donors. It opened a satellite campus in Fenostny. Its annual budget is 190 million crowns. Its journal, the Misor Review, publishes 5 issues a year. The current director took office in 2006. It was founded by Lorfen Gargardru. It holds 54 patents. The Quifen Venel Institute is headquartered in Ventasrom. It employs 745 researchers. It operates 16 laboratories. The Quifen Venel Institute was founded in 1958. The satellite campus opened in 1991. Its current director is Druka Tassorel."
+      },
+      {
+       "id": "X3S01",
+       "text": "It opened a satellite campus in Nyostel. The satellite campus opened in 2000. It has won the Lorqui Prize 7 times. The Quifen Venel Institute is headquartered in Ventasrom. Its main partner university is in Banromzu. It was founded by Lorfen Gargardru. 83% of its funding comes from private donors. The Quifen Venel Institute was founded in 1947. It operates 26 laboratories. Its current director is Druka Tassorel. It holds 54 patents. Its annual budget is 190 million crowns. The current director took office in 2018."
+      },
+      {
+       "id": "X3S06",
+       "text": "It operates 26 laboratories. It trains 145 doctoral students each year. 83% of its funding comes from private donors. Its journal, the Misor Review, publishes 5 issues a year. It has won the Lorqui Prize 7 times. The current director took office in 2018. Its annual budget is 190 million crowns. The Quifen Venel Institute was founded in 1958."
+      },
+      {
+       "id": "X3S08",
+       "text": "It holds 36 patents. Its current director is Druka Tassorel. Its journal, the Misor Review, publishes 11 issues a year. Its main partner university is in Banromzu. Its annual budget is 103 million crowns. The Quifen Venel Institute was founded in 1947. The satellite campus opened in 1991. It operates 16 laboratories. It has won the Lorqui Prize 7 times. 83% of its funding comes from private donors. It was founded by Lorfen Gargardru. It opened a satellite campus in Fenostny."
+      }
+     ]
+    },
+    "es": {
+     "source": "Informe sobre el Instituto Quifen Venel.\n\nEl Instituto Quifen Venel fue fundado en 1947. El Instituto Quifen Venel tiene su sede en Ventasrom. Fue fundado por Lorfen Gargardru. La organización publica un informe anual sobre sus actividades. Emplea a 745 investigadores. Opera 16 laboratorios. Su presupuesto anual es de 190 millones de coronas. Su director actual es Druka Tassorel. Su investigación abarca varias disciplinas científicas. El director actual asumió el cargo en 2018. Abrió un campus satélite en Nyostel. El campus satélite se inauguró en 2000. Posee 54 patentes. El 83% de su financiación procede de donantes privados. Su revista, la Misor Review, publica 11 números al año. Los visitantes pueden recorrer parte del edificio principal con cita previa. Su principal universidad asociada está en Banromzu. Ha ganado el Premio Lorqui 7 veces. Forma a 145 doctorandos cada año.",
+     "summaries": [
+      {
+       "id": "X3S12",
+       "text": "Su revista, la Misor Review, publica 11 números al año. Posee 54 patentes. Emplea a 745 investigadores. El Instituto Quifen Venel tiene su sede en Ventasrom. El Instituto Quifen Venel fue fundado en 1947. Opera 16 laboratorios. Su principal universidad asociada está en Banromzu. Su director actual es Druka Tassorel. Fue fundado por Lorfen Gargardru. El director actual asumió el cargo en 2018. Ha ganado el Premio Lorqui 12 veces. Su presupuesto anual es de 190 millones de coronas. Abrió un campus satélite en Nyostel. El campus satélite se inauguró en 1991. El 83% de su financiación procede de donantes privados. Forma a 145 doctorandos cada año."
+      },
+      {
+       "id": "X3S02",
+       "text": "El Instituto Quifen Venel fue fundado en 1947. El 83% de su financiación procede de donantes privados. El Instituto Quifen Venel tiene su sede en Theostka. Abrió un campus satélite en Nyostel. Su presupuesto anual es de 190 millones de coronas. Ha ganado el Premio Lorqui 7 veces. Forma a 145 doctorandos cada año. Posee 54 patentes. Su revista, la Misor Review, publica 11 números al año. Su director actual es Druka Tassorel. El director actual asumió el cargo en 2006. Fue fundado por Lorfen Gargardru. Opera 16 laboratorios. Su principal universidad asociada está en Banromzu. Emplea a 1021 investigadores."
+      },
+      {
+       "id": "X3S05",
+       "text": "Su revista, la Misor Review, publica 5 números al año. Emplea a 745 investigadores. Su director actual es Druka Tassorel. Ha ganado el Premio Lorqui 7 veces. El Instituto Quifen Venel tiene su sede en Ventasrom. El campus satélite se inauguró en 2000. Fue fundado por Lorfen Gargardru. El Instituto Quifen Venel fue fundado en 1947. Su presupuesto anual es de 190 millones de coronas. El 83% de su financiación procede de donantes privados. Su principal universidad asociada está en Banromzu."
+      },
+      {
+       "id": "X3S10",
+       "text": "Su principal universidad asociada está en Ailtheail. Emplea a 745 investigadores. Su presupuesto anual es de 190 millones de coronas. Su revista, la Misor Review, publica 11 números al año. Abrió un campus satélite en Nyostel. Su director actual es Sorzu Nyquitas. Ha ganado el Premio Lorqui 7 veces. El Instituto Quifen Venel fue fundado en 1947. Opera 26 laboratorios. El director actual asumió el cargo en 2006."
+      },
+      {
+       "id": "X3S04",
+       "text": "Abrió un campus satélite en Fenostny. El Instituto Quifen Venel tiene su sede en Theostka. Su presupuesto anual es de 103 millones de coronas. Forma a 217 doctorandos cada año. Su director actual es Sorzu Nyquitas."
+      },
+      {
+       "id": "X3S03",
+       "text": "Emplea a 745 investigadores. Su presupuesto anual es de 190 millones de coronas. El director actual asumió el cargo en 2018. El Instituto Quifen Venel fue fundado en 1947. El Instituto Quifen Venel tiene su sede en Ventasrom. Su director actual es Druka Tassorel."
+      },
+      {
+       "id": "X3S09",
+       "text": "El Instituto Quifen Venel fue fundado en 1947. Su revista, la Misor Review, publica 5 números al año. El campus satélite se inauguró en 2000. Su principal universidad asociada está en Banromzu. Forma a 145 doctorandos cada año. Su presupuesto anual es de 103 millones de coronas. El 83% de su financiación procede de donantes privados."
+      },
+      {
+       "id": "X3S07",
+       "text": "Forma a 145 doctorandos cada año. Ha ganado el Premio Lorqui 7 veces. El 83% de su financiación procede de donantes privados. Su presupuesto anual es de 190 millones de coronas. Opera 16 laboratorios. Su director actual es Druka Tassorel. El director actual asumió el cargo en 2018. Posee 54 patentes. Abrió un campus satélite en Nyostel."
+      },
+      {
+       "id": "X3S11",
+       "text": "Forma a 145 doctorandos cada año. El 83% de su financiación procede de donantes privados. Abrió un campus satélite en Fenostny. Su presupuesto anual es de 190 millones de coronas. Su revista, la Misor Review, publica 5 números al año. El director actual asumió el cargo en 2006. Fue fundado por Lorfen Gargardru. Posee 54 patentes. El Instituto Quifen Venel tiene su sede en Ventasrom. Emplea a 745 investigadores. Opera 16 laboratorios. El Instituto Quifen Venel fue fundado en 1958. El campus satélite se inauguró en 1991. Su director actual es Druka Tassorel."
+      },
+      {
+       "id": "X3S01",
+       "text": "Abrió un campus satélite en Nyostel. El campus satélite se inauguró en 2000. Ha ganado el Premio Lorqui 7 veces. El Instituto Quifen Venel tiene su sede en Ventasrom. Su principal universidad asociada está en Banromzu. Fue fundado por Lorfen Gargardru. El 83% de su financiación procede de donantes privados. El Instituto Quifen Venel fue fundado en 1947. Opera 26 laboratorios. Su director actual es Druka Tassorel. Posee 54 patentes. Su presupuesto anual es de 190 millones de coronas. El director actual asumió el cargo en 2018."
+      },
+      {
+       "id": "X3S06",
+       "text": "Opera 26 laboratorios. Forma a 145 doctorandos cada año. El 83% de su financiación procede de donantes privados. Su revista, la Misor Review, publica 5 números al año. Ha ganado el Premio Lorqui 7 veces. El director actual asumió el cargo en 2018. Su presupuesto anual es de 190 millones de coronas. El Instituto Quifen Venel fue fundado en 1958."
+      },
+      {
+       "id": "X3S08",
+       "text": "Posee 36 patentes. Su director actual es Druka Tassorel. Su revista, la Misor Review, publica 11 números al año. Su principal universidad asociada está en Banromzu. Su presupuesto anual es de 103 millones de coronas. El Instituto Quifen Venel fue fundado en 1947. El campus satélite se inauguró en 1991. Opera 16 laboratorios. Ha ganado el Premio Lorqui 7 veces. El 83% de su financiación procede de donantes privados. Fue fundado por Lorfen Gargardru. Abrió un campus satélite en Fenostny."
+      }
+     ]
+    },
+    "de": {
+     "source": "Bericht über das Quifen-Venel-Institut.\n\nDas Quifen-Venel-Institut wurde 1947 gegründet. Das Quifen-Venel-Institut hat seinen Sitz in Ventasrom. Es wurde von Lorfen Gargardru gegründet. Die Organisation veröffentlicht jährlich einen Tätigkeitsbericht. Es beschäftigt 745 Forschende. Es betreibt 16 Labore. Sein Jahresbudget beträgt 190 Millionen Kronen. Derzeitiger Direktor ist Druka Tassorel. Seine Forschung umfasst mehrere wissenschaftliche Disziplinen. Der derzeitige Direktor trat sein Amt 2018 an. Es eröffnete einen Außencampus in Nyostel. Der Außencampus wurde 2000 eröffnet. Es hält 54 Patente. 83% seiner Finanzierung stammen von privaten Spendern. Seine Zeitschrift, die Misor Review, erscheint 11-mal im Jahr. Besucher können Teile des Hauptgebäudes nach Vereinbarung besichtigen. Seine wichtigste Partneruniversität befindet sich in Banromzu. Es hat den Lorqui-Preis 7-mal gewonnen. Es bildet jedes Jahr 145 Doktoranden aus.",
+     "summaries": [
+      {
+       "id": "X3S12",
+       "text": "Seine Zeitschrift, die Misor Review, erscheint 11-mal im Jahr. Es hält 54 Patente. Es beschäftigt 745 Forschende. Das Quifen-Venel-Institut hat seinen Sitz in Ventasrom. Das Quifen-Venel-Institut wurde 1947 gegründet. Es betreibt 16 Labore. Seine wichtigste Partneruniversität befindet sich in Banromzu. Derzeitiger Direktor ist Druka Tassorel. Es wurde von Lorfen Gargardru gegründet. Der derzeitige Direktor trat sein Amt 2018 an. Es hat den Lorqui-Preis 12-mal gewonnen. Sein Jahresbudget beträgt 190 Millionen Kronen. Es eröffnete einen Außencampus in Nyostel. Der Außencampus wurde 1991 eröffnet. 83% seiner Finanzierung stammen von privaten Spendern. Es bildet jedes Jahr 145 Doktoranden aus."
+      },
+      {
+       "id": "X3S02",
+       "text": "Das Quifen-Venel-Institut wurde 1947 gegründet. 83% seiner Finanzierung stammen von privaten Spendern. Das Quifen-Venel-Institut hat seinen Sitz in Theostka. Es eröffnete einen Außencampus in Nyostel. Sein Jahresbudget beträgt 190 Millionen Kronen. Es hat den Lorqui-Preis 7-mal gewonnen. Es bildet jedes Jahr 145 Doktoranden aus. Es hält 54 Patente. Seine Zeitschrift, die Misor Review, erscheint 11-mal im Jahr. Derzeitiger Direktor ist Druka Tassorel. Der derzeitige Direktor trat sein Amt 2006 an. Es wurde von Lorfen Gargardru gegründet. Es betreibt 16 Labore. Seine wichtigste Partneruniversität befindet sich in Banromzu. Es beschäftigt 1021 Forschende."
+      },
+      {
+       "id": "X3S05",
+       "text": "Seine Zeitschrift, die Misor Review, erscheint 5-mal im Jahr. Es beschäftigt 745 Forschende. Derzeitiger Direktor ist Druka Tassorel. Es hat den Lorqui-Preis 7-mal gewonnen. Das Quifen-Venel-Institut hat seinen Sitz in Ventasrom. Der Außencampus wurde 2000 eröffnet. Es wurde von Lorfen Gargardru gegründet. Das Quifen-Venel-Institut wurde 1947 gegründet. Sein Jahresbudget beträgt 190 Millionen Kronen. 83% seiner Finanzierung stammen von privaten Spendern. Seine wichtigste Partneruniversität befindet sich in Banromzu."
+      },
+      {
+       "id": "X3S10",
+       "text": "Seine wichtigste Partneruniversität befindet sich in Ailtheail. Es beschäftigt 745 Forschende. Sein Jahresbudget beträgt 190 Millionen Kronen. Seine Zeitschrift, die Misor Review, erscheint 11-mal im Jahr. Es eröffnete einen Außencampus in Nyostel. Derzeitiger Direktor ist Sorzu Nyquitas. Es hat den Lorqui-Preis 7-mal gewonnen. Das Quifen-Venel-Institut wurde 1947 gegründet. Es betreibt 26 Labore. Der derzeitige Direktor trat sein Amt 2006 an."
+      },
+      {
+       "id": "X3S04",
+       "text": "Es eröffnete einen Außencampus in Fenostny. Das Quifen-Venel-Institut hat seinen Sitz in Theostka. Sein Jahresbudget beträgt 103 Millionen Kronen. Es bildet jedes Jahr 217 Doktoranden aus. Derzeitiger Direktor ist Sorzu Nyquitas."
+      },
+      {
+       "id": "X3S03",
+       "text": "Es beschäftigt 745 Forschende. Sein Jahresbudget beträgt 190 Millionen Kronen. Der derzeitige Direktor trat sein Amt 2018 an. Das Quifen-Venel-Institut wurde 1947 gegründet. Das Quifen-Venel-Institut hat seinen Sitz in Ventasrom. Derzeitiger Direktor ist Druka Tassorel."
+      },
+      {
+       "id": "X3S09",
+       "text": "Das Quifen-Venel-Institut wurde 1947 gegründet. Seine Zeitschrift, die Misor Review, erscheint 5-mal im Jahr. Der Außencampus wurde 2000 eröffnet. Seine wichtigste Partneruniversität befindet sich in Banromzu. Es bildet jedes Jahr 145 Doktoranden aus. Sein Jahresbudget beträgt 103 Millionen Kronen. 83% seiner Finanzierung stammen von privaten Spendern."
+      },
+      {
+       "id": "X3S07",
+       "text": "Es bildet jedes Jahr 145 Doktoranden aus. Es hat den Lorqui-Preis 7-mal gewonnen. 83% seiner Finanzierung stammen von privaten Spendern. Sein Jahresbudget beträgt 190 Millionen Kronen. Es betreibt 16 Labore. Derzeitiger Direktor ist Druka Tassorel. Der derzeitige Direktor trat sein Amt 2018 an. Es hält 54 Patente. Es eröffnete einen Außencampus in Nyostel."
+      },
+      {
+       "id": "X3S11",
+       "text": "Es bildet jedes Jahr 145 Doktoranden aus. 83% seiner Finanzierung stammen von privaten Spendern. Es eröffnete einen Außencampus in Fenostny. Sein Jahresbudget beträgt 190 Millionen Kronen. Seine Zeitschrift, die Misor Review, erscheint 5-mal im Jahr. Der derzeitige Direktor trat sein Amt 2006 an. Es wurde von Lorfen Gargardru gegründet. Es hält 54 Patente. Das Quifen-Venel-Institut hat seinen Sitz in Ventasrom. Es beschäftigt 745 Forschende. Es betreibt 16 Labore. Das Quifen-Venel-Institut wurde 1958 gegründet. Der Außencampus wurde 1991 eröffnet. Derzeitiger Direktor ist Druka Tassorel."
+      },
+      {
+       "id": "X3S01",
+       "text": "Es eröffnete einen Außencampus in Nyostel. Der Außencampus wurde 2000 eröffnet. Es hat den Lorqui-Preis 7-mal gewonnen. Das Quifen-Venel-Institut hat seinen Sitz in Ventasrom. Seine wichtigste Partneruniversität befindet sich in Banromzu. Es wurde von Lorfen Gargardru gegründet. 83% seiner Finanzierung stammen von privaten Spendern. Das Quifen-Venel-Institut wurde 1947 gegründet. Es betreibt 26 Labore. Derzeitiger Direktor ist Druka Tassorel. Es hält 54 Patente. Sein Jahresbudget beträgt 190 Millionen Kronen. Der derzeitige Direktor trat sein Amt 2018 an."
+      },
+      {
+       "id": "X3S06",
+       "text": "Es betreibt 26 Labore. Es bildet jedes Jahr 145 Doktoranden aus. 83% seiner Finanzierung stammen von privaten Spendern. Seine Zeitschrift, die Misor Review, erscheint 5-mal im Jahr. Es hat den Lorqui-Preis 7-mal gewonnen. Der derzeitige Direktor trat sein Amt 2018 an. Sein Jahresbudget beträgt 190 Millionen Kronen. Das Quifen-Venel-Institut wurde 1958 gegründet."
+      },
+      {
+       "id": "X3S08",
+       "text": "Es hält 36 Patente. Derzeitiger Direktor ist Druka Tassorel. Seine Zeitschrift, die Misor Review, erscheint 11-mal im Jahr. Seine wichtigste Partneruniversität befindet sich in Banromzu. Sein Jahresbudget beträgt 103 Millionen Kronen. Das Quifen-Venel-Institut wurde 1947 gegründet. Der Außencampus wurde 1991 eröffnet. Es betreibt 16 Labore. Es hat den Lorqui-Preis 7-mal gewonnen. 83% seiner Finanzierung stammen von privaten Spendern. Es wurde von Lorfen Gargardru gegründet. Es eröffnete einen Außencampus in Fenostny."
+      }
+     ]
+    },
+    "ja": {
+     "source": "Quifen Venel研究所に関する報告書。\n\nQuifen Venel研究所は1947年に設立された。Quifen Venel研究所の本部はVentasromにある。創設者はLorfen Gargardruである。同組織は活動に関する年次報告書を発行している。研究者745人を雇用している。16の研究室を運営している。年間予算は190百万クローネである。現在の所長はDruka Tassorelである。研究は複数の科学分野にまたがっている。現所長は2018年に就任した。Nyostelにサテライトキャンパスを開設した。サテライトキャンパスは2000年に開設された。54件の特許を保有している。資金の83%は民間の寄付者によるものである。機関誌『Misor Review』は年に11号発行される。見学者は予約制で本館の一部を見学できる。主な提携大学はBanromzuにある。Lorqui賞を7回受賞している。毎年145人の博士課程学生を育成している。",
+     "summaries": [
+      {
+       "id": "X3S12",
+       "text": "機関誌『Misor Review』は年に11号発行される。54件の特許を保有している。研究者745人を雇用している。Quifen Venel研究所の本部はVentasromにある。Quifen Venel研究所は1947年に設立された。16の研究室を運営している。主な提携大学はBanromzuにある。現在の所長はDruka Tassorelである。創設者はLorfen Gargardruである。現所長は2018年に就任した。Lorqui賞を12回受賞している。年間予算は190百万クローネである。Nyostelにサテライトキャンパスを開設した。サテライトキャンパスは1991年に開設された。資金の83%は民間の寄付者によるものである。毎年145人の博士課程学生を育成している。"
+      },
+      {
+       "id": "X3S02",
+       "text": "Quifen Venel研究所は1947年に設立された。資金の83%は民間の寄付者によるものである。Quifen Venel研究所の本部はTheostkaにある。Nyostelにサテライトキャンパスを開設した。年間予算は190百万クローネである。Lorqui賞を7回受賞している。毎年145人の博士課程学生を育成している。54件の特許を保有している。機関誌『Misor Review』は年に11号発行される。現在の所長はDruka Tassorelである。現所長は2006年に就任した。創設者はLorfen Gargardruである。16の研究室を運営している。主な提携大学はBanromzuにある。研究者1021人を雇用している。"
+      },
+      {
+       "id": "X3S05",
+       "text": "機関誌『Misor Review』は年に5号発行される。研究者745人を雇用している。現在の所長はDruka Tassorelである。Lorqui賞を7回受賞している。Quifen Venel研究所の本部はVentasromにある。サテライトキャンパスは2000年に開設された。創設者はLorfen Gargardruである。Quifen Venel研究所は1947年に設立された。年間予算は190百万クローネである。資金の83%は民間の寄付者によるものである。主な提携大学はBanromzuにある。"
+      },
+      {
+       "id": "X3S10",
+       "text": "主な提携大学はAiltheailにある。研究者745人を雇用している。年間予算は190百万クローネである。機関誌『Misor Review』は年に11号発行される。Nyostelにサテライトキャンパスを開設した。現在の所長はSorzu Nyquitasである。Lorqui賞を7回受賞している。Quifen Venel研究所は1947年に設立された。26の研究室を運営している。現所長は2006年に就任した。"
+      },
+      {
+       "id": "X3S04",
+       "text": "Fenostnyにサテライトキャンパスを開設した。Quifen Venel研究所の本部はTheostkaにある。年間予算は103百万クローネである。毎年217人の博士課程学生を育成している。現在の所長はSorzu Nyquitasである。"
+      },
+      {
+       "id": "X3S03",
+       "text": "研究者745人を雇用している。年間予算は190百万クローネである。現所長は2018年に就任した。Quifen Venel研究所は1947年に設立された。Quifen Venel研究所の本部はVentasromにある。現在の所長はDruka Tassorelである。"
+      },
+      {
+       "id": "X3S09",
+       "text": "Quifen Venel研究所は1947年に設立された。機関誌『Misor Review』は年に5号発行される。サテライトキャンパスは2000年に開設された。主な提携大学はBanromzuにある。毎年145人の博士課程学生を育成している。年間予算は103百万クローネである。資金の83%は民間の寄付者によるものである。"
+      },
+      {
+       "id": "X3S07",
+       "text": "毎年145人の博士課程学生を育成している。Lorqui賞を7回受賞している。資金の83%は民間の寄付者によるものである。年間予算は190百万クローネである。16の研究室を運営している。現在の所長はDruka Tassorelである。現所長は2018年に就任した。54件の特許を保有している。Nyostelにサテライトキャンパスを開設した。"
+      },
+      {
+       "id": "X3S11",
+       "text": "毎年145人の博士課程学生を育成している。資金の83%は民間の寄付者によるものである。Fenostnyにサテライトキャンパスを開設した。年間予算は190百万クローネである。機関誌『Misor Review』は年に5号発行される。現所長は2006年に就任した。創設者はLorfen Gargardruである。54件の特許を保有している。Quifen Venel研究所の本部はVentasromにある。研究者745人を雇用している。16の研究室を運営している。Quifen Venel研究所は1958年に設立された。サテライトキャンパスは1991年に開設された。現在の所長はDruka Tassorelである。"
+      },
+      {
+       "id": "X3S01",
+       "text": "Nyostelにサテライトキャンパスを開設した。サテライトキャンパスは2000年に開設された。Lorqui賞を7回受賞している。Quifen Venel研究所の本部はVentasromにある。主な提携大学はBanromzuにある。創設者はLorfen Gargardruである。資金の83%は民間の寄付者によるものである。Quifen Venel研究所は1947年に設立された。26の研究室を運営している。現在の所長はDruka Tassorelである。54件の特許を保有している。年間予算は190百万クローネである。現所長は2018年に就任した。"
+      },
+      {
+       "id": "X3S06",
+       "text": "26の研究室を運営している。毎年145人の博士課程学生を育成している。資金の83%は民間の寄付者によるものである。機関誌『Misor Review』は年に5号発行される。Lorqui賞を7回受賞している。現所長は2018年に就任した。年間予算は190百万クローネである。Quifen Venel研究所は1958年に設立された。"
+      },
+      {
+       "id": "X3S08",
+       "text": "36件の特許を保有している。現在の所長はDruka Tassorelである。機関誌『Misor Review』は年に11号発行される。主な提携大学はBanromzuにある。年間予算は103百万クローネである。Quifen Venel研究所は1947年に設立された。サテライトキャンパスは1991年に開設された。16の研究室を運営している。Lorqui賞を7回受賞している。資金の83%は民間の寄付者によるものである。創設者はLorfen Gargardruである。Fenostnyにサテライトキャンパスを開設した。"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "truth": {
+  "accuracy": "-(number of statements whose value contradicts the source), identical in every language",
+  "completeness": "number of source facts mentioned, identical in every language"
+ }
+}

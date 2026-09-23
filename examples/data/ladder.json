@@ -1,0 +1,1964 @@
+{
+ "seed": 20260924,
+ "rungs": 10,
+ "truth": "rung number: rung k = rung k-1 + one logged damage op (higher = worse)",
+ "ladders": [
+  {
+   "ladder": "L1",
+   "base_model": "moonshotai/kimi-k3",
+   "base": "This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. The approach is applied to recognizing pre-segmented characters from cursive handwriting on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude faster, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate.",
+   "items": [
+    {
+     "id": "L1R0",
+     "rung": 0,
+     "ops": [],
+     "text": "This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. The approach is applied to recognizing pre-segmented characters from cursive handwriting on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude faster, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R2",
+     "rung": 2,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude faster, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R9",
+     "rung": 9,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "Softmax",
+       "new": "SVM"
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Markov' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French bank checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or SVM—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem."
+    },
+    {
+     "id": "L1R6",
+     "rung": 6,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French bank checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R7",
+     "rung": 7,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "Softmax",
+       "new": "SVM"
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French bank checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or SVM—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R8",
+     "rung": 8,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "Softmax",
+       "new": "SVM"
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "Bayes",
+       "new": "Markov"
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Markov' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French bank checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or SVM—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R3",
+     "rung": 3,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R4",
+     "rung": 4,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R1",
+     "rung": 1,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      }
+     ],
+     "text": "This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude faster, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    },
+    {
+     "id": "L1R5",
+     "rung": 5,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      }
+     ],
+     "text": "Since raw two-class network outputs are not necessarily calibrated probabilities for real-world (non-Gaussian) data, the authors convert them to probabilities in two steps: first, class-conditional densities over each network's linear output are estimated (e.g., by fitting Gaussians) and transformed into pairwise posterior probabilities via Bayes' rule, under the assumption that the network output is as informative as the input; second, these pairwise probabilities are combined using a closed-form expression derived from the inclusion–exclusion principle to yield posterior probabilities for all K classes. This paper presents a method for multi-class classification using a \"pairwise\" neural network architecture, where a K-class problem is decomposed into K(K−1)/2 two-class sub-problems, each handled by a small neural network (potentially a single sigmoidal neuron) trained only on data from its respective pair of classes. The approach is applied to recognizing pre-segmented characters from cursive speech on French postal checks (27 classes, ~55,000 characters), where it achieves competitive recognition performance compared to multilayer perceptrons trained with backpropagation or Softmax—though Softmax scored highest in raw accuracy, the pairwise classifier trains over an order of magnitude slower, allows incremental updates when classes change, and offers greater insight into the classification problem. Integrated into a complete check-reading system with word-level post-processing, the method contributed to recognizing 80% of checks correctly at a 1% error rate."
+    }
+   ]
+  },
+  {
+   "ladder": "L2",
+   "base_model": "openai/gpt-5",
+   "base": "The paper proposes a scalable way to obtain calibrated, multi-class posterior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. Applied to real-world cursive handwriting recognition on French postal checks with 27 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost. Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions.",
+   "items": [
+    {
+     "id": "L2R9",
+     "rung": 9,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "handwriting",
+       "new": "speech"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 2
+      }
+     ],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. Applied to real-world cursive speech recognition on French postal checks with 34 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance)."
+    },
+    {
+     "id": "L2R2",
+     "rung": 2,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      }
+     ],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. Applied to real-world cursive handwriting recognition on French postal checks with 27 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+    },
+    {
+     "id": "L2R5",
+     "rung": 5,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "27",
+       "new": "34"
+      }
+     ],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Applied to real-world cursive handwriting recognition on French postal checks with 34 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives."
+    },
+    {
+     "id": "L2R6",
+     "rung": 6,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      }
+     ],
+     "text": "Applied to real-world cursive handwriting recognition on French postal checks with 34 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives."
+    },
+    {
+     "id": "L2R1",
+     "rung": 1,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      }
+     ],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class posterior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. Applied to real-world cursive handwriting recognition on French postal checks with 27 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+    },
+    {
+     "id": "L2R0",
+     "rung": 0,
+     "ops": [],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class posterior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. Applied to real-world cursive handwriting recognition on French postal checks with 27 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost. Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+    },
+    {
+     "id": "L2R8",
+     "rung": 8,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "handwriting",
+       "new": "speech"
+      }
+     ],
+     "text": "Applied to real-world cursive speech recognition on French postal checks with 34 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs."
+    },
+    {
+     "id": "L2R4",
+     "rung": 4,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+      }
+     ],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Applied to real-world cursive handwriting recognition on French postal checks with 27 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives."
+    },
+    {
+     "id": "L2R3",
+     "rung": 3,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      }
+     ],
+     "text": "The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs. Applied to real-world cursive handwriting recognition on French postal checks with 27 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+    },
+    {
+     "id": "L2R7",
+     "rung": 7,
+     "ops": [
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "On a 55k-character dataset, the pairwise method achieves 48.9% top-1 with equal priors (52.2% with true priors) and fast training; a Softmax MLP attains higher accuracy (54.9%/61.9%) but at significantly greater computational cost."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Integrated into a full check-reading pipeline, the approach yields 83.3% top-1 word accuracy, 64.1% correct literal amounts, and 80% correctly read checks at 1% error, while offering practical advantages: rapid experimentation, easy class addition, and diagnostic insight into class confusions."
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "swap",
+       "i": 2,
+       "j": 1
+      }
+     ],
+     "text": "Applied to real-world cursive handwriting recognition on French postal checks with 34 classes (including frequent letter pairs), the system normalizes segmented characters, trains 351 single-neuron pairwise classifiers, models the linear outputs as Gaussians, and aggregates probabilities for use by word-level decoding (e.g., Edit Distance). Each pairwise network is a small classifier trained only on two classes; to make its single output probabilistic, the authors fit class-conditional densities to the network’s linear output (before the sigmoid), apply Bayes’ rule to compute pairwise posteriors Prij, and then derive full K-class posteriors via a closed-form combination that uses all pairwise probabilities, avoiding brittle selection of (K−1) pairs required by alternatives. The paper proposes a scalable way to obtain calibrated, multi-class prior probabilities by decomposing a K-class problem into K(K−1)/2 two-class neural networks and then recombining their outputs."
+    }
+   ]
+  },
+  {
+   "ladder": "L3",
+   "base_model": "anthropic/claude-opus-4.7",
+   "base": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2)). This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French postal checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs. Compared to MLPs trained with backpropagation or Softmax and to 27 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full check-reading system it contributes to 80% correct check recognition at 1% error.",
+   "items": [
+    {
+     "id": "L3R9",
+     "rung": 9,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "1%",
+       "new": "9%"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "80%",
+       "new": "62%"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      }
+     ],
+     "text": "This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. This paper presents a method for obtaining prior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. Compared to MLPs trained with backpropagation or Softmax and to 34 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full invoice-reading system it contributes to 62% correct check recognition at 9% error."
+    },
+    {
+     "id": "L3R0",
+     "rung": 0,
+     "ops": [],
+     "text": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2)). This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French postal checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs. Compared to MLPs trained with backpropagation or Softmax and to 27 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full check-reading system it contributes to 80% correct check recognition at 1% error."
+    },
+    {
+     "id": "L3R4",
+     "rung": 4,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      }
+     ],
+     "text": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. Compared to MLPs trained with backpropagation or Softmax and to 27 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full invoice-reading system it contributes to 80% correct check recognition at 1% error."
+    },
+    {
+     "id": "L3R6",
+     "rung": 6,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      }
+     ],
+     "text": "This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. Compared to MLPs trained with backpropagation or Softmax and to 34 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full invoice-reading system it contributes to 80% correct check recognition at 1% error."
+    },
+    {
+     "id": "L3R8",
+     "rung": 8,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "1%",
+       "new": "9%"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "80%",
+       "new": "62%"
+      }
+     ],
+     "text": "This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. Compared to MLPs trained with backpropagation or Softmax and to 34 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full invoice-reading system it contributes to 62% correct check recognition at 9% error."
+    },
+    {
+     "id": "L3R5",
+     "rung": 5,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      }
+     ],
+     "text": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. Compared to MLPs trained with backpropagation or Softmax and to 34 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full invoice-reading system it contributes to 80% correct check recognition at 1% error."
+    },
+    {
+     "id": "L3R2",
+     "rung": 2,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      }
+     ],
+     "text": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs. Compared to MLPs trained with backpropagation or Softmax and to 27 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full check-reading system it contributes to 80% correct check recognition at 1% error."
+    },
+    {
+     "id": "L3R7",
+     "rung": 7,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "1%",
+       "new": "9%"
+      }
+     ],
+     "text": "This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. Compared to MLPs trained with backpropagation or Softmax and to 34 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full invoice-reading system it contributes to 80% correct check recognition at 9% error."
+    },
+    {
+     "id": "L3R3",
+     "rung": 3,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2))."
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs."
+      }
+     ],
+     "text": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. Compared to MLPs trained with backpropagation or Softmax and to 27 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full check-reading system it contributes to 80% correct check recognition at 1% error."
+    },
+    {
+     "id": "L3R1",
+     "rung": 1,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "postal",
+       "new": "bank"
+      }
+     ],
+     "text": "This paper presents a method for obtaining posterior class probabilities from a pairwise (one-vs-one) neural network classifier for K-class problems, where K(K−1)/2 small networks are each trained to discriminate a pair of classes. For each pairwise network, the authors fit Gaussians to the class-conditional densities of the single output neuron's pre-activation, apply Bayes' rule to get pairwise posteriors Pr(ω_i | ω_ij, x), then derive a closed-form expression combining all pairwise probabilities into the K class posteriors: Pr(ω_i|x) = 1 / (Σ_{j≠i} 1/Pr_ij − (K−2)). This improves on an earlier method (Refregier & Vallet) that required selecting an optimal subset of K−1 pairwise probabilities per pattern. The approach is applied to recognizing pre-segmented characters (27 classes) from cursive handwriting on French bank checks, using single sigmoidal neurons as the pairwise classifiers on 10×24 pixel inputs. Compared to MLPs trained with backpropagation or Softmax and to 27 one-vs-all MLPs, the pairwise classifier's raw accuracy (~52% top-1) is somewhat below Softmax MLPs (~62%), but it trains over an order of magnitude faster, allows incremental addition of classes without full retraining, and yields interpretable pairwise structure; integrated into a full check-reading system it contributes to 80% correct check recognition at 1% error."
+    }
+   ]
+  },
+  {
+   "ladder": "L4",
+   "base_model": "anthropic/claude-sonnet-5",
+   "base": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full posterior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French postal checks with 27 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude faster, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger check-reading system that achieves strong end-to-end word and amount recognition performance.",
+   "items": [
+    {
+     "id": "L4R7",
+     "rung": 7,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      }
+     ],
+     "text": "The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Markov' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude slower, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger invoice-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R1",
+     "rung": 1,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full posterior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 27 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude faster, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger check-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R2",
+     "rung": 2,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 27 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude faster, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger check-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R5",
+     "rung": 5,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "faster",
+       "new": "slower"
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude slower, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger invoice-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R8",
+     "rung": 8,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "drop",
+       "i": 0,
+       "removed": "The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Markov' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities."
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude slower, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger invoice-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R6",
+     "rung": 6,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Markov' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude slower, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger invoice-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R0",
+     "rung": 0,
+     "ops": [],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full posterior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French postal checks with 27 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude faster, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger check-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R9",
+     "rung": 9,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "faster",
+       "new": "slower"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "drop",
+       "i": 0,
+       "removed": "The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Markov' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities."
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 2
+      }
+     ],
+     "text": "While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude slower, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger invoice-reading system that achieves strong end-to-end word and amount recognition performance. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network."
+    },
+    {
+     "id": "L4R4",
+     "rung": 4,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "check",
+       "new": "invoice"
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude faster, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger invoice-reading system that achieves strong end-to-end word and amount recognition performance."
+    },
+    {
+     "id": "L4R3",
+     "rung": 3,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      }
+     ],
+     "text": "This paper presents a method for building multi-class neural network classifiers with probabilistic outputs by decomposing a K-class problem into K(K-1)/2 pairwise two-class subproblems, each solved by a small neural network. The authors show how to convert each pairwise classifier's raw output into a class-conditional probability estimate via density fitting and Bayes' rule, and then derive a closed-form formula for combining all pairwise probability estimates into full prior class probabilities, improving on a prior method that used only K-1 subsets of pairwise probabilities. This pairwise probabilistic classifier is applied to a real-world handwriting recognition task—reading cursive amounts on French bank checks with 34 character classes—where it is compared against standard MLPs, softmax-trained MLPs, and one-vs-all MLP ensembles. While softmax MLPs achieve the best raw recognition accuracy, the pairwise approach trains over an order of magnitude faster, allows classes to be added or retrained independently, and offers greater interpretability, making it a practical and flexible tool within a larger check-reading system that achieves strong end-to-end word and amount recognition performance."
+    }
+   ]
+  },
+  {
+   "ladder": "L5",
+   "base_model": "openai/gpt-5.6-sol-pro",
+   "base": "The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The approach is evaluated on 27-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000. Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate.",
+   "items": [
+    {
+     "id": "L5R6",
+     "rung": 6,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000."
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      }
+     ],
+     "text": "Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate. Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities."
+    },
+    {
+     "id": "L5R7",
+     "rung": 7,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000."
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight."
+      }
+     ],
+     "text": "Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities."
+    },
+    {
+     "id": "L5R8",
+     "rung": 8,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000."
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "1%",
+       "new": "9%"
+      }
+     ],
+     "text": "Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 9% error rate. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities."
+    },
+    {
+     "id": "L5R0",
+     "rung": 0,
+     "ops": [],
+     "text": "The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The approach is evaluated on 27-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000. Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate."
+    },
+    {
+     "id": "L5R4",
+     "rung": 4,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000."
+      }
+     ],
+     "text": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities."
+    },
+    {
+     "id": "L5R5",
+     "rung": 5,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000."
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      }
+     ],
+     "text": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities."
+    },
+    {
+     "id": "L5R3",
+     "rung": 3,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      }
+     ],
+     "text": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities."
+    },
+    {
+     "id": "L5R9",
+     "rung": 9,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 4
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000."
+      },
+      {
+       "op": "swap",
+       "i": 1,
+       "j": 2
+      },
+      {
+       "op": "swap",
+       "i": 0,
+       "j": 1
+      },
+      {
+       "op": "drop",
+       "i": 1,
+       "removed": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "1%",
+       "new": "9%"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "posterior",
+       "new": "prior"
+      }
+     ],
+     "text": "Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 9% error rate. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into prior class probabilities."
+    },
+    {
+     "id": "L5R1",
+     "rung": 1,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      }
+     ],
+     "text": "The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000. Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate."
+    },
+    {
+     "id": "L5R2",
+     "rung": 2,
+     "ops": [
+      {
+       "op": "error",
+       "i": 2,
+       "old": "27",
+       "new": "34"
+      },
+      {
+       "op": "swap",
+       "i": 3,
+       "j": 0
+      }
+     ],
+     "text": "Although a conventional softmax multilayer perceptron achieved better isolated-character accuracy, the pairwise classifier trained over an order of magnitude faster, allowed classes or training data to be changed without retraining the entire system, and offered greater diagnostic insight. Each binary network’s scalar linear output is calibrated by fitting class-conditional densities and applying Bayes’ rule to estimate pairwise probabilities; the resulting \\(K(K-1)/2\\) estimates are then combined analytically to produce probabilities over all \\(K\\) classes. The approach is evaluated on 34-class recognition of pre-segmented cursive characters from French postal checks, using 351 single-neuron classifiers trained on roughly 20,000 examples and tested on 15,000. The paper presents a “divide-and-conquer” method for multiclass classification that trains a separate neural network for every pair of classes and combines their outputs into posterior class probabilities. Integrated into a check-reading pipeline, it helped achieve 83.3% top-ranked word recognition and 80% correctly recognized checks at a 1% error rate."
+    }
+   ]
+  },
+  {
+   "ladder": "L6",
+   "base_model": "google/gemini-3.7-flash",
+   "base": "This paper presents a method for estimating posterior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$. Evaluated on a 27-class cursive character recognition task for French postal check reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for cursive word recognition.",
+   "items": [
+    {
+     "id": "L6R5",
+     "rung": 5,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "cursive",
+       "new": "printed"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. Evaluated on a 27-class cursive character recognition task for German postal invoice reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for printed word recognition."
+    },
+    {
+     "id": "L6R0",
+     "rung": 0,
+     "ops": [],
+     "text": "This paper presents a method for estimating posterior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$. Evaluated on a 27-class cursive character recognition task for French postal check reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for cursive word recognition."
+    },
+    {
+     "id": "L6R6",
+     "rung": 6,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "cursive",
+       "new": "printed"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Markov' rule. Evaluated on a 27-class cursive character recognition task for German postal invoice reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for printed word recognition."
+    },
+    {
+     "id": "L6R4",
+     "rung": 4,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "cursive",
+       "new": "printed"
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. Evaluated on a 27-class cursive character recognition task for German postal check reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for printed word recognition."
+    },
+    {
+     "id": "L6R7",
+     "rung": 7,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "cursive",
+       "new": "printed"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for printed word recognition."
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Markov' rule. Evaluated on a 27-class cursive character recognition task for German postal invoice reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6)."
+    },
+    {
+     "id": "L6R1",
+     "rung": 1,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      }
+     ],
+     "text": "This paper presents a method for estimating posterior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$. Evaluated on a 27-class cursive character recognition task for German postal check reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for cursive word recognition."
+    },
+    {
+     "id": "L6R9",
+     "rung": 9,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "cursive",
+       "new": "printed"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for printed word recognition."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "55,000",
+       "new": "12,000"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "postal",
+       "new": "bank"
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Markov' rule. Evaluated on a 27-class cursive character recognition task for German bank invoice reading (comprising ~12,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6)."
+    },
+    {
+     "id": "L6R8",
+     "rung": 8,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      },
+      {
+       "op": "error",
+       "i": 3,
+       "old": "cursive",
+       "new": "printed"
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "check",
+       "new": "invoice"
+      },
+      {
+       "op": "error",
+       "i": 1,
+       "old": "Bayes",
+       "new": "Markov"
+      },
+      {
+       "op": "drop",
+       "i": 3,
+       "removed": "Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for printed word recognition."
+      },
+      {
+       "op": "error",
+       "i": 2,
+       "old": "55,000",
+       "new": "12,000"
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Markov' rule. Evaluated on a 27-class cursive character recognition task for German postal invoice reading (comprising ~12,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6)."
+    },
+    {
+     "id": "L6R3",
+     "rung": 3,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      },
+      {
+       "op": "error",
+       "i": 0,
+       "old": "posterior",
+       "new": "prior"
+      }
+     ],
+     "text": "This paper presents a method for estimating prior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. Evaluated on a 27-class cursive character recognition task for German postal check reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for cursive word recognition."
+    },
+    {
+     "id": "L6R2",
+     "rung": 2,
+     "ops": [
+      {
+       "op": "error",
+       "i": 3,
+       "old": "French",
+       "new": "German"
+      },
+      {
+       "op": "drop",
+       "i": 2,
+       "removed": "These pairwise estimates are then analytically combined via an exact probability-of-union formulation into global posterior class probabilities: $\\operatorname{Pr}(\\omega_i \\mid x) = \\left[\\sum_{j \\neq i} \\operatorname{Pr}_{ij}^{-1} - (K-2)\\right]^{-1}$."
+      }
+     ],
+     "text": "This paper presents a method for estimating posterior class probabilities in multi-class classification problems by decomposing the task into $K(K-1)/2$ pairwise, two-class neural networks. For each pair of classes, a single-neuron classifier is trained, and its linear output is modeled using class-conditional probability density estimation (fitted to Gaussians) to compute pairwise posterior probabilities via Bayes' rule. Evaluated on a 27-class cursive character recognition task for German postal check reading (comprising ~55,000 pre-segmented character images), the pairwise classifier achieved a 48.9% first-position accuracy under equal priors (average rank 2.9) and 52.2% under true priors (average rank 2.6). Although standard Softmax MLPs attained slightly higher accuracy (54.9% and 61.9%, respectively), the pairwise architecture offers practical advantages, including more than an order-of-magnitude faster training, modularity for adding or modifying classes without full retraining, and seamless integration with downstream dynamic programming algorithms like Edit Distance for cursive word recognition."
+    }
+   ]
+  }
+ ]
+}

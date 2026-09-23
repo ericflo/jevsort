@@ -13,7 +13,7 @@ Price, Knerr, Personnaz & Dreyfus ([NeurIPS 1994](https://proceedings.neurips.cc
 
 * **More reliable than any single judgment.** Coupling many pairwise answers fixes the contradictions a judge makes
   (A > B > C > A) and averages out its noise and position bias. Measured against explicit ground truth in
-  [four evals](#does-it-work).
+  [eight evals](#does-it-work).
 * **Cheap: not all-vs-all.** An active schedule asks only the informative pairs and stops when the ranking settles;
   100 items were ranked from 8% of the possible pairs. With [Jev](docs/judges.md) as the judge, 4,800 comparisons cost $0.11.
 * **Probabilities, not vibes.** Every item gets a posterior, every pair a calibrated P(A beats B), and jevsort
@@ -62,12 +62,16 @@ More: [usage & CLI](docs/usage.md).
 
 ## Does it work?
 
-Four evals, each with its ground truth stated up front:
+Eight evals, each with its ground truth stated up front:
 
 | eval | what gets ranked | ground truth | result | details |
 |---|---|---|---|---|
 | **Verifiable** | 72 summaries of 6 *fictional* documents | **exact counts** of injected false statements and of facts mentioned, fixed by construction and recountable by a script | <!-- ev:verifiable -->Jev: 96% of pairs right on accuracy, 94% on completeness (τ 0.82 / 0.89) for $0.02; weakest judge τ 0.42<!-- /ev --> | [verifiable](docs/verifiable.md) |
 | **Market** | 80 stocks, judged only on their pre-open SEC filings | **realized return** Fri 2026-09-18 close → Mon 2026-09-21 close, which didn't exist before that day | <!-- ev:market -->Jev τ +0.14 (p = 0.035); its top quartile returned +3.7% vs +0.5%. Other judges: not significant. One day only<!-- /ev --> | [market](docs/market.md) |
+| **Degradation ladder** | 60 copies of 6 real summaries, damaged one logged step at a time | **rung number** (each rung = previous + one planted error / deleted / swapped sentence) | Jev: 94% of pairs right, ECE 0.033 | [ladder](docs/ladder.md) |
+| **Code runtime** | 25 correct implementations of a new function | **measured wall-clock time** in a sandbox | Jev picks the faster one 97% of the time | [runtime](docs/runtime.md) |
+| **Cross-lingual** | the same summaries in EN/ES/DE/JA | **exact counts, identical in every language** by construction | Jev gives the same answer in all 4 languages 96% of the time | [cross-lingual](docs/crosslingual.md) |
+| **Weather** | 35 cities, ranked the day before | **airport observations** of the next day's high and rain; predictions committed first | first round resolves 2026-09-25 | [weather](docs/weather.md) |
 | **Paper sorting** | 16 *fictional* abstracts on 3 questions | **1–5 levels assigned by construction** by the dataset author (not expert ratings) | Jev: fused AUC 0.994, Kendall τ 0.86 | [evaluation](docs/evaluation.md) |
 | **Synthetic** | simulated items, flawed simulated judge | **known latent order**; calibration labels sampled from it | coupling + both orders + temperature: ECE 0.158 → 0.013 | [evaluation](docs/evaluation.md) |
 
@@ -81,6 +85,6 @@ Four evals, each with its ground truth stated up front:
 * [How it works](docs/how-it-works.md): pairwise questions, PKPD Eq. 7, Bradley–Terry, bias guards, blending, Jev as meta-judge and referee
 * [Judges & backends](docs/judges.md): Jev via OpenRouter, the LLM fallback, open Jev models, the `/v1/systemone` shim
 * [Usage](docs/usage.md): CLI, input formats, Python API, calibration, a worked example
-* [Evaluation](docs/evaluation.md) · [Verifiable](docs/verifiable.md) · [Market](docs/market.md) · [Summary Showdown](docs/showdown.md) · [Humans vs judges](docs/humans-vs-judges.md)
+* Evals: [verifiable](docs/verifiable.md) · [market](docs/market.md) · [ladder](docs/ladder.md) · [runtime](docs/runtime.md) · [cross-lingual](docs/crosslingual.md) · [weather](docs/weather.md) · [synthetic + papers](docs/evaluation.md) · [Summary Showdown](docs/showdown.md) · [Humans vs judges](docs/humans-vs-judges.md)
 
 MIT licensed. Contributions welcome.

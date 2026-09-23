@@ -68,4 +68,4 @@ To run it for another session, change the `FRI_CLOSE` / `MON_OPEN` window and da
 
 ---
 
-← [Verifiable eval](verifiable.md) · [Evaluation](evaluation.md) → · [All docs](guide.md)
+← [Verifiable eval](verifiable.md) · [Degradation ladder](ladder.md) → · [All docs](guide.md)
