@@ -1,0 +1,26 @@
+name: weather-eval-resolve
+# Resolves any pending weather-eval predictions from public METAR observations (no API keys needed)
+# and commits the scores. Predictions themselves are made (and committed) before the target day starts.
+on:
+  schedule:
+    - cron: "30 13 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e '.[dev]'
+      - run: python examples/weather_eval.py resolve
+      - run: python examples/weather_eval.py plots || true
+      - name: commit results
+        run: |
+          git config user.name "jevsort-bot"
+          git config user.email "jevsort-bot@users.noreply.github.com"
+          git add examples/data/weather examples/figures docs || true
+          git diff --cached --quiet || (git commit -m "weather eval: resolve $(date -u +%F)" && git push)
