@@ -107,8 +107,8 @@ section { padding-block: 3.2rem 1rem; }
 .card.chosen { border-color: var(--accent); transform: translateY(-2px); }
 .skip-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .8rem; flex-wrap: wrap; }
 
-#results { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.4rem; box-shadow: var(--shadow); }
-#verdict { font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0 0 .2rem; letter-spacing: -.02em; }
+.play #results { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 1.4rem; box-shadow: var(--shadow); }
+.play #verdict { font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0 0 .2rem; letter-spacing: -.02em; }
 .judge-bars { margin: 1.1rem 0 1.2rem; display: grid; gap: .55rem; }
 .jb { display: grid; grid-template-columns: minmax(9rem, 16rem) 1fr 5.5rem; gap: .7rem; align-items: center; }
 .jb-name { font-weight: 600; font-size: .92rem; }
