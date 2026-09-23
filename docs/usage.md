@@ -23,7 +23,8 @@ Items can be `.txt` (one per line), `.csv`, `.jsonl` or `.json` (`[{id, text}]` 
 
 | command | what it does |
 |---|---|
-| `pairsort sort ITEMS "QUESTION" [name="QUESTION" …]` | rank items (a file, or `-` for stdin) by one or more questions; `--top N`, `--budget N`, `--judge SPEC`, `--format text\|ids\|json` |
+| `pairsort sort ITEMS "QUESTION"` | rank items (a file, or `-` for stdin) by one question; `--top N`, `--budget N`, `--judge SPEC`, `--format text\|ids\|json` |
+| `pairsort sort ITEMS name="QUESTION" name2:2="QUESTION" …` | several questions blended into one ranking; `:2` makes one count double |
 | `pairsort compare A B ["QUESTION"]` | one pairwise probability, asked both ways |
 | `pairsort calibrate LABELED.json` | fit per-question temperatures + blend weights → `profile.json` |
 | `pairsort eval --synthetic` / `--data FILE` | AUC-ROC, calibration, τ-vs-pairs ([Evaluation](evaluation.md)) |
@@ -74,25 +75,31 @@ ground-truth levels (1–5) per dimension so ranking quality can be measured. Th
 ```text
 $ pairsort sort examples/data/papers.json --judge llm --pair-strategy active --budget 60 --fusion linear+meta
 
-  #  id               fused     evidence    relevance contribution  title
--------------------------------------------------------------------------
-  1  P10              0.367        0.329        0.347        0.383  Contrastive fine-tuning on clinician edits: a mu
-  2  P01              0.320        0.328        0.322        0.269  Retrieval-grounded decoding for discharge summar
-  3  P02              0.111        0.120        0.103        0.097  Citation-constrained generation cuts unsupported
-  4  P08              0.038        0.036        0.057        0.021  Self-consistency sampling reduces hallucination
+  #  id   P(best)  evidence  relevance  contribution  item
+--------------------------------------------------------------------------------------------
+  1  P10    34.2%        #2         #2            #1  Contrastive fine-tuning on clinician edits: a…
+  2  P01    31.8%        #1         #1            #2  Retrieval-grounded decoding for discharge sum…
+  3  P02    11.5%        #3         #3            #4  Citation-constrained generation cuts unsuppor…
   ...
- 14  P03              0.004        0.004        0.008        0.002  HalluGuard: a revolutionary framework that elimi
- 15  P07              0.003        0.002        0.011        0.001  Ten prompt engineering tips for medical chatbots
- 16  P09              0.002        0.004        0.001        0.002  Diffusion models for retinal vessel segmentation
+  8  P04     1.4%        #8        #13            #7  Scaling laws for factual consistency in news…
+ 11  P12     0.9%       #11         #6           #13  Knowledge-graph grounded summarization of EHR…
+ 12  P15     0.6%       #16        #14            #8  On the impossibility of hallucination-free la…
+  ...
+ 16  P09     0.2%       #13        #16           #14  Diffusion models for retinal vessel segmentat…
 
-coupling: bt   fusion: linear+meta   blend w: evidence=0.54, relevance=0.54, contribution=0.54
-pairs: 60/120   judge questions: 360   stop: max_pairs budget (60) reached
-meta-judge (Option B) over top-5: P10=1.00, P01=0.00, P02=0.00, P16=0.00, P08=0.00
-decision: ACCEPT — accepted: top posterior 0.367, gap 0.047
+blend: evidence 33% + relevance 33% + contribution 33%
+60/120 pairs x 3 questions x 2 orders: 362 judgments, $0.0287; max_pairs budget (60) reached
+meta-judge over the top 5: P10=0.97, P01=0.03, P02=0.00, P16=0.00, P08=0.00
+✓ #1 is 34% likely to be the best, 2% ahead of #2
 ```
 
-Note the per-dimension columns: the retinal-segmentation paper (P09) has decent *evidence* but near-zero
-*relevance*; the hype paper (P03) is on-topic but has no evidence. Blending the three questions puts both near the bottom.
+Read across a row to see why a paper landed where it did. The news-summarization scaling-law study (P04) has solid
+*evidence* (#8) but is off-topic (*relevance* #13). The knowledge-graph pilot (P12) is on-topic (#6) but has little
+evidence (#11). The impossibility proof (P15) is a real *contribution* (#8) with no experiments (*evidence* #16).
+Blending the three questions puts all of them below the solid, on-topic trials.
+
+To make one question count more, give it a weight: `evidence:2="..."` on the CLI, or
+`pairsort.sort(papers, evidence=("...", 2), ...)` in Python.
 
 ## Reproduce everything
 

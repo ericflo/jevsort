@@ -32,6 +32,7 @@ result = pairsort.sort(ideas, useful="Which would developers find more useful?",
                               easy="Which is easier to build in a weekend?")
 # (Same thing as a dict: pairsort.sort(ideas, {"useful": "...", "easy": "..."}). Use the dict when a question's
 #  name would clash with an option such as judge= or budget=.)
+# To make one question count double: useful=("Which would developers find more useful?", 2)
 print(result)                 # a table: overall + each question
 
 # 3. One comparison.

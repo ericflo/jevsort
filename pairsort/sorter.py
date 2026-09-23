@@ -44,6 +44,8 @@ class Dimension:
     #: Optional per-dimension state for per-pair judging (e.g. the source document
     #: for "accuracy" but not for "writing quality"). Defaults to the objective.
     context: object = None
+    #: How much this question counts in the blend, relative to the others (default: all equal).
+    weight: float = 1.0
 
     @property
     def instructions(self) -> str:
@@ -141,24 +143,47 @@ class SortResult:
         return head + "\n" + self.table()
 
     def rows(self) -> list[dict]:
+        ranks = {d: {int(i): r for r, i in enumerate(np.argsort(-self.per_dim[d].posterior, kind="stable"), 1)} for d in self.dims}
         out = []
         for rank, i in enumerate(self.order, 1):
             row = {"rank": rank, "id": self.items[i].id, "fused": float(self.fused.posterior[i])}
             for d in self.dims:
                 row[d] = float(self.per_dim[d].posterior[i])
+            row["ranks"] = {d: ranks[d][int(i)] for d in self.dims}
             out.append(row)
         return out
 
-    def table(self, width: int = 48) -> str:
-        head = f"{'#':>3}  {'id':<14} {'fused':>7} " + " ".join(f"{d[:12]:>12}" for d in self.dims) + "  title"
-        lines = [head, "-" * len(head)]
-        for r in self.rows():
-            text = self.items[self.order[r["rank"] - 1]].text.split("\n")[0][:width]
-            lines.append(
-                f"{r['rank']:>3}  {r['id'][:14]:<14} {r['fused']:>7.3f} "
-                + " ".join(f"{r[d]:>12.3f}" for d in self.dims)
-                + f"  {text}"
-            )
+    def shares(self) -> dict[str, float]:
+        """How much each question counted in the blend (fractions summing to 1)."""
+        tot = sum(abs(w) for w in self.weights.values()) or 1.0
+        return {d: abs(self.weights.get(d, 0.0)) / tot for d in self.dims}
+
+    def table(self, width: int | None = None) -> str:
+        """The ranking as a table: P(best) overall, each question's own rank when there are several, then the item."""
+        import re as _re
+        import shutil
+
+        rows = self.rows()
+        show_id = not all(_re.fullmatch(r"(item|idx)?\d+", r["id"]) for r in rows)
+        multi = len(self.dims) > 1
+        idw = min(max((len(r["id"]) for r in rows), default=2), 14)
+        cols = [f"{'#':>3}"] + ([f"{'id':<{idw}}"] if show_id else []) + [f"{'P(best)':>7}"]
+        if multi:
+            shares = self.shares()
+            even = max(shares.values()) - min(shares.values()) < 0.02
+            labels = {d: d[:12] if even else f"{d[:9]} {round(100 * shares[d])}%" for d in self.dims}
+            cols += [f"{labels[d]:>{max(len(labels[d]), 4)}}" for d in self.dims]
+        head = "  ".join(cols) + "  item"
+        if width is None:
+            width = max(24, shutil.get_terminal_size((100, 20)).columns - len(head) + 4)
+        lines = [head, "-" * min(len(head) + width - 4, 120)]
+        for r in rows:
+            text = self.items[self.order[r["rank"] - 1]].text.split("\n")[0]
+            text = text if len(text) <= width else text[: width - 1].rstrip() + "…"
+            cells = [f"{r['rank']:>3}"] + ([f"{r['id'][:idw]:<{idw}}"] if show_id else []) + [f"{r['fused']:>7.1%}"]
+            if multi:
+                cells += [f"{'#' + str(r['ranks'][d]):>{max(len(labels[d]), 4)}}" for d in self.dims]
+            lines.append("  ".join(cells) + "  " + text)
         return "\n".join(lines)
 
     def to_dict(self) -> dict:
@@ -342,7 +367,8 @@ class PairSorter:
             return
         groups, plan = self._questions(items, pairs, rng)
         n_q = sum(len(q) for _, q in groups)
-        self.progress(f"judging {len(pairs)} pairs x {len(self.dimensions)} dims x {2 if self.both_orders else 1} orders = {n_q} questions")
+        self.progress(f"judging {len(pairs)} pairs x {len(self.dimensions)} question{'s' if len(self.dimensions) > 1 else ''} x "
+                      f"{2 if self.both_orders else 1} orders = {n_q} judgments")
         ans = {}
         for res in self.backend.system_one_many(groups):
             ans.update(res)
@@ -367,7 +393,9 @@ class PairSorter:
         return {d: couple(mats[d], self.coupling, eps=self.eps, max_pkpd_k=self.max_round_robin) for d in self.dims}
 
     def _fuse(self, per_dim):
-        blend = B.LinearBlend(weights=self.profile.blend_weights or None, bias=self.profile.blend_bias)
+        rel = {d.name: float(d.weight) for d in self.dimensions}
+        blend = B.LinearBlend(weights=self.profile.blend_weights or None, bias=self.profile.blend_bias,
+                              relative=rel if len(set(rel.values())) > 1 else None)
         return blend.fuse(per_dim, self.dims)
 
     def _abstain(self, fused: Coupled) -> tuple[bool, str]:
@@ -403,7 +431,7 @@ class PairSorter:
         adaptive = (self.adaptive if self.adaptive is not None else strategy != "round_robin") and strategy != "fixed"
         batch = self.batch_size or max(2, K // 4 if strategy == "referee" else K // 2)
         min_pairs = min(self.min_pairs if self.min_pairs is not None else K, budget)
-        self.progress(f"{K} items, {len(self.dims)} dimensions, strategy={strategy}, "
+        self.progress(f"{K} items, {len(self.dims)} question{'s' if len(self.dims) > 1 else ''}, strategy={strategy}, "
                       f"max {budget}/{total} pairs, adaptive={'on' if adaptive else 'off'}")
 
         def run(pairs):

@@ -68,6 +68,15 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
 - PyPI: pairsort 0.1.0 (tag v0.1.0) and 0.2.0 (tag v0.2.0, keyword questions) published via trusted publishing.
   Next release: bump version in pyproject.toml + pairsort/__init__.py, push tag vX.Y.Z (only when Eric asks).
 
+## Multi-question UX + site restructure (2026-09-23)
+- Homepage is library-first and Jev-led (hero quickstart, "Several questions, one ranking", a replay of a real Jev run,
+  Jev vs the other judges with costs, showdown taste, roadmap); the Summary Showdown lives at summary-showdown.html;
+  evals hub at evals.html.
+- Question weights: `Dimension(weight=)`, Python `useful=("Which ...?", 2)` / `{"question": ..., "weight": 2}`, CLI
+  `useful:2="Which ...?"`. `SortResult.table()` shows P(best) + each question's rank; `SortResult.shares()`.
+  CLI footer in plain English (blend shares, judgments + cost, clear/too-close verdict); help text without
+  "(default: None)" noise; shell-split questions are rejected with a hint. Unreleased (PyPI is 0.2.0).
+
 ## Next
 - Check the weather resolve Action after 2026-09-25 13:30 UTC; then add the result to README/landing.
 - Collect human ballots (issues labeled `human-ballot`), then `pairsort agreement --github ericflo/pairsort` and commit

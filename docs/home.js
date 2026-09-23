@@ -12,11 +12,12 @@ const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // quickstart tabs + copy
 document.querySelectorAll(".qs-tabs [data-tab]").forEach((b) => b.addEventListener("click", () => {
-  document.querySelectorAll(".qs-tabs [data-tab]").forEach((x) => { x.classList.toggle("on", x === b); x.setAttribute("aria-selected", x === b); });
-  document.querySelectorAll(".qs-code").forEach((p) => (p.hidden = p.dataset.pane !== b.dataset.tab));
+  const box = b.closest(".qs");
+  box.querySelectorAll(".qs-tabs [data-tab]").forEach((x) => { x.classList.toggle("on", x === b); x.setAttribute("aria-selected", x === b); });
+  box.querySelectorAll(".qs-code").forEach((p) => (p.hidden = p.dataset.pane !== b.dataset.tab));
 }));
 document.querySelectorAll("[data-copy-from]").forEach((b) => b.addEventListener("click", async () => {
-  const pane = [...document.querySelectorAll(".qs-code")].find((p) => !p.hidden);
+  const pane = [...b.closest(".qs").querySelectorAll(".qs-code")].find((p) => !p.hidden);
   let text = pane.textContent;
   text = text.split("\n").filter((l) => !l.startsWith("#")).join("\n");
   if (pane.dataset.pane === "py") text = text.replace(/\s+#.*$/gm, "");

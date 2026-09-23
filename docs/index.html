@@ -48,10 +48,12 @@ layout: null
 
 ideas = [<span class="s">"A CSV-to-chart CLI"</span>,
          <span class="s">"A blockchain to-do app"</span>,
-         <span class="s">"A PR-urgency ranker"</span>]
+         <span class="s">"A PR-urgency ranker"</span>,
+         <span class="s">"A local-first notes app"</span>,
+         <span class="s">"A tweeting fridge magnet"</span>]
 r = pairsort.sort(ideas,
       <span class="s">"Which is most useful?"</span>)
-r.best     <span class="c"># the winner</span>
+r.best     <span class="c"># 'A local-first notes app'</span>
 r.scores   <span class="c"># P(best) for each idea</span></code></pre>
 <pre class="qs-code" data-pane="cli" hidden><code><span class="c"># no install needed</span>
 uvx pairsort sort - \
@@ -59,10 +61,50 @@ uvx pairsort sort - \
 A CSV-to-chart CLI
 A blockchain to-do app
 A PR-urgency ranker
+A local-first notes app
+A tweeting fridge magnet
 EOF</code></pre>
   </div>
   <p class="hero-proof">Jev is the default judge: set <code>OPENROUTER_API_KEY</code>. Ranking six ideas took
-    <b>30 Jev judgments, 0.52 s and $0.0001</b> (<a href="#demo">watch it</a>). <a href="quickstart.html">Quickstart →</a></p>
+    <b>30 Jev judgments, 0.52 s and $0.0001</b> (<a href="#demo">watch it</a>).
+    <a href="#blend">Several questions? ↓</a></p>
+</section>
+
+<section id="blend" class="blend">
+  <div class="section-head"><h2>Several questions, one ranking</h2>
+    <p>Name each question. pairsort ranks by each one separately, then blends them into one answer.</p></div>
+  <div class="blend-grid">
+    <div class="qs">
+      <div class="qs-tabs">
+        <button type="button" class="on" data-tab="py" role="tab" aria-selected="true">Python</button>
+        <button type="button" data-tab="cli" role="tab" aria-selected="false">CLI</button>
+        <button type="button" class="copy" data-copy-from="qs">Copy</button>
+      </div>
+<pre class="qs-code" data-pane="py"><code>r = pairsort.sort(ideas,
+      useful=<span class="s">"Which is more useful?"</span>,
+      easy=<span class="s">"Which is easier to build?"</span>)
+r.best     <span class="c"># 'A CSV-to-chart CLI'</span>
+print(r)   <span class="c"># this table:</span></code></pre>
+<pre class="qs-code" data-pane="cli" hidden><code>pairsort sort ideas.txt \
+  useful=<span class="s">"Which is more useful?"</span> \
+  easy=<span class="s">"Which is easier to build?"</span></code></pre>
+    </div>
+    <figure class="blend-out">
+      <table class="blend-table">
+        <thead><tr><th>#</th><th>idea</th><th>useful</th><th>easy</th><th>P(best)</th></tr></thead>
+        <tbody>
+          <tr class="lead"><td>1</td><td>A CSV-to-chart CLI</td><td>#2</td><td class="r1">#1</td><td><span class="bb"><i style="width:54%"></i></span>54%</td></tr>
+          <tr><td>2</td><td>A local-first notes app</td><td class="r1">#1</td><td>#4</td><td><span class="bb"><i style="width:20%"></i></span>20%</td></tr>
+          <tr><td>3</td><td>A PR-urgency ranker</td><td>#3</td><td>#3</td><td><span class="bb"><i style="width:19%"></i></span>19%</td></tr>
+          <tr><td>4</td><td>A tweeting fridge magnet</td><td>#5</td><td>#2</td><td><span class="bb"><i style="width:5%"></i></span>5%</td></tr>
+          <tr><td>5</td><td>A blockchain to-do app</td><td>#4</td><td>#5</td><td><span class="bb"><i style="width:2%"></i></span>2%</td></tr>
+        </tbody>
+      </table>
+      <figcaption>Asked only “most useful?”, the notes app wins. It's also hard to build, so the blend picks the CSV
+        CLI: #2 on useful, #1 on easy. To make one question count double, write <code>useful:2="…"</code> in the CLI or
+        <code>useful=("…", 2)</code> in Python. Real Jev run: 40 judgments, $0.00013.</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section id="demo">

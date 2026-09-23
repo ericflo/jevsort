@@ -59,7 +59,7 @@ def test_sort_round_robin_with_synthetic_judge():
     assert kendall_tau(res.fused.log_strength, O) > 0.6
     assert {a["stage"] for a in res.audit} >= {"pair", "meta", "round", "stop"}
     json.loads(res.to_json())  # serializable
-    assert "fused" in res.table()
+    assert "P(best)" in res.table()
 
 
 @pytest.mark.parametrize("strategy", ["random", "swiss", "active", "referee"])

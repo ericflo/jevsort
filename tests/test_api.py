@@ -121,3 +121,32 @@ def test_keyword_collisions_and_typos():
     with pytest.raises(TypeError, match="misspelled option 'fusion'"):
         pairsort.sort(["a", "b"], "Q?", judge=longer, fusoin="linear+meta")
     assert {"judge", "max_pairs", "budget", "objective", "fusion", "coupling"} <= pairsort.reserved_names()
+
+
+def test_blended_questions_show_per_question_ranks_and_weights():
+    ideas = ["a", "bbbb", "cc", "ddd"]
+    r = pairsort.sort(ideas, long="Which is longer?", short="Which is shorter?", judge=lambda q, a, b: (len(a) > len(b)) == ("longer" in q))
+    t = r.table()
+    assert "P(best)" in t and "long" in t and "short" in t and "#1" in t and "item" not in t.split("\n")[2]
+    assert abs(sum(r.shares().values()) - 1) < 1e-9 and abs(r.shares()["long"] - 0.5) < 1e-9
+    assert r.rows()[0]["ranks"]["long"] in (1, 4)
+
+
+def test_question_weights_python_and_cli():
+    judge = lambda q, a, b: (len(a) > len(b)) == ("longer" in q)  # noqa: E731
+    ideas = ["a", "bbbb", "cc", "ddd"]
+    r = pairsort.sort(ideas, long=("Which is longer?", 3), short="Which is shorter?", judge=judge)
+    assert r.best == "bbbb" and abs(r.shares()["long"] - 0.75) < 1e-9
+    r = pairsort.sort(ideas, {"long": "Which is longer?", "short": {"question": "Which is shorter?", "weight": 3}}, judge=judge)
+    assert r.best == "a" and abs(r.shares()["short"] - 0.75) < 1e-9
+    from argparse import Namespace
+
+    from pairsort.cli import _dims
+    d = _dims(Namespace(questions=['useful:2=Which is more useful?', 'easy=Which is easier?', "Which is cheaper?"], dim=None))
+    assert [(x.name, x.weight) for x in d] == [("useful", 2.0), ("easy", 1.0), ("cheaper", 1.0)]
+
+
+def test_cli_rejects_shell_split_questions():
+    r = subprocess.run([sys.executable, "-m", "pairsort", "sort", "-", "useful=Which", "is", "more", "useful?"],
+                       input="a\nb\n", capture_output=True, text=True)
+    assert r.returncode != 0 and "split your quotes" in r.stderr

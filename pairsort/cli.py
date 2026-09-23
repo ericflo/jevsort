@@ -29,7 +29,11 @@ BANNER = "pairsort — PKPD pairwise sorting on Jev-style judges"
 
 
 class _Fmt(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
-    pass
+    def _get_help_string(self, action):  # show a default only when it says something
+        h = action.help or ""
+        if action.default in (None, False, argparse.SUPPRESS) or "default" in h or isinstance(action.default, bool):
+            return h
+        return super()._get_help_string(action)
 
 
 def _err(msg: str) -> None:
@@ -68,8 +72,12 @@ def _dims(args, extra=None) -> list[Dimension]:
         out = []
         for spec in specs:
             name, sep, q = spec.partition("=")
-            if sep and re.fullmatch(r"[A-Za-z_][\w-]*", name.strip()) and q.strip():
-                out.append(Dimension(name.strip(), q.strip().strip('"')))
+            m = re.fullmatch(r"([A-Za-z_][\w-]*)(?::(\d+(?:\.\d+)?))?", name.strip()) if sep else None
+            if m and q.strip():  # name="Which ...?"  or  name:WEIGHT="Which ...?"
+                out.append(Dimension(m[1], q.strip().strip('"'), weight=float(m[2] or 1)))
+            elif not sep and not re.search(r"\s|\?", spec.strip()):
+                raise SystemExit(f"error: {spec!r} doesn't look like a question (did the shell split your quotes?). "
+                                 f'Quote each one:  pairsort sort ideas.txt useful="Which is more useful?" easy="Which is easier?"')
             else:
                 out += as_dimensions(spec)
         return as_dimensions(out)
@@ -157,22 +165,35 @@ def cmd_sort(args) -> int:
         print(f"\033[1mObjective:\033[0m {objective}\n")
     print(res.table())
     print()
-    w = ", ".join(f"{d}={x:.2f}" for d, x in res.weights.items())
-    u = res.usage
-    print(f"coupling: {', '.join(sorted({c.method for c in res.per_dim.values()}))}   fusion: {res.fused.method}   "
-          f"blend w: {w}")
-    print(f"pairs: {u['pairs']}/{u['pairs_possible']}   judge questions: {u['questions']} (+{u['cache_hits']} cached)   "
-          f"stop: {res.config['stop_reason']}")
+    _summary(res)
+    return 0
+
+
+def _summary(res) -> None:
+    """The plain-English footer under a ranking: blend, spend, and whether #1 is a clear winner."""
+    dim, u = "\033[2m", res.usage
+    if len(res.dims) > 1:
+        shares = res.shares()
+        print("blend: " + " + ".join(f"{d} {round(100 * shares[d])}%" for d in res.dims)
+              + f"{dim}   (weight a question with name:2=\"...\"){chr(27)}[0m")
+    c = u.get("cost_usd") or 0
+    cost = (f", ${c:.4f}" if c >= 0.01 else f", ${c:.6f}") if c >= 5e-7 else ""
+    cached = f" (+{u['cache_hits']} cached)" if u.get("cache_hits") else ""
+    print(f"{dim}{u['pairs']}/{u['pairs_possible']} pairs x {len(res.dims)} question{'s' if len(res.dims) > 1 else ''} "
+          f"x 2 orders: {u['questions']} judgments{cached}{cost}; {res.config['stop_reason']}\033[0m")
     for m in res.meta:
         if m.kind == "meta" and m.candidates:
             probs = ", ".join(f"{res.items[i].id}={p:.2f}" for i, p in zip(m.candidates, m.probs))
-            print(f"meta-judge (Option B) over top-{len(m.candidates)}: {probs}{'  -> changed #1' if m.changed else ''}")
+            print(f"{dim}meta-judge over the top {len(m.candidates)}: {probs}{'  -> changed #1' if m.changed else ''}\033[0m")
         if m.kind == "pairwise-meta" and m.candidates:
-            print(f"pairwise meta (Option C): re-judged {len(m.candidates)} close pair(s)"
-                  f"{' -> order changed' if m.changed else ''}")
-    flag = "\033[33mABSTAIN\033[0m" if res.abstained else "\033[32mACCEPT\033[0m"
-    print(f"decision: {flag} — {res.reason}")
-    return 0
+            print(f"{dim}close call: re-judged {len(m.candidates)} pair(s) head to head overall"
+                  f"{', which changed the order' if m.changed else ''}\033[0m")
+    p = sorted(res.fused.posterior, reverse=True)
+    if res.abstained:
+        print(f"\033[33m≈ too close to call:\033[0m #1 and #2 are {abs(p[0] - p[1]):.1%} apart in P(best) "
+              f"({res.reason}); add a question or --budget more pairs")
+    else:
+        print(f"\033[32m✓ #1 is {p[0]:.0%} likely to be the best\033[0m" + (f", {p[0] - p[1]:.0%} ahead of #2" if len(p) > 1 else ""))
 
 
 def cmd_compare(args) -> int:
@@ -322,7 +343,8 @@ def cmd_demo(args) -> int:
     print(res.table())
     tau = kendall_tau(res.fused.log_strength, labels_of(items, "overall"))
     u = res.usage
-    cost = f", ${u['cost_usd']:.4f}" if u.get("cost_usd") else ""
+    c = u.get("cost_usd") or 0
+    cost = (f", ${c:.4f}" if c >= 0.01 else f", ${c:.6f}") if c >= 5e-7 else ""
     print(f"\npairs {u['pairs']}/{u['pairs_possible']}, judge questions {u['questions']} (+{u['cache_hits']} cached){cost}; "
           f"Kendall tau vs ground truth = {tau:.3f}")
     return 0
@@ -344,13 +366,16 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="cmd", metavar="COMMAND")
 
     s = sub.add_parser("sort", help="rank items by one or more pairwise questions", formatter_class=_Fmt,
-                       description="Rank ITEMS by QUESTION(s) with a Jev-style judge.\n\n"
+                       description="Rank ITEMS by one or more QUESTIONs, judged pairwise by Jev.\n\n"
                                    "  pairsort sort ideas.txt \"Which idea has more impact?\"\n"
-                                   "  cat ideas.txt | pairsort sort - \"Which is funnier?\" --top 3\n"
-                                   "  pairsort sort talks.csv impact=\"Which talk matters more?\" clarity=\"Which is clearer?\"")
+                                   "  cat ideas.txt | pairsort sort - \"Which is funnier?\" --top 3\n\n"
+                                   "several questions, blended into one ranking (name each one; :2 = counts double):\n"
+                                   "  pairsort sort ideas.txt useful=\"Which is more useful?\" easy=\"Which is easier to build?\"\n"
+                                   "  pairsort sort ideas.txt useful:2=\"Which is more useful?\" easy=\"Which is easier to build?\"")
     s.add_argument("items", help="items: .txt (one per line), .csv, .jsonl, .json, or '-' for stdin")
     s.add_argument("questions", nargs="*", metavar="QUESTION",
-                   help='what to sort by: "Which is clearer?" or name="Which is clearer?" (repeatable)')
+                   help='what to sort by: "Which is clearer?", or name="Which is clearer?" (repeatable; '
+                        'name:2="..." counts double)')
     s.add_argument("--objective", help="context every judgment sees (default: from the items file)")
     s.add_argument("--preset", default=None, choices=sorted(PRESETS), help="a built-in question set instead of QUESTIONs")
     s.add_argument("--dim", action="append", metavar='[NAME=]QUESTION', help=argparse.SUPPRESS)

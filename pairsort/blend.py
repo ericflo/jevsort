@@ -98,6 +98,8 @@ class LinearBlend:
 
     weights: dict | None = None
     bias: float = 0.0
+    #: relative importance per dimension (e.g. {"useful": 2, "easy": 1}); used only when ``weights`` is unset
+    relative: dict | None = None
     norm: str = "z"
     fitted: bool = False
 
@@ -107,7 +109,11 @@ class LinearBlend:
         # Equal weights, scaled so that if every dimension agreed exactly the
         # fused log-strength would equal the per-dimension log-strength.
         sd = np.mean([np.std(coupled[d].log_strength) for d in dims]) if dims else 1.0
-        return np.full(len(dims), (sd if sd > 1e-9 else 1.0) / max(len(dims), 1))
+        sd = sd if sd > 1e-9 else 1.0
+        if self.relative:
+            r = np.array([max(float(self.relative.get(d, 1.0)), 0.0) for d in dims])
+            return sd * r / (r.sum() or 1.0)
+        return np.full(len(dims), sd / max(len(dims), 1))
 
     def fuse(self, coupled: dict[str, Coupled], dims: list[str]) -> tuple[Coupled, np.ndarray, np.ndarray]:
         Z = dimension_features(coupled, dims, self.norm)

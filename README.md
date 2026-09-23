@@ -16,9 +16,10 @@ export OPENROUTER_API_KEY=sk-or-...     # Jev is the default judge
 ```python
 import pairsort
 
-ideas = ["A CSV-to-chart CLI", "A blockchain to-do app", "A PR-urgency ranker"]
+ideas = ["A CSV-to-chart CLI", "A blockchain to-do app", "A PR-urgency ranker",
+         "A local-first notes app", "A tweeting fridge magnet"]
 r = pairsort.sort(ideas, "Which is most useful?")
-r.best      # 'A CSV-to-chart CLI'   (your own objects back, best first)
+r.best      # 'A local-first notes app'   (your own objects back, best first)
 r.scores    # {id: P(best)}
 ```
 
@@ -26,8 +27,36 @@ r.scores    # {id: P(best)}
 uvx pairsort sort ideas.txt "Which is most useful?"     # the CLI, no install needed
 ```
 
-Ranking six ideas took **30 Jev judgments, 0.52 s and $0.0001**.
-[Watch that run replay →](https://ericflo.github.io/pairsort/#demo)
+### Several questions, one ranking
+
+Name each question. pairsort ranks by each one separately, then blends them:
+
+```python
+r = pairsort.sort(ideas, useful="Which is more useful?", easy="Which is easier to build?")
+r.best      # 'A CSV-to-chart CLI'
+print(r)
+```
+
+```bash
+pairsort sort ideas.txt useful="Which is more useful?" easy="Which is easier to build?"
+```
+
+```
+  #  P(best)  useful  easy  item
+--------------------------------------------------
+  1    54.3%      #2    #1  A CSV-to-chart CLI
+  2    20.3%      #1    #4  A local-first notes app
+  3    18.5%      #3    #3  A PR-urgency ranker
+  4     5.3%      #5    #2  A tweeting fridge magnet
+  5     1.6%      #4    #5  A blockchain to-do app
+
+blend: useful 50% + easy 50%
+✓ #1 is 54% likely to be the best, 34% ahead of #2
+```
+
+The notes app is the most useful idea but the second-hardest to build, so the blend picks the CSV CLI. To make one
+question count double, write `useful=("Which is more useful?", 2)` in Python or `useful:2="Which is more useful?"` in
+the CLI. That run took 40 Jev judgments and cost $0.00013. [Watch a Jev run replay →](https://ericflo.github.io/pairsort/#demo)
 
 ## Jev: cheap *and* good
 
@@ -97,7 +126,6 @@ Eight evals, each with its ground truth stated up front:
 ## Beyond the one-liner
 
 ```python
-pairsort.sort(ideas, useful="Which is more useful?", easy="Which is easier to build?")     # blend questions
 pairsort.compare("draft A", "draft B", "Which is clearer?")                                  # -> P(A is better)
 pairsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))             # any function is a judge
 pairsort.sorter().by("Which is best?").judge("llm:deepseek/deepseek-v4.1-flash").budget(60).meta().sort(ideas)

@@ -56,7 +56,7 @@ def as_dimensions(by) -> list[Dimension]:
             return list(PRESETS[by])
         by = [by]
     elif isinstance(by, dict) and not {"question"} <= set(by):
-        by = [Dimension(name, q) if isinstance(q, str) else _dim_from_dict({"name": name, **q}) for name, q in by.items()]
+        by = [_dim_from_value(name, q) for name, q in by.items()]
     elif isinstance(by, dict):
         by = [by]
     out: list[Dimension] = []
@@ -85,7 +85,20 @@ def _dim_from_dict(d: dict) -> Dimension:
     q = d.get("question") or d.get("q")
     if not q:
         raise ValueError(f"dimension dict needs a 'question': {d!r}")
-    return Dimension(d.get("name") or _slug(q), q, d.get("guidance", ""), d.get("context"))
+    return Dimension(d.get("name") or _slug(q), q, d.get("guidance", ""), d.get("context"), float(d.get("weight", 1.0)))
+
+
+def _dim_from_value(name: str, q) -> Dimension:
+    """A named question: "Which ...?", ("Which ...?", weight), {"question": ..., "weight": ...} or a Dimension."""
+    if isinstance(q, Dimension):
+        return q
+    if isinstance(q, str):
+        return Dimension(name, q)
+    if isinstance(q, tuple) and len(q) == 2 and isinstance(q[0], str) and isinstance(q[1], (int, float)):
+        return Dimension(name, q[0], weight=float(q[1]))
+    if isinstance(q, dict):
+        return _dim_from_dict({"name": name, **q})
+    raise TypeError(f"can't turn {name}={q!r} into a question; use \"Which ...?\" or (\"Which ...?\", weight)")
 
 
 def as_items(items) -> tuple[list[Item], list[Any], dict]:
@@ -204,7 +217,8 @@ def _split_kwargs(kwargs: dict) -> tuple[dict, dict]:
         elif close and isinstance(v, str):
             raise TypeError(f"{k}={v!r} looks like a misspelled option {close[0]!r}. If you meant a question named {k!r}, "
                             f"pass it as by={{{k!r}: {v!r}}}.")
-        elif isinstance(v, (str, Dimension)) or (isinstance(v, dict) and "question" in v):
+        elif (isinstance(v, (str, Dimension)) or (isinstance(v, dict) and "question" in v)
+              or (isinstance(v, tuple) and len(v) == 2 and isinstance(v[0], str) and isinstance(v[1], (int, float)))):
             questions[k] = v
         else:
             close = difflib.get_close_matches(k, sorted(reserved), n=1)
@@ -220,6 +234,7 @@ def sort(items, by=None, *, judge=None, objective: str | None = None, budget: in
         pairsort.sort(ideas, "Which is more useful?")                                   # one question
         pairsort.sort(ideas, useful="Which is more useful?", easy="Which is easier?")   # several, named
         pairsort.sort(ideas, {"useful": "...", "easy": "..."})                          # same, as a dict
+        pairsort.sort(ideas, useful=("Which is more useful?", 2), easy="Which is easier?")  # useful counts double
 
     items      list of strings / dicts / Items, a ``{id: text}`` dict, or a path to a file
     by         a question string, a list of them, ``{name: question}``, dicts, Dimensions, or a preset (``"papers"``)
