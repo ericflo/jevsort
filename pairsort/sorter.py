@@ -1,6 +1,6 @@
-"""JevSorter: sort anything with many small pairwise judgments + PKPD.
+"""PairSorter: sort anything with many small pairwise judgments + PKPD.
 
-Pipeline (one call to :meth:`JevSorter.sort`):
+Pipeline (one call to :meth:`PairSorter.sort`):
 
 1. **Schedule** pairs (round robin for small K, else random + Swiss/active).
 2. **Judge** every scheduled pair on every dimension, in *both* orders, as
@@ -182,12 +182,12 @@ class SortResult:
         return json.dumps(self.to_dict(), **kw)
 
 
-class JevSorter:
+class PairSorter:
     """Sort items with a Jev-style judge, PKPD coupling and multi-dimension fusion.
 
     Parameters
     ----------
-    backend: a :class:`~jevsort.backends.JudgeBackend`, a spec string (``"openrouter"``, ``"llm:MODEL"``...), a plain
+    backend: a :class:`~pairsort.backends.JudgeBackend`, a spec string (``"openrouter"``, ``"llm:MODEL"``...), a plain
         function ``f(question, a, b) -> P(a better)``, or None for Jev via OpenRouter.
     dimensions: what to sort by: a question string, a list of them, ``{name: question}``, dicts, :class:`Dimension`
         objects, or a preset name (``"papers"``).
@@ -206,7 +206,7 @@ class JevSorter:
     both_orders: ask (A,B) and (B,A) and symmetrize (strongly recommended).
     state_mode: ``pair`` (small state per question), ``shared`` (one state with
         every item — best for Jev servers) or ``auto`` (backend preference).
-    profile: a :class:`~jevsort.calibrate.Profile` with temperatures + blend weights.
+    profile: a :class:`~pairsort.calibrate.Profile` with temperatures + blend weights.
     fusion: any of ``linear`` (always), ``meta`` (Option B), ``pairwise`` (Option C),
         combined with ``+`` e.g. ``"linear+meta+pairwise"``.
     tau, delta: abstain when fused top posterior < tau or top-2 gap < delta.
@@ -574,4 +574,4 @@ def calls_estimate(k: int, n_dims: int, budget: int | None = None, both_orders: 
     return pairs * n_dims * (2 if both_orders else 1)
 
 
-__all__ = ["Dimension", "Item", "JevSorter", "SortResult", "PAPER_DIMENSIONS", "PRESETS", "calls_estimate", "math"]
+__all__ = ["Dimension", "Item", "PairSorter", "SortResult", "PAPER_DIMENSIONS", "PRESETS", "calls_estimate", "math"]

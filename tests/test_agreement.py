@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pytest
 
-from jevsort.agreement import agreement_report, cohen_kappa, parse_ballot, votes_from_ballots, wilson
+from pairsort.agreement import agreement_report, cohen_kappa, parse_ballot, votes_from_ballots, wilson
 
 
 def judges():

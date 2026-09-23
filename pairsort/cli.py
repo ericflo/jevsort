@@ -1,12 +1,12 @@
-"""jevsort command line.
+"""pairsort command line.
 
-    jevsort sort ITEMS [--objective ...] [--preset papers | --dim NAME="QUESTION" ...]
-    jevsort judge --a TEXT --b TEXT --question Q
-    jevsort calibrate LABELED.json --out profile.json
-    jevsort eval --synthetic | --data LABELED.json
-    jevsort backends
-    jevsort serve --backend openrouter
-    jevsort demo
+    pairsort sort ITEMS [--objective ...] [--preset papers | --dim NAME="QUESTION" ...]
+    pairsort judge --a TEXT --b TEXT --question Q
+    pairsort calibrate LABELED.json --out profile.json
+    pairsort eval --synthetic | --data LABELED.json
+    pairsort backends
+    pairsort serve --backend openrouter
+    pairsort demo
 """
 
 from __future__ import annotations
@@ -21,11 +21,11 @@ from pathlib import Path
 from . import __version__
 from .backends import DEFAULT_MODEL, FALLBACK_LLM, REGISTRY, BackendUnavailable, make_backend
 from .calibrate import Profile
-from .sorter import PRESETS, Dimension, JevSorter, calls_estimate
+from .sorter import PRESETS, Dimension, PairSorter, calls_estimate
 
-DEFAULT_CACHE = os.environ.get("JEVSORT_CACHE", ".jevsort_cache")
+DEFAULT_CACHE = os.environ.get("PAIRSORT_CACHE", ".pairsort_cache")
 
-BANNER = "jevsort — PKPD pairwise sorting on Jev-style judges"
+BANNER = "pairsort — PKPD pairwise sorting on Jev-style judges"
 
 
 class _Fmt(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
@@ -53,7 +53,7 @@ def _backend(args):
     b = make_backend(args.backend, model=args.model, cache_dir=cache, fallback=not getattr(args, "no_fallback", False),
                      warn=warn)
     if not b.available():
-        hint = {"openrouter": "export OPENROUTER_API_KEY=... (or try `jevsort demo` / `jevsort eval --synthetic` offline)",
+        hint = {"openrouter": "export OPENROUTER_API_KEY=... (or try `pairsort demo` / `pairsort eval --synthetic` offline)",
                 "typesafe": "export TYPESAFE_API_KEY=... (TypeSafe Jev is early access)"}.get(args.backend.split(":")[0], "")
         raise BackendUnavailable(f"backend {args.backend!r} is not available here. {hint}")
     return b
@@ -79,7 +79,7 @@ def _dims(args, extra=None) -> list[Dimension]:
     by = extra.get("questions") or extra.get("dimensions") or extra.get("preset")
     if by:
         return as_dimensions(by)
-    raise SystemExit('error: say what to sort by, e.g.  jevsort sort ideas.txt "Which idea has more impact?"')
+    raise SystemExit('error: say what to sort by, e.g.  pairsort sort ideas.txt "Which idea has more impact?"')
 
 
 def _read_items(path):
@@ -124,7 +124,7 @@ def cmd_sort(args) -> int:
               f"of {K * (K - 1) // 2} pairs, <= {est} judge questions")
         return 0
     backend = _backend(args)
-    sorter = JevSorter(
+    sorter = PairSorter(
         backend, dims, objective,
         coupling=args.coupling, pair_strategy=args.pair_strategy, max_pairs=budget,
         adaptive=args.adaptive, tau_threshold=args.tau_threshold, patience=args.patience,
@@ -219,7 +219,7 @@ def cmd_calibrate(args) -> int:
     items, extra = load_items(args.data)
     dims = _dims(args)
     backend = _backend(args)
-    res = JevSorter(backend, dims, args.objective or extra.get("objective", ""), pair_strategy="round_robin",
+    res = PairSorter(backend, dims, args.objective or extra.get("objective", ""), pair_strategy="round_robin",
                     progress=_progress(args.quiet)).sort(items)
     prof = Profile(meta={"backend": backend.describe(), "data": str(args.data), "k": len(items)})
     coupled = {}
@@ -278,7 +278,7 @@ def cmd_backends(args) -> int:
     print(f"{'llm[:MODEL]':<34}{('ready' if orj.available() else 'no key'):<14}FALLBACK generic LLM judge, default {FALLBACK_LLM} (logprobs)")
     ts = TypeSafeJevJudge()
     print(f"{'typesafe[:MODEL]':<34}{('ready' if ts.available() else 'no key'):<14}TypeSafe hosted Jev, early access (TYPESAFE_API_KEY)")
-    print(f"{'jev-wire:URL[#MODEL]':<34}{'-':<14}any /v1/systemone server: openjev-sglang, decider.serve, jevsort serve")
+    print(f"{'jev-wire:URL[#MODEL]':<34}{'-':<14}any /v1/systemone server: openjev-sglang, decider.serve, pairsort serve")
     print()
     print(f"{'open model':<14}{'repo':<44}{'size':<10}{'--backend':<38}")
     for s in REGISTRY:
@@ -316,7 +316,7 @@ def cmd_demo(args) -> int:
         ov = {it.id: sum(lat[it.id].values()) / 3 for it in items}
         backend = synthetic_judge(lat, ov, seed=1, beta=0.8)
         print("no OPENROUTER_API_KEY (or --offline): using the synthetic judge on the ground-truth labels", file=sys.stderr)
-    res = JevSorter(backend, "papers", extra["objective"], pair_strategy=args.pair_strategy, max_pairs=args.max_pairs,
+    res = PairSorter(backend, "papers", extra["objective"], pair_strategy=args.pair_strategy, max_pairs=args.max_pairs,
                     fusion=args.fusion, progress=_progress(args.quiet)).sort(items)
     print(f"\n\033[1mObjective:\033[0m {extra['objective']}\n")
     print(res.table())
@@ -329,31 +329,25 @@ def cmd_demo(args) -> int:
 
 
 # ----------------------------------------------------------------------------
-def _prog() -> str:
-    """'jevsort' or 'pairsort', whichever the user typed (both are installed)."""
-    name = Path(sys.argv[0]).name if sys.argv and sys.argv[0] else "jevsort"
-    return name if name in ("jevsort", "pairsort") else "jevsort"
-
-
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        prog=_prog(), formatter_class=_Fmt,
+        prog="pairsort", formatter_class=_Fmt,
         description=BANNER + "\n\nSort anything by asking a calibrated judge many small pairwise questions,\n"
         "coupling the answers with PKPD (Price et al. 1994) / Bradley-Terry, and blending dimensions.",
         epilog="examples:\n"
-        "  jevsort sort ideas.txt \"Which idea has more impact?\"          # rank a list\n"
-        "  cat ideas.txt | jevsort sort - \"Which is funnier?\" --top 3     # from stdin, best 3\n"
-        "  jevsort compare \"draft A\" \"draft B\" \"Which is clearer?\"       # one pairwise probability\n"
-        "  jevsort demo                                                   # 16 papers x 3 questions, offline if no key\n",
+        "  pairsort sort ideas.txt \"Which idea has more impact?\"          # rank a list\n"
+        "  cat ideas.txt | pairsort sort - \"Which is funnier?\" --top 3     # from stdin, best 3\n"
+        "  pairsort compare \"draft A\" \"draft B\" \"Which is clearer?\"       # one pairwise probability\n"
+        "  pairsort demo                                                   # 16 papers x 3 questions, offline if no key\n",
     )
-    p.add_argument("--version", action="version", version=f"jevsort {__version__} (PyPI: pairsort)")
+    p.add_argument("--version", action="version", version=f"pairsort {__version__}")
     sub = p.add_subparsers(dest="cmd", metavar="COMMAND")
 
     s = sub.add_parser("sort", help="rank items by one or more pairwise questions", formatter_class=_Fmt,
                        description="Rank ITEMS by QUESTION(s) with a Jev-style judge.\n\n"
-                                   "  jevsort sort ideas.txt \"Which idea has more impact?\"\n"
-                                   "  cat ideas.txt | jevsort sort - \"Which is funnier?\" --top 3\n"
-                                   "  jevsort sort talks.csv impact=\"Which talk matters more?\" clarity=\"Which is clearer?\"")
+                                   "  pairsort sort ideas.txt \"Which idea has more impact?\"\n"
+                                   "  cat ideas.txt | pairsort sort - \"Which is funnier?\" --top 3\n"
+                                   "  pairsort sort talks.csv impact=\"Which talk matters more?\" clarity=\"Which is clearer?\"")
     s.add_argument("items", help="items: .txt (one per line), .csv, .jsonl, .json, or '-' for stdin")
     s.add_argument("questions", nargs="*", metavar="QUESTION",
                    help='what to sort by: "Which is clearer?" or name="Which is clearer?" (repeatable)')
@@ -375,7 +369,7 @@ def build_parser() -> argparse.ArgumentParser:
     g.add_argument("--coupling", default="auto", choices=["auto", "pkpd", "bt"], help="auto = PKPD Eq.7 if complete and K<=12, else Bradley-Terry")
     g.add_argument("--fusion", default="linear", help="linear | linear+meta (Jev meta-judge) | linear+pairwise | linear+meta+pairwise")
     g.add_argument("--top-m", type=int, default=5, help="items the meta-judge considers")
-    g.add_argument("--profile", help="calibration profile from `jevsort calibrate` (temperatures + blend weights)")
+    g.add_argument("--profile", help="calibration profile from `pairsort calibrate` (temperatures + blend weights)")
     g.add_argument("--tau", type=float, default=0.0, help="abstain if fused top posterior < tau")
     g.add_argument("--delta", type=float, default=0.02, help="abstain if fused top-2 posterior gap < delta")
     g.add_argument("--one-order", action="store_true", help="ask each pair in one random order only (cheaper, position-biased)")
@@ -391,7 +385,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(fn=cmd_sort)
 
     cp = sub.add_parser("compare", help="P(A is better than B), asked both ways", formatter_class=_Fmt,
-                        description='  jevsort compare "first draft" "second draft" "Which is clearer?"')
+                        description='  pairsort compare "first draft" "second draft" "Which is clearer?"')
     cp.add_argument("first")
     cp.add_argument("second")
     cp.add_argument("question_pos", nargs="?", metavar="QUESTION", help='default: "Which is better?"')
@@ -429,7 +423,7 @@ def build_parser() -> argparse.ArgumentParser:
     _common(e)
     e.set_defaults(fn=cmd_eval)
 
-    sub.add_parser("agreement", help="human-vs-judge agreement from Summary Showdown ballots (see `jevsort agreement -h`)")
+    sub.add_parser("agreement", help="human-vs-judge agreement from Summary Showdown ballots (see `pairsort agreement -h`)")
 
     b = sub.add_parser("backends", help="list judge backends and open Jev models")
     b.set_defaults(fn=cmd_backends)

@@ -1,6 +1,6 @@
 {
   "name": "clinical-hallucination-papers",
-  "description": "16 FICTIONAL paper abstracts written for the jevsort demo. Each has ground-truth levels (1-5) per dimension assigned by construction by the dataset author, so judge accuracy (ROC/AUC, Kendall tau) can be measured. Overall = mean of the three levels. None of these papers exist.",
+  "description": "16 FICTIONAL paper abstracts written for the pairsort demo. Each has ground-truth levels (1-5) per dimension assigned by construction by the dataset author, so judge accuracy (ROC/AUC, Kendall tau) can be measured. Overall = mean of the three levels. None of these papers exist.",
   "objective": "Find methods that reliably reduce hallucinated (unsupported) statements in LLM-generated hospital discharge summaries without reducing clinical completeness.",
   "preset": "papers",
   "items": [

@@ -1,17 +1,17 @@
 # Quickstart
 
 Rank anything in one line; reach every knob when you need it. This page is
-[`examples/quickstart.py`](https://github.com/ericflo/jevsort/blob/main/examples/quickstart.py) verbatim. A fresh
+[`examples/quickstart.py`](https://github.com/ericflo/pairsort/blob/main/examples/quickstart.py) verbatim. A fresh
 (uncached) run against the real judges takes about 4 seconds.
 
 ```bash
-pip install pairsort       # PyPI name; the package is still `import jevsort`
+pip install pairsort       # PyPI name; the package is still `import pairsort`
 export OPENROUTER_API_KEY=sk-or-...
 python examples/quickstart.py
 ```
 
 ```python
-import jevsort
+import pairsort
 
 ideas = [
     "A browser extension that summarizes long email threads",
@@ -22,28 +22,28 @@ ideas = [
 ]
 
 # 1. One question, one line.
-result = jevsort.sort(ideas, "Which side project would developers find most useful?")
+result = pairsort.sort(ideas, "Which side project would developers find most useful?")
 print(result.best)            # the winner (your own string back)
 print(result.top(3))          # the three best
 print(result.scores)          # {id: probability of being the best}
 
 # 2. Several questions, blended. Plain strings, or name="question".
-result = jevsort.sort(ideas, {"useful": "Which would developers find more useful?",
+result = pairsort.sort(ideas, {"useful": "Which would developers find more useful?",
                               "easy": "Which is easier to build in a weekend?"})
 print(result)                 # a table: overall + each question
 
 # 3. One comparison.
-p = jevsort.compare("Short, clear sentences.",
+p = pairsort.compare("Short, clear sentences.",
                     "Sentences that, owing to a proliferation of subordinate clauses, meander.",
                     "Which is easier to read?")
 print(f"P(first is easier to read) = {p:.2f}")
 
 # 4. Your own judge: any function (question, a, b) -> P(a is better). No API key needed.
-by_length = jevsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))
+by_length = pairsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))
 print(by_length.best)
 
 # 5. Everything else is still there: builder, budgets, meta-judge, calibration, any backend.
-result = (jevsort.sorter()
+result = (pairsort.sorter()
           .by("Which would developers find more useful?")
           .objective("We are picking one weekend hackathon project.")
           .judge("llm:deepseek/deepseek-v4.1-flash")   # any OpenRouter model, Jev, or a local model
@@ -62,11 +62,11 @@ print(result.ids, result.usage["pairs"], "pairs")
 | `judge` | nothing (Jev via OpenRouter, falling back to an LLM judge with a warning), a spec string (`"llm"`, `"llm:MODEL"`, `"typesafe"`, `"jev-wire:URL"`, `"hf:REPO"`...), a backend object, or a function `f(question, a, b)` returning a probability, `"A"`/`"B"`, or a bool (add a `context` parameter to receive the objective) |
 | `objective` | context every judgment sees |
 | `budget` | the most pairs to compare (default: every pair up to 12 items; beyond that about K·log₂K, stopping early once the ranking is stable) |
-| anything else | every `JevSorter` option: `pair_strategy`, `fusion`, `coupling`, `profile`, `both_orders`, `tau_threshold`, `seed`, ... |
+| anything else | every `PairSorter` option: `pair_strategy`, `fusion`, `coupling`, `profile`, `both_orders`, `tau_threshold`, `seed`, ... |
 
 ## What you get back
 
-`jevsort.sort` returns a `SortResult`:
+`pairsort.sort` returns a `SortResult`:
 
 | | |
 |---|---|
@@ -79,7 +79,7 @@ print(result.ids, result.usage["pairs"], "pairs")
 ## The builder
 
 ```python
-jevsort.sorter().by("Which is clearer?", depth="Which goes deeper?").objective("...") \
+pairsort.sorter().by("Which is clearer?", depth="Which goes deeper?").objective("...") \
     .judge("llm:MODEL").budget(60).strategy("referee").adaptive(tau_threshold=0.97) \
     .meta(pairwise=True).calibrated("profile.json").verbose().sort(items)
 ```

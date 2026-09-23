@@ -91,8 +91,8 @@ trading day (see below); a pattern across many days would be the real evidence.
    (returns shuffled 4,000 times), the share of judged pairs that picked the better performer, and the mean realized
    return of each judge's predicted top and bottom quartiles.
 
-Data: [`market_2026-09-21.json`](https://github.com/ericflo/jevsort/blob/main/examples/data/market_2026-09-21.json),
-[`market_2026-09-22.json`](https://github.com/ericflo/jevsort/blob/main/examples/data/market_2026-09-22.json)
+Data: [`market_2026-09-21.json`](https://github.com/ericflo/pairsort/blob/main/examples/data/market_2026-09-21.json),
+[`market_2026-09-22.json`](https://github.com/ericflo/pairsort/blob/main/examples/data/market_2026-09-22.json)
 (every filing's accession number, acceptance time, items and text, plus both closes).
 
 ## Reproduce or repeat on a new day

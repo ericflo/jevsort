@@ -4,8 +4,8 @@
     python examples/make_plots.py --rerun    # recompute the synthetic suite first (~1 min, offline)
 
 Inputs (examples/results/):
-    synthetic_eval.json                        offline synthetic benchmark (`jevsort eval --synthetic`)
-    real_eval_*.json                           real-judge evals (`jevsort eval --data examples/data/papers.json`)
+    synthetic_eval.json                        offline synthetic benchmark (`pairsort eval --synthetic`)
+    real_eval_*.json                           real-judge evals (`pairsort eval --data examples/data/papers.json`)
 """
 
 from __future__ import annotations
@@ -94,7 +94,7 @@ def main():
     args = ap.parse_args()
     syn_path = RESULTS / "synthetic_eval.json"
     if args.rerun or not syn_path.exists():
-        from jevsort.eval import synthetic_suite
+        from pairsort.eval import synthetic_suite
 
         print("running the synthetic suite (offline, ~1 min)...")
         RESULTS.mkdir(parents=True, exist_ok=True)

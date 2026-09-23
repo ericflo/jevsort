@@ -1,6 +1,6 @@
 # Summary Showdown leaderboard
 
-100 of OpenRouter's most-used models summarized *Pairwise Neural Network Classifiers with Probabilistic Outputs* (Price, Knerr, Personnaz & Dreyfus, NeurIPS 1994) in one paragraph. jevsort ranked them with **400 of 4,950 pairs** (8.1%) × 6 questions × 2 orders × 4 judges (19,200 pairwise judgments). Stop reason: max_pairs budget (400) reached.
+100 of OpenRouter's most-used models summarized *Pairwise Neural Network Classifiers with Probabilistic Outputs* (Price, Knerr, Personnaz & Dreyfus, NeurIPS 1994) in one paragraph. pairsort ranked them with **400 of 4,950 pairs** (8.1%) × 6 questions × 2 orders × 4 judges (19,200 pairwise judgments). Stop reason: max_pairs budget (400) reached.
 
 Spend: summaries $0.78 · judges $2.75 · reference grader $1.83.
 

@@ -1,10 +1,10 @@
-"""jevsort — rank anything with AI judges.
+"""pairsort — rank anything with AI judges.
 
-    import jevsort
-    result = jevsort.sort(["idea one", "idea two", "idea three"], "Which idea has more impact?")
+    import pairsort
+    result = pairsort.sort(["idea one", "idea two", "idea three"], "Which idea has more impact?")
     result.sorted        # best first
-    jevsort.compare("draft A", "draft B", "Which is clearer?")   # -> P(A is better)
-    jevsort.sorter().by("Which is clearer?").judge("llm").budget(60).meta().sort(items)   # builder
+    pairsort.compare("draft A", "draft B", "Which is clearer?")   # -> P(A is better)
+    pairsort.sorter().by("Which is clearer?").judge("llm").budget(60).meta().sort(items)   # builder
 
 PKPD pairwise sorting on Jev-style judges.
 
@@ -21,7 +21,7 @@ from .blend import LinearBlend
 from .calibrate import Profile, apply_temperature, ece, fit_temperature
 from .couple import Coupled, bradley_terry, couple, pkpd
 from .pairwise import PairwiseMatrix, clip, symmetrize
-from .sorter import PAPER_DIMENSIONS, Dimension, Item, JevSorter, SortResult
+from .sorter import PAPER_DIMENSIONS, Dimension, Item, PairSorter, SortResult
 
 __version__ = "0.1.0"
 
@@ -52,6 +52,6 @@ __all__ = [
     "PAPER_DIMENSIONS",
     "Dimension",
     "Item",
-    "JevSorter",
+    "PairSorter",
     "SortResult",
 ]

@@ -81,7 +81,7 @@ RAIN = ("RA", "DZ", "SH", "TS")
 def _json(url):
     for n in range(4):
         try:
-            return json.loads(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "jevsort-weather-eval"}),
+            return json.loads(urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "pairsort-weather-eval"}),
                                                      timeout=60).read())
         except Exception:  # noqa: BLE001
             time.sleep(2 * (n + 1))
@@ -116,7 +116,7 @@ def _describe(c, obs_day, obs) -> str:
 
 
 def cmd_predict(args):
-    from jevsort import Dimension, Item, JevSorter
+    from pairsort import Dimension, Item, PairSorter
     from summary_showdown import _judge_backend
 
     target = date.fromisoformat(args.date)
@@ -147,7 +147,7 @@ def cmd_predict(args):
     judges = {}
     for spec in [s for s in args.judges.split(",") if s]:
         b = _judge_backend(spec)
-        r = JevSorter(b, dims, f"Weather forecasting task. Target date: {target}. Each option is a city with its most recent "
+        r = PairSorter(b, dims, f"Weather forecasting task. Target date: {target}. Each option is a city with its most recent "
                                "observed weather.", pair_strategy="round_robin", coupling="bt", state_mode="pair",
                       delta=0.0, progress=lambda m, spec=spec: print(f"· [{spec}] {m}")).sort(items)
         judges[spec] = {"log_strength": {d: {it.id: float(r.per_dim[d].log_strength[i]) for i, it in enumerate(items)} for d in r.dims},
@@ -169,7 +169,7 @@ def _pending():
 
 
 def cmd_resolve(args):
-    from jevsort.metrics import kendall_tau
+    from pairsort.metrics import kendall_tau
 
     for p in _pending():
         P = json.loads(p.read_text())

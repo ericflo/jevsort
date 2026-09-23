@@ -3,7 +3,7 @@
 One client speaks to every server that implements TypeSafe's System One HTTP
 API — TypeSafe's hosted Jev, and the open serve layers
 (``ekzhang/openjev-sglang``, ``decider.serve`` from ``Mapika/decider-2b``,
-Decision-1.0 endpoints, ``jevsort serve`` itself...).
+Decision-1.0 endpoints, ``pairsort serve`` itself...).
 
 Request::
 

@@ -9,5 +9,5 @@ build/
 .env.*
 *.key
 secrets*
-.jevsort_cache/
+.pairsort_cache/
 examples/data/.cache/

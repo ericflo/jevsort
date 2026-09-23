@@ -119,7 +119,7 @@ def ece(p, y, n_bins: int = 10) -> float:
 class Profile:
     """A saved calibration profile: per-dimension temperatures + blend weights.
 
-    Produced by ``jevsort calibrate`` and consumed by ``jevsort sort --profile``.
+    Produced by ``pairsort calibrate`` and consumed by ``pairsort sort --profile``.
     """
 
     temperatures: dict = field(default_factory=dict)

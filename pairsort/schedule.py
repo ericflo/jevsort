@@ -12,7 +12,7 @@
 * ``referee``       — Jev as referee: the judge itself sees the current
                       posteriors + a shortlist of informative candidate pairs
                       and picks the next pair(s), or answers STOP
-                      (see :func:`jevsort.blend.referee`).
+                      (see :func:`pairsort.blend.referee`).
 
 Every strategy except full round robin runs in batches with adaptive stopping
 on diminishing returns (Kendall tau between successive rankings).

@@ -19,7 +19,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(ROOT))
 from make_plots import INK, INK2, MUTED, S1, S2, S3, S4, SURFACE, _save, _suptitle, _truth  # noqa: E402
 
-from jevsort.metrics import kendall_tau  # noqa: E402
+from pairsort.metrics import kendall_tau  # noqa: E402
 
 LABELS = {"typesafe/jev-1.13": "Jev 1.13 (TypeSafe)", "deepseek/deepseek-v4.1-flash": "DeepSeek V4.1 Flash",
           "google/gemma-4-31b-it": "Gemma 4 31B", "nvidia/nemotron-3.5-lightning": "Nemotron 3.5 Lightning"}

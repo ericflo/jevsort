@@ -13,7 +13,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 import viz  # noqa: E402
 
-from jevsort.metrics import spearman  # noqa: E402
+from pairsort.metrics import spearman  # noqa: E402
 
 DOCS_FIG = HERE.parent / "docs" / "figures"
 SHORT = {"accuracy": "Accurate", "completeness": "Complete", "faithfulness": "Faithful", "writing": "Prose",

@@ -1,9 +1,9 @@
-"""Summary Showdown: the most-used models on OpenRouter summarize the PKPD paper; jevsort ranks them.
+"""Summary Showdown: the most-used models on OpenRouter summarize the PKPD paper; pairsort ranks them.
 
     python examples/summary_showdown.py collect --n 20      # pilot: top-20 most-used models write summaries
     python examples/summary_showdown.py collect --n 100     # scale up (cached; only new models are called)
     python examples/summary_showdown.py grade               # reference grades (key-fact checklist) for evaluation
-    python examples/summary_showdown.py rank                # jevsort: 6 pairwise dimensions, bounded + adaptive
+    python examples/summary_showdown.py rank                # pairsort: 6 pairwise dimensions, bounded + adaptive
     python examples/summary_showdown.py plots               # figures + examples/SHOWDOWN.md leaderboard
     python examples/summary_showdown.py all --n 100
 
@@ -15,12 +15,12 @@ Pipeline
      and filtered by a per-summary cost cap. Source: OpenRouter (openrouter.ai/rankings).
   3. Each model writes ONE paragraph. Model id, popularity rank, tokens, cost and latency are recorded
      in examples/data/summaries.json (committed) so re-runs are free.
-  4. jevsort ranks the anonymized summaries on six pairwise dimensions — three grounded in the paper
+  4. pairsort ranks the anonymized summaries on six pairwise dimensions — three grounded in the paper
      (accuracy, completeness, faithfulness), three about the writing (writing quality,
      understandability, verbosity calibration) — with an `active` schedule, a `max_pairs` budget and
      adaptive stopping. NOT all-vs-all.
   5. For evaluation only, a separate reference grader scores each summary against a key-fact checklist;
-     per-dimension AUC / Kendall tau compare jevsort's pairwise ranking with it.
+     per-dimension AUC / Kendall tau compare pairsort's pairwise ranking with it.
 """
 
 from __future__ import annotations
@@ -44,9 +44,9 @@ sys.path.insert(0, str(HERE.parent))
 import httpx  # noqa: E402
 import numpy as np  # noqa: E402
 
-from jevsort import Dimension, Item, JevSorter  # noqa: E402
-from jevsort.backends import OpenRouterJudge  # noqa: E402
-from jevsort.metrics import kendall_tau, pair_scores_labels, roc_auc, roc_curve, spearman  # noqa: E402
+from pairsort import Dimension, Item, PairSorter  # noqa: E402
+from pairsort.backends import OpenRouterJudge  # noqa: E402
+from pairsort.metrics import kendall_tau, pair_scores_labels, roc_auc, roc_curve, spearman  # noqa: E402
 
 PAPER_URL = "https://proceedings.neurips.cc/paper_files/paper/1994/file/210f760a89db30aa72ca258a3483cc7f-Paper.pdf"
 PAPER_TITLE = "Pairwise Neural Network Classifiers with Probabilistic Outputs (Price, Knerr, Personnaz & Dreyfus, NeurIPS 1994)"
@@ -64,7 +64,7 @@ SUMMARY_PROMPT = (
     "Output only the paragraph."
 )
 
-# Key facts, extracted by hand from the paper — used ONLY by the reference grader (evaluation), never by jevsort.
+# Key facts, extracted by hand from the paper — used ONLY by the reference grader (evaluation), never by pairsort.
 KEY_FACTS = {
     "F1": "A K-class problem is split into K(K-1)/2 two-class problems; one (potentially small) neural network per pair of classes, trained only on the data of those two classes.",
     "F2": "Each pairwise network's output is turned into a probability by class-conditional density estimation on its linear output (Gaussian fits in the application) plus Bayes' rule.",
@@ -108,7 +108,7 @@ def _key() -> str:
 
 def _client() -> httpx.Client:
     return httpx.Client(timeout=180, headers={"Authorization": f"Bearer {_key()}",
-                                              "HTTP-Referer": "https://github.com/ericflo/jevsort", "X-Title": "jevsort"})
+                                              "HTTP-Referer": "https://github.com/ericflo/pairsort", "X-Title": "pairsort"})
 
 
 def _load(path, default):
@@ -372,7 +372,7 @@ def cmd_grade(args):
 
 
 # ----------------------------------------------------------------------------
-# 4. jevsort ranking
+# 4. pairsort ranking
 
 
 def anon_id(model: str) -> str:
@@ -381,9 +381,9 @@ def anon_id(model: str) -> str:
 
 def _judge_backend(spec: str):
     """A judge from a model id: typesafe/* -> Jev via OpenRouter, else a logprob LLM judge."""
-    from jevsort.backends import OpenRouterJevJudge
+    from pairsort.backends import OpenRouterJevJudge
 
-    cache = HERE.parent / ".jevsort_cache"
+    cache = HERE.parent / ".pairsort_cache"
     if spec.startswith("typesafe/"):
         return OpenRouterJevJudge(model=spec, cache_dir=cache)
     prov = {"order": ["deepseek"], "allow_fallbacks": True} if spec.startswith("deepseek/") else None
@@ -406,8 +406,8 @@ def _evaluate(coupled_by_dim, fused, R, R_overall):
 
 
 def cmd_rank(args):
-    from jevsort.blend import LinearBlend
-    from jevsort.couple import couple
+    from pairsort.blend import LinearBlend
+    from pairsort.couple import couple
 
     paper = paper_text()
     db = _load(SUMMARIES, None)
@@ -427,7 +427,7 @@ def cmd_rank(args):
 
     judge_specs = [s.strip() for s in args.judges.split(",") if s.strip()]
     if args.try_jev:
-        from jevsort.backends import OpenRouterJevJudge
+        from pairsort.backends import OpenRouterJevJudge
 
         err = OpenRouterJevJudge().probe()
         if err is None:
@@ -447,7 +447,7 @@ def cmd_rank(args):
                 if have_ref:
                     row["tau_vs_reference"] = kendall_tau(fused.log_strength, R_overall)
                 traj.append((row, fused.log_strength.copy()))
-        sorter = JevSorter(judge, dims, objective, pair_strategy=args.strategy, max_pairs=budget,
+        sorter = PairSorter(judge, dims, objective, pair_strategy=args.strategy, max_pairs=budget,
                            adaptive=not args.no_adaptive, tau_threshold=args.tau_threshold, patience=args.patience,
                            batch_size=args.batch_size or max(4, K // 4), fusion="linear", seed=0, on_round=on_round,
                            progress=lambda m, spec=spec: print(f"· [{spec}] {m}"))

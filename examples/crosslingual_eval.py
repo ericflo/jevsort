@@ -232,7 +232,7 @@ def verify(data) -> bool:
 
 
 def cmd_judge(args):
-    from jevsort import Dimension, Item, JevSorter
+    from pairsort import Dimension, Item, PairSorter
     from summary_showdown import _judge_backend
 
     data = json.loads(DATA.read_text())
@@ -249,7 +249,7 @@ def cmd_judge(args):
                 ctx = f"{L['source']}:\n{D['source']}"
                 dims = [Dimension("accuracy", L["q_acc"], L["g_acc"], context=ctx),
                         Dimension("completeness", L["q_comp"], L["g_comp"], context=ctx)]
-                r = JevSorter(b, dims, L["objective"], pair_strategy="round_robin", coupling="bt", state_mode="pair",
+                r = PairSorter(b, dims, L["objective"], pair_strategy="round_robin", coupling="bt", state_mode="pair",
                               delta=0.0).sort(items)
                 out[f"{lang}|{doc['doc']}"] = {
                     "log_strength": {d: {it.id: float(r.per_dim[d].log_strength[i]) for i, it in enumerate(items)} for d in r.dims},
@@ -262,7 +262,7 @@ def cmd_judge(args):
 
 
 def score():
-    from jevsort.metrics import kendall_tau
+    from pairsort.metrics import kendall_tau
 
     data = json.loads(DATA.read_text())
     R = json.loads(RESULT.read_text())

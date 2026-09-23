@@ -3,11 +3,11 @@ import itertools
 import numpy as np
 import pytest
 
-from jevsort import PairwiseMatrix, bradley_terry, couple, pkpd, symmetrize
-from jevsort.calibrate import apply_temperature, ece, fit_temperature, sigmoid
-from jevsort.couple import win_rate
-from jevsort.metrics import kendall_tau, roc_auc, roc_curve, spearman
-from jevsort.schedule import active_pairs, random_pairs, round_robin, swiss_pairs
+from pairsort import PairwiseMatrix, bradley_terry, couple, pkpd, symmetrize
+from pairsort.calibrate import apply_temperature, ece, fit_temperature, sigmoid
+from pairsort.couple import win_rate
+from pairsort.metrics import kendall_tau, roc_auc, roc_curve, spearman
+from pairsort.schedule import active_pairs, random_pairs, round_robin, swiss_pairs
 
 
 def consistent(p):

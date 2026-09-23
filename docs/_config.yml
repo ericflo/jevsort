@@ -1,4 +1,4 @@
-title: jevsort
+title: pairsort
 description: Sort anything with many small pairwise AI judgments, coupled into one ranking with PKPD.
 plugins:
   - jekyll-relative-links

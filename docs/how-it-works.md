@@ -1,6 +1,6 @@
 # How it works
 
-jevsort turns one hard question ("rank these 100 things") into many easy ones ("which of these two is better?"),
+pairsort turns one hard question ("rank these 100 things") into many easy ones ("which of these two is better?"),
 then puts the answers back together with the coupling rule from Price, Knerr, Personnaz & Dreyfus (NeurIPS 1994).
 
 ## Why pairwise questions + PKPD?
@@ -15,7 +15,7 @@ Paper Eq. 7:        P_i  =  1 / ( Σ_{j≠i} 1/P_ij  −  (K − 2) )
 ```
 
 It's exact when the pairwise posteriors are consistent (`P_ij = P_i / (P_i + P_j)` — tested to 1e-16), and it
-degrades gracefully when they're not. For large K, sparse schedules or hard votes, jevsort uses the modern analogue,
+degrades gracefully when they're not. For large K, sparse schedules or hard votes, pairsort uses the modern analogue,
 **Bradley–Terry** (`P(i beats j) = s_i/(s_i+s_j)`, fit by MM iterations), as the default.
 
 Jev is the ideal judge for this: it takes a state and typed questions and returns **probabilities, not text** —
@@ -55,7 +55,7 @@ Each dimension is coupled separately into `P_i^(d)`, then fused:
 
 * **Option A — learned linear blend** (default): `l_i = Σ_d w_d · z(logit P_i^(d)) + b`. Each dimension is
   normalized first (z-score or rank-gauss; never average raw probabilities from different scales). `w` is fit by
-  logistic regression on labeled pairs (`jevsort calibrate`) and reported; without labels, equal weights. The fused
+  logistic regression on labeled pairs (`pairsort calibrate`) and reported; without labels, equal weights. The fused
   posterior is `softmax(l)`.
 * **Option B — Jev as meta-judge** (`--fusion linear+meta`): a second-stage Choice whose state holds the objective,
   every item's per-dimension posteriors and ranks, and whose candidates are the top-m items: *"which item is best
@@ -65,7 +65,7 @@ Each dimension is coupled separately into `P_i^(d)`, then fused:
   of extra calls, spent exactly where the ranking is unsure.
 
 Tie-break order is configurable (default evidence > relevance > contribution). **Abstain** when the fused top
-posterior `< τ` or the top-2 gap `< δ`; on abstain jevsort fetches more pairs among the leaders, or runs Option C.
+posterior `< τ` or the top-2 gap `< δ`; on abstain pairsort fetches more pairs among the leaders, or runs Option C.
 Everything — every raw `q(i,j)`, `q(j,i)`, symmetrized and calibrated probability, meta call, referee verdict, round
 and stop reason — lands in the audit log (`--audit audit.jsonl`, `--json result.json`).
 
@@ -85,10 +85,10 @@ and `pairs_used / pairs_possible` plus the stop reason are logged.
 
 ## Calibration in practice
 
-Probabilities are only useful if they mean what they say. `jevsort calibrate labeled.json --out profile.json` runs a
+Probabilities are only useful if they mean what they say. `pairsort calibrate labeled.json --out profile.json` runs a
 round robin on items with ground-truth labels (`{"labels": {"evidence": 4, ...}}`), fits one temperature per dimension
 by NLL (golden-section search), reports ECE before/after, and fits the Option-A blend weights by logistic regression
-on the labels' `overall` (or their mean). Then `jevsort sort items.json --profile profile.json`. Jev is trained to be
+on the labels' `overall` (or their mean). Then `pairsort sort items.json --profile profile.json`. Jev is trained to be
 calibrated already; LLM logprobs usually are not (the fallback's fitted T was 1.8–2.6).
 
 ## Citation

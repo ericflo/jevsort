@@ -8,7 +8,7 @@
 ``llm[:MODEL]``                FALLBACK generic LLM-as-judge on OpenRouter
 ``typesafe[:MODEL]``           TypeSafe hosted Jev (needs TYPESAFE_API_KEY)
 ``jev-wire:URL[#MODEL]``       any ``/v1/systemone`` server (openjev-sglang,
-                               decider.serve, Decision-1.0, ``jevsort serve``)
+                               decider.serve, Decision-1.0, ``pairsort serve``)
 ``laya[:CHECKPOINT]``          convaiinnovations/laya in process
 ``decider[:REPO]``             Mapika/decider-* in process
 ``nanojev``                    C-Tianyu/NanoJev in process

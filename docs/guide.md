@@ -1,4 +1,4 @@
-# jevsort docs
+# pairsort docs
 
 | page | what's inside |
 |---|---|
@@ -16,4 +16,4 @@
 | [Evaluation](evaluation.md) | synthetic judge + 16-paper demo: ROC/AUC, calibration, cost vs quality, guard ablations |
 | [Humans vs judges](humans-vs-judges.md) | the voting site, ballots, and the human-agreement graph |
 
-Or just [play the Summary Showdown](https://ericflo.github.io/jevsort/).
+Or just [play the Summary Showdown](https://ericflo.github.io/pairsort/).

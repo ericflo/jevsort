@@ -21,11 +21,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
-from jevsort import JevSorter, make_backend  # noqa: E402
-from jevsort.eval import synthetic_judge  # noqa: E402
-from jevsort.io import labels_of, load_items  # noqa: E402
-from jevsort.metrics import kendall_tau  # noqa: E402
-from jevsort.sorter import PAPER_DIMENSIONS  # noqa: E402
+from pairsort import PairSorter, make_backend  # noqa: E402
+from pairsort.eval import synthetic_judge  # noqa: E402
+from pairsort.io import labels_of, load_items  # noqa: E402
+from pairsort.metrics import kendall_tau  # noqa: E402
+from pairsort.sorter import PAPER_DIMENSIONS  # noqa: E402
 
 B, D, R = "\033[1m", "\033[2m", "\033[0m"
 
@@ -50,7 +50,7 @@ def main():
         def warn(err):
             print(f"{D}Jev unavailable ({err[:120]}...) -> generic LLM fallback{R}")
 
-        backend = make_backend("openrouter", model=args.model, cache_dir=HERE.parent / ".jevsort_cache", warn=warn)
+        backend = make_backend("openrouter", model=args.model, cache_dir=HERE.parent / ".pairsort_cache", warn=warn)
         print(f"{D}judge: {backend.describe()}{R}")
 
     print(f"\n{B}Objective{R}: {objective}\n")
@@ -58,7 +58,7 @@ def main():
     for n, d in enumerate(PAPER_DIMENSIONS, 1):
         print(f"  {n}. [{d.name}] {d.question}")
 
-    res = JevSorter(backend, "papers", objective, pair_strategy=args.strategy, max_pairs=args.max_pairs,
+    res = PairSorter(backend, "papers", objective, pair_strategy=args.strategy, max_pairs=args.max_pairs,
                     fusion=args.fusion, progress=lambda m: print(f"{D}· {m}{R}")).sort(items)
 
     print(f"\n{B}Per-dimension posteriors{R} ({', '.join(f'{d}: {c.method}' for d, c in res.per_dim.items())})")

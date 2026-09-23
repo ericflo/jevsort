@@ -187,7 +187,7 @@ def bench(args):
 
 
 def judge(args):
-    from jevsort import Dimension, Item, JevSorter
+    from pairsort import Dimension, Item, PairSorter
     from summary_showdown import _judge_backend
 
     db = json.loads(DATA.read_text())
@@ -202,7 +202,7 @@ def judge(args):
     res = json.loads(RESULT.read_text()) if RESULT.exists() else {"judges": {}}
     for spec in [s for s in args.judges.split(",") if s]:
         b = _judge_backend(spec)
-        r = JevSorter(b, dims, "You are comparing Python implementations of the same function.", pair_strategy="round_robin",
+        r = PairSorter(b, dims, "You are comparing Python implementations of the same function.", pair_strategy="round_robin",
                       coupling="bt", state_mode="pair", delta=0.0).sort(items)
         res["judges"][spec] = {"log_strength": {it.id: float(r.per_dim["speed"].log_strength[i]) for i, it in enumerate(items)},
                                "pairs": [{k: a[k] for k in ("a", "b", "p_sym")} for a in r.audit if a["stage"] == "pair"],
@@ -219,7 +219,7 @@ def judge(args):
 def score():
     import numpy as np
 
-    from jevsort.metrics import kendall_tau
+    from pairsort.metrics import kendall_tau
 
     R = json.loads(RESULT.read_text())
     sec = {i: v["seconds"] for i, v in R["items"].items()}

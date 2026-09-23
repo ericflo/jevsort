@@ -32,7 +32,7 @@ REF = ("there is no ground truth. 'Reference' = ANOTHER LLM, Claude Sonnet 5 (an
        "against a rubric of 9 key facts hand-extracted", "from the paper (factual errors, facts covered, invented claims) + 1-10 "
        "writing/understandability scores; verbosity = distance from a 110-220-word paragraph. Not human judgment.")
 
-from jevsort.metrics import spearman  # noqa: E402
+from pairsort.metrics import spearman  # noqa: E402
 
 RESULT = HERE / "results" / "showdown.json"
 SUMMARIES = HERE / "data" / "summaries.json"
@@ -58,7 +58,7 @@ def pretty(model: str, names: dict) -> str:
 def write_markdown(R, dims):
     lines = ["# Summary Showdown leaderboard", "",
              f"{R['k']} of OpenRouter's most-used models summarized *Pairwise Neural Network Classifiers with Probabilistic "
-             f"Outputs* (Price, Knerr, Personnaz & Dreyfus, NeurIPS 1994) in one paragraph. jevsort ranked them with "
+             f"Outputs* (Price, Knerr, Personnaz & Dreyfus, NeurIPS 1994) in one paragraph. pairsort ranked them with "
              f"**{R['pairs_used']} of {R['pairs_possible']:,} pairs** ({R['pairs_used'] / R['pairs_possible']:.1%}) × 6 questions × 2 orders × "
              f"{len(R['judges'])} judges ({R['judgments']:,} pairwise judgments). Stop reason: {R['stop_reason']}.", "",
              f"Spend: summaries ${R['cost']['summaries_usd']:.2f} · judges ${R['cost']['judges_usd']:.2f} · reference grader "
@@ -80,7 +80,7 @@ def write_site(R, dims, names):
     id_of = {r["model"]: r["id"] for r in R["leaderboard"]}
     summaries = [{"id": id_of[m], "text": e["summary"], "words": e["words"], "model": m, "name": pretty(m, names),
                   "popularity_rank": e["popularity_rank"], "cost_usd": e.get("cost_usd", 0.0)} for m, e in S.items() if m in id_of]
-    judges = {"jury": {"label": "jevsort jury", "kind": "jury", "note": "all AI judges pooled, PKPD/BT coupled",
+    judges = {"jury": {"label": "pairsort jury", "kind": "jury", "note": "all AI judges pooled, PKPD/BT coupled",
                        "log_strength": R["jury"]["log_strength"]}}
     for k, j in R["judges"].items():
         judges[k] = {"label": pretty(k, names), "kind": "jev" if k.startswith("typesafe/") else "llm",
@@ -155,11 +155,11 @@ def readme_section(R, dims, names) -> str:
 > separately in [Humans vs judges](humans-vs-judges.md).
 
 **{K} of OpenRouter's most-used models each summarized the same paper, the 1994 PKPD paper this library implements.
-jevsort ranked the summaries on six questions from just {R['pairs_used']} of the {R['pairs_possible']:,} possible pairs
-({R['pairs_used'] / R['pairs_possible']:.1%}).** Then you can [**judge them yourself →**](https://ericflo.github.io/jevsort/)
+pairsort ranked the summaries on six questions from just {R['pairs_used']} of the {R['pairs_possible']:,} possible pairs
+({R['pairs_used'] / R['pairs_possible']:.1%}).** Then you can [**judge them yourself →**](https://ericflo.github.io/pairsort/)
 and find out which AI judge agrees with you.
 
-[![Summary Showdown: top 20](examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)
+[![Summary Showdown: top 20](examples/figures/showdown_top.png)](https://ericflo.github.io/pairsort/)
 
 * **Contestants**: the top {K} callable models by tokens served on OpenRouter ({R['citation']}), each given the
   full paper text and asked for one paragraph. Cost of all {K} summaries: **${costs['summaries_usd']:.2f}**.
@@ -178,7 +178,7 @@ and find out which AI judge agrees with you.
 {chr(10).join(rows)}
 
 Full 100-model leaderboard: [examples/SHOWDOWN.md](examples/SHOWDOWN.md) · interactive version:
-[ericflo.github.io/jevsort](https://ericflo.github.io/jevsort/).
+[ericflo.github.io/pairsort](https://ericflo.github.io/pairsort/).
 
 **What we found**
 
@@ -210,16 +210,16 @@ def readme_teaser(R, names) -> str:
     lb = R["leaderboard"]
     top = ", ".join(pretty(r["model"], names) for r in lb[:3])
     return (f"**{R['k']} of OpenRouter's most-used models each summarized the 1994 paper this library implements.** "
-            f"jevsort ranked them on six questions from {R['pairs_used']} of {R['pairs_possible']:,} possible pairs "
+            f"pairsort ranked them on six questions from {R['pairs_used']} of {R['pairs_possible']:,} possible pairs "
             f"({R['pairs_used'] / R['pairs_possible']:.0%}) with a jury of {len(R['judges'])} AI judges. Current top 3: {top}.\n\n"
-            "[![Summary Showdown](https://raw.githubusercontent.com/ericflo/jevsort/main/examples/figures/showdown_top.png)]"
-            "(https://ericflo.github.io/jevsort/)\n\n"
+            "[![Summary Showdown](https://raw.githubusercontent.com/ericflo/pairsort/main/examples/figures/showdown_top.png)]"
+            "(https://ericflo.github.io/pairsort/)\n\n"
             "*Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; "
             "we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the "
-            "[verifiable eval](https://ericflo.github.io/jevsort/verifiable.html) shows is itself accurate on exact counts. Humans can vote on the site.*\n\n"
-            "[**Judge the summaries yourself →**](https://ericflo.github.io/jevsort/) · "
-            "[full results + method](https://ericflo.github.io/jevsort/showdown.html) · "
-            "[leaderboard](https://github.com/ericflo/jevsort/blob/main/examples/SHOWDOWN.md)")
+            "[verifiable eval](https://ericflo.github.io/pairsort/verifiable.html) shows is itself accurate on exact counts. Humans can vote on the site.*\n\n"
+            "[**Judge the summaries yourself →**](https://ericflo.github.io/pairsort/) · "
+            "[full results + method](https://ericflo.github.io/pairsort/showdown.html) · "
+            "[leaderboard](https://github.com/ericflo/pairsort/blob/main/examples/SHOWDOWN.md)")
 
 
 def _splice(path, start, end, body):
@@ -234,7 +234,7 @@ def _splice(path, start, end, body):
 def update_readme(R, dims, names):
     marks = ("<!-- showdown:start -->", "<!-- showdown:end -->")
     full = readme_section(R, dims, names).replace("examples/figures/", "figures/").replace("(examples/SHOWDOWN.md)",
-                                                   "(https://github.com/ericflo/jevsort/blob/main/examples/SHOWDOWN.md)")
+                                                   "(https://github.com/ericflo/pairsort/blob/main/examples/SHOWDOWN.md)")
     full = full.replace("## Summary Showdown\n", "## Results\n")
     if _splice(ROOT / "docs" / "showdown.md", *marks, full):
         print("updated docs/showdown.md")

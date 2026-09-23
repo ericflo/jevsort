@@ -1,9 +1,9 @@
-"""``jevsort serve`` — a tiny Jev-wire shim.
+"""``pairsort serve`` — a tiny Jev-wire shim.
 
 Exposes ``POST /v1/systemone`` (TypeSafe's System One HTTP API, Choice
-questions) over ANY jevsort backend — e.g. an OpenRouter model, or a local HF
+questions) over ANY pairsort backend — e.g. an OpenRouter model, or a local HF
 checkpoint. Point the official ``typesafe-sdk`` (``TYPESAFE_BASE_URL``) or
-jevsort's own ``--backend jev-wire:http://127.0.0.1:8765`` at it.
+pairsort's own ``--backend jev-wire:http://127.0.0.1:8765`` at it.
 
 Standard library only (``http.server``); meant for local use and demos.
 """
@@ -93,7 +93,7 @@ def serve(backend: JudgeBackend, host: str = "127.0.0.1", port: int = 8765) -> N
             pass
 
     httpd = ThreadingHTTPServer((host, port), Handler)
-    print(f"jevsort: serving {backend.describe()} as a Jev endpoint on http://{host}:{port}/v1/systemone")
+    print(f"pairsort: serving {backend.describe()} as a Jev endpoint on http://{host}:{port}/v1/systemone")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

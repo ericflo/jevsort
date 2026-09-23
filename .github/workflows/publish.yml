@@ -1,8 +1,8 @@
 name: publish
 # Publishes to PyPI with trusted publishing (OIDC): no API token is stored anywhere.
-# The PyPI project is "pairsort" (import name and CLI stay `jevsort`; a `pairsort` CLI alias is also installed).
+# The PyPI project is "pairsort" (import name and CLI stay `pairsort`; a `pairsort` CLI alias is also installed).
 # One-time setup on pypi.org: add a "pending publisher" for PyPI project "pairsort" with
-#   owner: ericflo · repository: jevsort · workflow: publish.yml · environment: pypi
+#   owner: ericflo · repository: pairsort · workflow: publish.yml · environment: pypi
 # (and the same on test.pypi.org with environment: testpypi, for dry runs)
 # Then release by pushing a tag that matches the version in pyproject.toml:  git tag v0.1.0 && git push origin v0.1.0
 on:
@@ -34,10 +34,10 @@ jobs:
       - name: smoke-test the wheel in a clean venv
         run: |
           python -m venv /tmp/w && /tmp/w/bin/pip install dist/*.whl
-          /tmp/w/bin/jevsort --version
           /tmp/w/bin/pairsort --version
-          /tmp/w/bin/jevsort demo --offline -q | tail -1
-          /tmp/w/bin/python -c "import jevsort; print(jevsort.sort(['a','bbb','cc'], 'Which is longer?', judge=lambda q,a,b: len(a)>len(b)).sorted)"
+          /tmp/w/bin/pairsort --version
+          /tmp/w/bin/pairsort demo --offline -q | tail -1
+          /tmp/w/bin/python -c "import pairsort; print(pairsort.sort(['a','bbb','cc'], 'Which is longer?', judge=lambda q,a,b: len(a)>len(b)).sorted)"
       - name: run the tests from the sdist
         run: |
           mkdir /tmp/s && tar xzf dist/*.tar.gz -C /tmp/s --strip-components=1

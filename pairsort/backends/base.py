@@ -1,6 +1,6 @@
 """The judge interface.
 
-Every judge in jevsort speaks the Jev / System One shape natively::
+Every judge in pairsort speaks the Jev / System One shape natively::
 
     system_one(state, {key: Choice(instructions, options)}) -> {key: {option: prob}}
 

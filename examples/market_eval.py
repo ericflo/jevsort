@@ -41,8 +41,8 @@ sys.path.insert(0, str(HERE))
 
 import numpy as np  # noqa: E402
 
-from jevsort import Dimension, Item, JevSorter  # noqa: E402
-from jevsort.metrics import kendall_tau, pair_scores_labels, roc_auc, spearman  # noqa: E402
+from pairsort import Dimension, Item, PairSorter  # noqa: E402
+from pairsort.metrics import kendall_tau, pair_scores_labels, roc_auc, spearman  # noqa: E402
 
 ET = timezone(timedelta(hours=-4))  # EDT in September
 # Each session: judges see 8-Ks accepted between the previous session's close and this session's open;
@@ -77,7 +77,7 @@ GUIDANCE = ("Consider how surprising and material each disclosure is for the com
 
 
 def _get(url: str, ua: str | None = None, tries: int = 4) -> bytes:
-    ua = ua or os.environ.get("SEC_USER_AGENT") or "jevsort"
+    ua = ua or os.environ.get("SEC_USER_AGENT") or "pairsort"
     for n in range(tries):
         try:
             return urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": ua}), timeout=60).read()
@@ -212,7 +212,7 @@ def judge(args):
         def on_round(k, fused, traj=traj):
             traj.append([k, kendall_tau(fused.log_strength, truth)])
 
-        r = JevSorter(b, dim, "", pair_strategy="active", max_pairs=budget, adaptive=False, state_mode="pair",
+        r = PairSorter(b, dim, "", pair_strategy="active", max_pairs=budget, adaptive=False, state_mode="pair",
                       delta=0.0, on_round=on_round if n == 0 else None, batch_size=max(8, K // 4),
                       progress=lambda m, spec=spec: print(f"· [{spec}] {m}")).sort(items, pairs=pairs)
         if n == 0:

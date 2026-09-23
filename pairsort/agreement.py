@@ -25,7 +25,7 @@ Ballot format (``v`` = 1)::
 
 CLI::
 
-    jevsort agreement --judges docs/data/showdown.json --github ericflo/jevsort \\
+    pairsort agreement --judges docs/data/showdown.json --github ericflo/pairsort \\
                       --out docs/data/agreement.json
 """
 
@@ -279,7 +279,7 @@ def _finite(obj):
 def main(argv=None) -> int:
     import argparse
 
-    ap = argparse.ArgumentParser(prog="jevsort agreement", description="Human-vs-judge agreement from pairwise ballots")
+    ap = argparse.ArgumentParser(prog="pairsort agreement", description="Human-vs-judge agreement from pairwise ballots")
     ap.add_argument("--judges", default="docs/data/showdown.json", help="site data file with each judge's log-strengths")
     ap.add_argument("--ballots", nargs="*", default=[], help="ballot JSON files / globs")
     ap.add_argument("--github", help="owner/repo to read `human-ballot` issues from (needs gh)")

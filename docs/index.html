@@ -6,23 +6,23 @@ layout: null
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Summary Showdown · jevsort</title>
-<meta name="description" content="100 popular AI models summarized the same paper. Judge pairs yourself and find the AI judge you agree with. Powered by jevsort: rank anything with AI judges.">
+<title>Summary Showdown · pairsort</title>
+<meta name="description" content="100 popular AI models summarized the same paper. Judge pairs yourself and find the AI judge you agree with. Powered by pairsort: rank anything with AI judges.">
 <meta property="og:title" content="Summary Showdown: which AI writes the best summary? You be the judge.">
 <meta property="og:description" content="100 popular models, one paper, ranked by pairwise AI judges. Vote on 8 pairs and see which judge thinks like you.">
-<meta property="og:image" content="https://ericflo.github.io/jevsort/figures/showdown_top.png">
+<meta property="og:image" content="https://ericflo.github.io/pairsort/figures/showdown_top.png">
 <link rel="stylesheet" href="style.css">
 <script src="config.js"></script>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="#">jevsort <span>· summary showdown</span></a>
+  <a class="brand" href="#">pairsort <span>· summary showdown</span></a>
   <nav>
     <a href="#play">Judge</a>
     <a href="#leaderboard">Leaderboard</a>
     <a href="#trust">Is it any good?</a>
-    <a href="usage.html">Use jevsort</a>
-    <a href="https://github.com/ericflo/jevsort">GitHub</a>
+    <a href="usage.html">Use pairsort</a>
+    <a href="https://github.com/ericflo/pairsort">GitHub</a>
   </nav>
 </header>
 
@@ -34,7 +34,7 @@ layout: null
     AI judges ranked them. Now compare a few pairs yourself and see which judge thinks like you.</p>
   <div class="btn-row hero-cta">
     <a class="btn primary big" href="#play">Judge 8 pairs →</a>
-    <a class="btn big" href="#how">What is jevsort?</a>
+    <a class="btn big" href="#how">What is pairsort?</a>
   </div>
   <div class="stats">
     <div><b id="stat-models">100</b><span>models, one paper</span></div>
@@ -156,7 +156,7 @@ layout: null
 </section>
 
 <section id="how" class="how">
-  <div class="section-head"><h2>What is jevsort?</h2>
+  <div class="section-head"><h2>What is pairsort?</h2>
     <p>A small Python library that ranks anything with AI judges: summaries, ideas, papers, candidates, prompts.</p></div>
   <ol class="steps">
     <li><strong>Ask small questions.</strong> "Which of these two is clearer?" beats "score this 1–10".</li>
@@ -166,17 +166,17 @@ layout: null
   </ol>
   <pre class="install"><code>pip install pairsort         # or: uvx pairsort demo
 
-import jevsort
-jevsort.sort(ideas, "Which idea has more impact?").best</code></pre>
+import pairsort
+pairsort.sort(ideas, "Which idea has more impact?").best</code></pre>
   <p class="btn-row"><a class="btn primary" href="quickstart.html">Quickstart</a> <a class="btn" href="how-it-works.html">How it works</a>
-    <a class="btn" href="judges.html">Judges</a> <a class="btn" href="https://github.com/ericflo/jevsort">GitHub</a></p>
+    <a class="btn" href="judges.html">Judges</a> <a class="btn" href="https://github.com/ericflo/pairsort">GitHub</a></p>
 </section>
 </main>
 
 <footer>
   <p id="citation"></p>
   <p>Paper: Price, Knerr, Personnaz &amp; Dreyfus, <em>Pairwise Neural Network Classifiers with Probabilistic Outputs</em>, NeurIPS 7 (1994).
-    <a id="paper-link" href="#">PDF</a> · MIT-licensed code: <a href="https://github.com/ericflo/jevsort">github.com/ericflo/jevsort</a></p>
+    <a id="paper-link" href="#">PDF</a> · MIT-licensed code: <a href="https://github.com/ericflo/pairsort">github.com/ericflo/pairsort</a></p>
 </footer>
 <script src="app.js"></script>
 </body>

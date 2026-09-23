@@ -6,13 +6,13 @@ Everything you need to sort your own things: CLI, input formats, Python API, cal
 
 ```bash
 pip install pairsort       # or: uv tool install pairsort · or run without installing: uvx pairsort demo
-# the import name and the CLI are `jevsort` (`pairsort` is installed as a CLI alias too)
+# the import name and the CLI are `pairsort` (`pairsort` is installed as a CLI alias too)
 export OPENROUTER_API_KEY=sk-or-...
 
-jevsort demo                                            # 16 papers × 3 questions
-jevsort sort examples/data/papers.json                  # same, via the general CLI
-jevsort sort ideas.txt "Which idea would have more impact?" --budget 60
-jevsort eval --synthetic                                # ROC/AUC, ECE, τ-vs-pairs — no key needed
+pairsort demo                                            # 16 papers × 3 questions
+pairsort sort examples/data/papers.json                  # same, via the general CLI
+pairsort sort ideas.txt "Which idea would have more impact?" --budget 60
+pairsort eval --synthetic                                # ROC/AUC, ECE, τ-vs-pairs — no key needed
 python examples/make_plots.py                           # regenerate every figure in this README
 ```
 
@@ -23,27 +23,27 @@ Items can be `.txt` (one per line), `.csv`, `.jsonl` or `.json` (`[{id, text}]` 
 
 | command | what it does |
 |---|---|
-| `jevsort sort ITEMS "QUESTION" [name="QUESTION" …]` | rank items (a file, or `-` for stdin) by one or more questions; `--top N`, `--budget N`, `--judge SPEC`, `--format text\|ids\|json` |
-| `jevsort compare A B ["QUESTION"]` | one pairwise probability, asked both ways |
-| `jevsort calibrate LABELED.json` | fit per-question temperatures + blend weights → `profile.json` |
-| `jevsort eval --synthetic` / `--data FILE` | AUC-ROC, calibration, τ-vs-pairs ([Evaluation](evaluation.md)) |
-| `jevsort backends` | which judges are ready on this machine ([Judges](judges.md)) |
-| `jevsort serve` | expose any judge as a TypeSafe-compatible `/v1/systemone` endpoint |
-| `jevsort agreement` | human-vs-judge agreement from ballots ([Humans vs judges](humans-vs-judges.md)) |
-| `jevsort demo` | the 16-paper example, offline if no key |
+| `pairsort sort ITEMS "QUESTION" [name="QUESTION" …]` | rank items (a file, or `-` for stdin) by one or more questions; `--top N`, `--budget N`, `--judge SPEC`, `--format text\|ids\|json` |
+| `pairsort compare A B ["QUESTION"]` | one pairwise probability, asked both ways |
+| `pairsort calibrate LABELED.json` | fit per-question temperatures + blend weights → `profile.json` |
+| `pairsort eval --synthetic` / `--data FILE` | AUC-ROC, calibration, τ-vs-pairs ([Evaluation](evaluation.md)) |
+| `pairsort backends` | which judges are ready on this machine ([Judges](judges.md)) |
+| `pairsort serve` | expose any judge as a TypeSafe-compatible `/v1/systemone` endpoint |
+| `pairsort agreement` | human-vs-judge agreement from ballots ([Humans vs judges](humans-vs-judges.md)) |
+| `pairsort demo` | the 16-paper example, offline if no key |
 
 Every command has `--help`.
 
 ## Python API
 
-The [quickstart](quickstart.md) covers the easy path: `jevsort.sort`, `jevsort.compare` and the
-`jevsort.sorter()` builder. Under them sits `JevSorter`, which takes the same flexible questions, items and judges
+The [quickstart](quickstart.md) covers the easy path: `pairsort.sort`, `pairsort.compare` and the
+`pairsort.sorter()` builder. Under them sits `PairSorter`, which takes the same flexible questions, items and judges
 plus every option by keyword:
 
 ```python
-from jevsort import JevSorter
+from pairsort import PairSorter
 
-sorter = JevSorter("llm:deepseek/deepseek-v4.1-flash",
+sorter = PairSorter("llm:deepseek/deepseek-v4.1-flash",
                    {"clarity": "Which explanation is clearer for a beginner?",
                     "accuracy": "Which explanation is more technically accurate?"},
                    objective="Explain how TCP congestion control works.",
@@ -67,12 +67,12 @@ discharge summaries without reducing completeness"* by asking, for every pair, i
 3. **contribution** — *Which of these papers makes the more valid and significant scientific contribution?*
 
 Each question also carries evidence pointers ("weigh sample size, controls, ablations, replication…"). The dataset
-([`examples/data/papers.json`](https://github.com/ericflo/jevsort/blob/main/examples/data/papers.json)) is **fictional by design**: each abstract was written with
+([`examples/data/papers.json`](https://github.com/ericflo/pairsort/blob/main/examples/data/papers.json)) is **fictional by design**: each abstract was written with
 ground-truth levels (1–5) per dimension so ranking quality can be measured. There's a rigorous RCT, a hype paper with
 20 cherry-picked examples, a rock-solid study on the *wrong* domain, a theory paper with no experiments, and so on.
 
 ```text
-$ jevsort sort examples/data/papers.json --judge llm --pair-strategy active --budget 60 --fusion linear+meta
+$ pairsort sort examples/data/papers.json --judge llm --pair-strategy active --budget 60 --fusion linear+meta
 
   #  id               fused     evidence    relevance contribution  title
 -------------------------------------------------------------------------
@@ -97,11 +97,11 @@ Note the per-dimension columns: the retinal-segmentation paper (P09) has decent 
 ## Reproduce everything
 
 ```bash
-git clone https://github.com/ericflo/jevsort && cd jevsort
+git clone https://github.com/ericflo/pairsort && cd pairsort
 uv venv && uv pip install -e '.[dev]'
 pytest                                                   # 35 tests, ~2 s, offline
-jevsort eval --synthetic --out examples/results/synthetic_eval.json
-jevsort eval --data examples/data/papers.json --out examples/results/real_eval_jev.json   # needs a key
+pairsort eval --synthetic --out examples/results/synthetic_eval.json
+pairsort eval --data examples/data/papers.json --out examples/results/real_eval_jev.json   # needs a key
 python examples/make_plots.py                            # -> figures/*.png
 python examples/sort_papers.py                           # the worked example with the full audit log
 ```
@@ -109,15 +109,15 @@ python examples/sort_papers.py                           # the worked example wi
 ## Layout
 
 ```
-jevsort/pairwise.py    P_ij matrix, symmetrize, clip
-jevsort/couple.py      PKPD Eq. 7, Bradley–Terry (MM), win-rate baseline
-jevsort/calibrate.py   temperature scaling, ECE, reliability, profiles
-jevsort/schedule.py    round robin, random, Swiss, active pairs
-jevsort/blend.py       normalization, Option A/B/C, Jev-as-referee
-jevsort/sorter.py      JevSorter: schedule → judge → couple → fuse → accept/abstain
-jevsort/eval.py        synthetic + real-judge harness (AUC-ROC, τ, ECE, cost)
-jevsort/backends/      Jev via OpenRouter, TypeSafe, jev-wire, open models, generic LLM, synthetic
-jevsort/serve.py       /v1/systemone shim over any backend
+pairsort/pairwise.py    P_ij matrix, symmetrize, clip
+pairsort/couple.py      PKPD Eq. 7, Bradley–Terry (MM), win-rate baseline
+pairsort/calibrate.py   temperature scaling, ECE, reliability, profiles
+pairsort/schedule.py    round robin, random, Swiss, active pairs
+pairsort/blend.py       normalization, Option A/B/C, Jev-as-referee
+pairsort/sorter.py      PairSorter: schedule → judge → couple → fuse → accept/abstain
+pairsort/eval.py        synthetic + real-judge harness (AUC-ROC, τ, ECE, cost)
+pairsort/backends/      Jev via OpenRouter, TypeSafe, jev-wire, open models, generic LLM, synthetic
+pairsort/serve.py       /v1/systemone shim over any backend
 ```
 
 

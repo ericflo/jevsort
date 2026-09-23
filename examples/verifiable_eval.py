@@ -42,8 +42,8 @@ sys.path.insert(0, str(HERE))
 
 import numpy as np  # noqa: E402
 
-from jevsort import Dimension, Item, JevSorter  # noqa: E402
-from jevsort.metrics import kendall_tau, pair_scores_labels, roc_auc  # noqa: E402
+from pairsort import Dimension, Item, PairSorter  # noqa: E402
+from pairsort.metrics import kendall_tau, pair_scores_labels, roc_auc  # noqa: E402
 
 DATA = HERE / "data" / "verifiable.json"
 RESULT = HERE / "results" / "verifiable_eval.json"
@@ -207,7 +207,7 @@ def run_judge(spec: str, data: dict) -> dict:
     for doc in data["docs"]:
         items = [Item(s["id"], s["text"]) for s in doc["summaries"]]
         dims = [Dimension(d.name, d.question, d.guidance, context=f"SOURCE DOCUMENT:\n{doc['source']}") for d in DIMS]
-        r = JevSorter(b, dims, "You are comparing summaries of a source document.", pair_strategy="round_robin",
+        r = PairSorter(b, dims, "You are comparing summaries of a source document.", pair_strategy="round_robin",
                       coupling="pkpd", state_mode="pair", delta=0.0).sort(items)
         recs = [{k: a[k] for k in ("dim", "a", "b", "p_sym", "q_ab", "q_ba")} for a in r.audit if a["stage"] == "pair"]
         out["docs"][doc["doc"]] = {"log_strength": {d: {it.id: float(r.per_dim[d].log_strength[i]) for i, it in enumerate(items)}
@@ -279,8 +279,8 @@ def score(data: dict, judge: dict) -> dict:
             ls = np.array([jd["log_strength"][d][i] for i in ids], dtype=float)
             per[d]["tau"].append(kendall_tau(ls, t))
             if "pairs" in jd:  # same answers coupled with Bradley–Terry (robust to near-certain votes)
-                from jevsort.couple import bradley_terry
-                from jevsort.pairwise import PairwiseMatrix
+                from pairsort.couple import bradley_terry
+                from pairsort.pairwise import PairwiseMatrix
 
                 idx = {x: n for n, x in enumerate(ids)}
                 m = PairwiseMatrix(len(ids))
@@ -352,8 +352,8 @@ def cmd_judge(args):
         print("  " + "  ".join(f"{d}: τ {v['kendall_tau_mean']:.3f} pair-acc {v['pairwise_accuracy']:.3f}"
                                for d, v in j["score"].items()) + f"  ${j['usage']['cost_usd']:.4f}")
     # the jury: pool all pairwise judges per document (sum of symmetrized P matrices), PKPD-coupled
-    from jevsort.couple import couple
-    from jevsort.pairwise import PairwiseMatrix
+    from pairsort.couple import couple
+    from pairsort.pairwise import PairwiseMatrix
 
     pair_judges = [k for k, v in res["judges"].items() if not k.startswith("pointwise:") and k != "jury"]
     jury = {"docs": {}}

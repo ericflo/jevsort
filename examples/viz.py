@@ -1,4 +1,4 @@
-"""House style for every jevsort figure.
+"""House style for every pairsort figure.
 
 One typeface (Libre Franklin, OFL, bundled in examples/fonts), one warm paper background, one color per judge and
 per question everywhere, direct labels instead of legends, and a fixed page grammar:

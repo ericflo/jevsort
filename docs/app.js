@@ -1,8 +1,8 @@
 /* Summary Showdown — static, no build step. Data: data/showdown.json, data/agreement.json. */
 (() => {
   "use strict";
-  const CFG = Object.assign({ repo: "ericflo/jevsort", submit_endpoint: null, votes_per_round: 8,
-    human_dimensions: ["understandability", "writing", "verbosity", "completeness", "accuracy"] }, window.JEVSORT_CONFIG || {});
+  const CFG = Object.assign({ repo: "ericflo/pairsort", submit_endpoint: null, votes_per_round: 8,
+    human_dimensions: ["understandability", "writing", "verbosity", "completeness", "accuracy"] }, window.PAIRSORT_CONFIG || {});
   const $ = (s, r = document) => r.querySelector(s);
   const el = (tag, attrs = {}, ...kids) => {
     const n = document.createElement(tag);
@@ -191,8 +191,8 @@
   function finish() {
     $("#progress-bar").style.width = "100%";
     $("#game").hidden = true;
-    const all = store.get("jevsort_votes", []).concat(round.votes);
-    store.set("jevsort_votes", all);
+    const all = store.get("pairsort_votes", []).concat(round.votes);
+    store.set("pairsort_votes", all);
     const ag = agreementFor(round.votes);
     const decisive = round.votes.filter((v) => v.pick !== "skip").length;
     const best = ag.filter((j) => j.kind !== "jury")[0];
@@ -268,7 +268,7 @@
       body.append(el("div", { class: "empty" },
         el("strong", { text: "No ballots yet. Yours could be the first. " }),
         document.createTextNode("Judge a round above and press “Submit ballot”; the maintainers run "),
-        el("code", { text: "jevsort agreement --github " + CFG.repo }),
+        el("code", { text: "pairsort agreement --github " + CFG.repo }),
         document.createTextNode(" to rebuild this section.")));
       return;
     }

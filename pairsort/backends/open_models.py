@@ -1,14 +1,14 @@
 """Open Jev reproductions, in process.
 
-Each adapter lazily imports the model's own package, so jevsort itself stays
+Each adapter lazily imports the model's own package, so pairsort itself stays
 dependency-free. They all return Jev-shaped answers, so anything that works
 with OpenRouter or TypeSafe works with these.
 
 If a model ships an HTTP server that speaks ``/v1/systemone`` (decider.serve,
 openjev-sglang, Decision-1.0 endpoints), you can also point
-:class:`~jevsort.backends.jev.JevWireJudge` at it — ``--backend jev-wire:URL``.
+:class:`~pairsort.backends.jev.JevWireJudge` at it — ``--backend jev-wire:URL``.
 
-See :data:`REGISTRY` for the catalogue shown by ``jevsort backends``.
+See :data:`REGISTRY` for the catalogue shown by ``pairsort backends``.
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ class ModelSpec:
     repo: str
     size: str
     kind: str
-    how: str  # jevsort --backend string
+    how: str  # pairsort --backend string
     notes: str
 
 
@@ -35,8 +35,8 @@ REGISTRY: list[ModelSpec] = [
     ModelSpec("decision-kai", "llm-semantic-router/Decision-1.0-Kai-0.6B", "0.6B", "Choice/Score/Noul encoder (Apache-2.0)", "jev-wire:URL#Decision-1.0-Kai-0.6B", "serve with any SystemOne-compatible endpoint; also Lex-0.6B, Eos-0.8B, Sol-2B"),
     ModelSpec("decision-nox", "llm-semantic-router/Decision-1.0-Nox-4B", "4.2B", "Choice/Score/Noul (Apache-2.0)", "jev-wire:URL#Decision-1.0-Nox-4B", "bigger sibling; also Lux-9B"),
     ModelSpec("decider-2b", "Mapika/decider-2b", "2B", "Qwen3.5-2B decision model, TypeSafe wire format", "decider", "in-process via `decider.infer.Decider`, or `decider.serve` + jev-wire"),
-    ModelSpec("solomon", "DoccyHealth/Solomon", "27B+LoRA", "LoRA + typed heads on Qwen3.8-27B, per-type temperatures", "jev-wire:URL", "serve via `solomon.api.serve` behind a /v1/systemone adapter (e.g. `jevsort serve`)"),
-    ModelSpec("scorer-v2b", "pngwn/system-one-qwen3.5-4b-scorer-v2b", "4B LoRA", "Qwen3.5-4B System One scorer", "hf:pngwn/system-one-qwen3.5-4b-scorer-v2b", "apply temperature scaling (`jevsort calibrate`)"),
+    ModelSpec("solomon", "DoccyHealth/Solomon", "27B+LoRA", "LoRA + typed heads on Qwen3.8-27B, per-type temperatures", "jev-wire:URL", "serve via `solomon.api.serve` behind a /v1/systemone adapter (e.g. `pairsort serve`)"),
+    ModelSpec("scorer-v2b", "pngwn/system-one-qwen3.5-4b-scorer-v2b", "4B LoRA", "Qwen3.5-4B System One scorer", "hf:pngwn/system-one-qwen3.5-4b-scorer-v2b", "apply temperature scaling (`pairsort calibrate`)"),
     ModelSpec("nanojev", "C-Tianyu/NanoJev", "0.6B", "Qwen3 + attention Choice head, tiny/fast", "nanojev", "in-process via its `DecisionPredictor`"),
     ModelSpec("verdict", "heman10x/rlcd-modernbert-151m", "151M", "\"Verdict\" RLCD ModernBERT, <35 ms, WebGPU/ONNX", "verdict", "in-process via `rlcd.DecisionEngine` (Verdict-open-jev)"),
     ModelSpec("openjev", "AlexWortega/openjev", "0.8B-35B", "Qwen3.5 NLI cross-encoders + SGLang serving", "jev-wire:URL", "or `ekzhang/openjev-sglang` (Qwen3.6-35B-A3B, radix cache)"),
@@ -166,7 +166,7 @@ class HFCausalChoiceJudge(JudgeBackend):
         super().__init__(cache_dir=cache_dir)
         self.repo = repo
         self.name = f"hf:{repo}"
-        tf = _need("transformers", "pip install 'jevsort[hf]'")
+        tf = _need("transformers", "pip install 'pairsort[hf]'")
         torch = _need("torch", "pip install torch")
         self._torch = torch
         self.tok = tf.AutoTokenizer.from_pretrained(repo)

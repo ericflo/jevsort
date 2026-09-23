@@ -132,7 +132,7 @@ PAPER_Q = ("Which is the better one-paragraph summary of the paper in the state:
 
 
 def cmd_judge(args):
-    from jevsort import Dimension, Item, JevSorter
+    from pairsort import Dimension, Item, PairSorter
     from summary_showdown import _judge_backend, paper_text
     from verifiable_eval import run_pointwise  # noqa: F401  (pointwise path reused below)
 
@@ -147,7 +147,7 @@ def cmd_judge(args):
             items = [Item(it["id"], it["text"]) for it in L["items"]]
             dims = [Dimension("quality", PAPER_Q, "Check claims against the paper; penalize errors, missing content and "
                                                   "poor ordering.", context=f"<paper>\n{paper}\n</paper>")]
-            r = JevSorter(b, dims, "You are comparing summaries of a research paper.", pair_strategy="round_robin",
+            r = PairSorter(b, dims, "You are comparing summaries of a research paper.", pair_strategy="round_robin",
                           coupling="pkpd", state_mode="pair", delta=0.0).sort(items)
             out["ladders"][L["ladder"]] = {
                 "log_strength": {it.id: float(r.per_dim["quality"].log_strength[i]) for i, it in enumerate(items)},
@@ -161,8 +161,8 @@ def cmd_judge(args):
 
 
 def score_all():
-    from jevsort.calibrate import reliability
-    from jevsort.metrics import kendall_tau
+    from pairsort.calibrate import reliability
+    from pairsort.metrics import kendall_tau
 
     data = json.loads(DATA.read_text())
     R = json.loads(RESULT.read_text())
@@ -174,8 +174,8 @@ def score_all():
             ids = list(L["log_strength"])
             taus_pkpd.append(kendall_tau([L["log_strength"][i] for i in ids], [-rung[i] for i in ids]))
             # Bradley–Terry from the same pairwise answers (Eq. 7 saturates on near-certain votes -> ties)
-            from jevsort.couple import bradley_terry
-            from jevsort.pairwise import PairwiseMatrix
+            from pairsort.couple import bradley_terry
+            from pairsort.pairwise import PairwiseMatrix
 
             idx = {x: n for n, x in enumerate(ids)}
             m = PairwiseMatrix(len(ids))

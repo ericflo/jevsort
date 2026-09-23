@@ -4,14 +4,14 @@ import threading
 import numpy as np
 import pytest
 
-from jevsort import Choice, Item, JevSorter, LinearBlend, make_backend
-from jevsort.backends import JevWireJudge, OpenRouterJudge
-from jevsort.backends.base import JudgeBackend
-from jevsort.blend import dimension_features, rank_gauss, zscore
-from jevsort.couple import Coupled
-from jevsort.eval import synthetic_judge, synthetic_world
-from jevsort.metrics import kendall_tau
-from jevsort.sorter import PAPER_DIMENSIONS
+from pairsort import Choice, Item, PairSorter, LinearBlend, make_backend
+from pairsort.backends import JevWireJudge, OpenRouterJudge
+from pairsort.backends.base import JudgeBackend
+from pairsort.blend import dimension_features, rank_gauss, zscore
+from pairsort.couple import Coupled
+from pairsort.eval import synthetic_judge, synthetic_world
+from pairsort.metrics import kendall_tau
+from pairsort.sorter import PAPER_DIMENSIONS
 
 
 def world(k=12, seed=0, **kw):
@@ -54,7 +54,7 @@ def test_equal_blend_is_identity_when_dimensions_agree():
 # ---------------------------------------------------------------- end to end
 def test_sort_round_robin_with_synthetic_judge():
     items, judge, L, O = world(10)
-    res = JevSorter(judge, "papers", "objective", fusion="linear+meta+pairwise").sort(items)
+    res = PairSorter(judge, "papers", "objective", fusion="linear+meta+pairwise").sort(items)
     assert res.usage["pairs"] == 45 and res.per_dim["evidence"].method == "pkpd"
     assert kendall_tau(res.fused.log_strength, O) > 0.6
     assert {a["stage"] for a in res.audit} >= {"pair", "meta", "round", "stop"}
@@ -65,7 +65,7 @@ def test_sort_round_robin_with_synthetic_judge():
 @pytest.mark.parametrize("strategy", ["random", "swiss", "active", "referee"])
 def test_budgeted_strategies_respect_max_pairs(strategy):
     items, judge, L, O = world(24, seed=3)
-    res = JevSorter(judge, "papers", pair_strategy=strategy, max_pairs=60, adaptive=False).sort(items)
+    res = PairSorter(judge, "papers", pair_strategy=strategy, max_pairs=60, adaptive=False).sort(items)
     assert res.usage["pairs"] <= 60
     assert res.usage["pairs_possible"] == 276
     assert kendall_tau(res.fused.log_strength, O) > 0.5
@@ -73,7 +73,7 @@ def test_budgeted_strategies_respect_max_pairs(strategy):
 
 def test_adaptive_stopping_uses_fewer_pairs():
     items, judge, L, O = world(30, seed=4)
-    res = JevSorter(judge, "papers", pair_strategy="active", max_pairs=435, adaptive=True).sort(items)
+    res = PairSorter(judge, "papers", pair_strategy="active", max_pairs=435, adaptive=True).sort(items)
     assert res.usage["pairs"] < 435
     assert "diminishing returns" in res.config["stop_reason"]
     stop = [a for a in res.audit if a["stage"] == "stop"][0]
@@ -82,7 +82,7 @@ def test_adaptive_stopping_uses_fewer_pairs():
 
 def test_referee_can_say_stop():
     items, judge, L, O = world(30, seed=5)
-    res = JevSorter(judge, "papers", pair_strategy="referee", max_pairs=435, adaptive=False).sort(items)
+    res = PairSorter(judge, "papers", pair_strategy="referee", max_pairs=435, adaptive=False).sort(items)
     refs = [a for a in res.audit if a["stage"] == "referee"]
     assert refs and "STOP" in refs[0]["probs"]
     assert res.usage["pairs"] < 435 and "referee said STOP" in res.config["stop_reason"]
@@ -95,7 +95,7 @@ def test_both_orders_beats_single_order_under_position_bias():
     taus = {}
     for both in (True, False):
         j = synthetic_judge(lat, ov, seed=1, position_bias=2.5, opinion_noise=0.0, call_noise=0.0)
-        r = JevSorter(j, "papers", both_orders=both, seed=2).sort(items)
+        r = PairSorter(j, "papers", both_orders=both, seed=2).sort(items)
         taus[both] = kendall_tau(r.per_dim["evidence"].log_strength, L[:, 0])
     assert taus[True] >= taus[False]
 
@@ -121,7 +121,7 @@ class RecordingJev(JudgeBackend):
 def test_mock_backend_batches_all_pairs_into_one_call():
     b = RecordingJev()
     items = [Item(f"i{n}", f"item {n}") for n in range(5)]
-    res = JevSorter(b, "papers", "obj", delta=0.0).sort(items)
+    res = PairSorter(b, "papers", "obj", delta=0.0).sort(items)
     assert len(b.calls) == 1  # 10 pairs x 3 dims x 2 orders in ONE Jev call
     state, qs = b.calls[0]
     assert len(qs) == 60 and set(state["items"]) == {it.id for it in items}
@@ -134,10 +134,10 @@ def test_cache_makes_reruns_free(tmp_path):
     lat = {it.id: {d.name: float(L[n, c]) for c, d in enumerate(PAPER_DIMENSIONS)} for n, it in enumerate(items)}
     j1 = synthetic_judge(lat, None, seed=1)
     j1._cache_dir = tmp_path
-    JevSorter(j1, "papers").sort(items)
+    PairSorter(j1, "papers").sort(items)
     j2 = synthetic_judge(lat, None, seed=1)
     j2._cache_dir = tmp_path
-    JevSorter(j2, "papers").sort(items)
+    PairSorter(j2, "papers").sort(items)
     assert j2.usage.questions == 0 and j2.usage.cache_hits == 90
 
 
@@ -147,11 +147,11 @@ def test_judge_functional_interface():
     assert p.shape == (3,) and p.sum() == pytest.approx(1)
 
 
-def test_jev_wire_client_against_jevsort_serve():
-    """Round trip: jevsort serve (shim) <- JevWireJudge client, over real HTTP."""
+def test_jev_wire_client_against_pairsort_serve():
+    """Round trip: pairsort serve (shim) <- JevWireJudge client, over real HTTP."""
     from http.server import ThreadingHTTPServer
 
-    from jevsort import serve as S
+    from pairsort import serve as S
 
     backend = RecordingJev()
     srv = ThreadingHTTPServer(("127.0.0.1", 0), None)
@@ -227,10 +227,10 @@ def test_make_backend_routing(monkeypatch):
 
 def test_fixed_pairs_rejudge():
     items, judge, L, O = world(12, seed=8)
-    first = JevSorter(judge, "papers", pair_strategy="active", max_pairs=30).sort(items)
+    first = PairSorter(judge, "papers", pair_strategy="active", max_pairs=30).sort(items)
     idx = {it.id: n for n, it in enumerate(items)}
     pairs = {(idx[a["a"]], idx[a["b"]]) for a in first.audit if a["stage"] == "pair"}
     items2, judge2, _, _ = world(12, seed=8)
-    second = JevSorter(judge2, "papers").sort(items2, pairs=sorted(pairs))
+    second = PairSorter(judge2, "papers").sort(items2, pairs=sorted(pairs))
     assert second.usage["pairs"] == len(pairs) == first.usage["pairs"]
     assert second.config["pair_strategy"] == "fixed"

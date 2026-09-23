@@ -10,7 +10,7 @@ prescribes:
 
   ``z_d`` normalizes each dimension (z-score or rank-gauss) so raw probabilities
   from different scales are never averaged. ``w`` is fit by logistic
-  regression on labeled pairs (``jevsort calibrate``); without labels, equal
+  regression on labeled pairs (``pairsort calibrate``); without labels, equal
   weights are used, scaled so the fused log-strengths stay on the coupled
   (Bradley–Terry) scale. The fused posterior is ``softmax(l)``.
 

@@ -46,7 +46,7 @@ averaged over 6 documents.
 3. **The truth is in the text.** Every summary sentence is one fact template with either the true or the wrong
    value. `verify` maps each sentence back to its fact and recounts both numbers from the text alone.
 
-The data lives in [`examples/data/verifiable.json`](https://github.com/ericflo/jevsort/blob/main/examples/data/verifiable.json).
+The data lives in [`examples/data/verifiable.json`](https://github.com/ericflo/pairsort/blob/main/examples/data/verifiable.json).
 
 ## How judges are scored
 

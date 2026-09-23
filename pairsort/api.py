@@ -1,8 +1,8 @@
-"""The easy front door: ``jevsort.sort``, ``jevsort.compare`` and ``jevsort.sorter()``.
+"""The easy front door: ``pairsort.sort``, ``pairsort.compare`` and ``pairsort.sorter()``.
 
-    import jevsort
+    import pairsort
 
-    best = jevsort.sort(["idea one", "idea two", "idea three"], "Which idea has more impact?")
+    best = pairsort.sort(["idea one", "idea two", "idea three"], "Which idea has more impact?")
     best.sorted          # the same strings, best first
     best.top(2)          # the two best
     best.scores          # {id: posterior}
@@ -10,10 +10,10 @@
 Everything is optional except the items and at least one question. Questions can be a string, a list of strings,
 ``{"name": "question"}``, dicts, :class:`Dimension` objects or a preset name. Judges can be ``None`` (Jev via
 OpenRouter, falling back to an LLM judge), a spec string (``"llm:openai/gpt-5.6-luna"``), a
-:class:`~jevsort.backends.JudgeBackend`, or any plain function ``f(question, a, b) -> P(a is better)``.
+:class:`~pairsort.backends.JudgeBackend`, or any plain function ``f(question, a, b) -> P(a is better)``.
 
-Nothing here hides power: every keyword of :class:`~jevsort.sorter.JevSorter` is accepted too, and
-``jevsort.sorter()`` is a fluent builder over the same options.
+Nothing here hides power: every keyword of :class:`~pairsort.sorter.PairSorter` is accepted too, and
+``pairsort.sorter()`` is a fluent builder over the same options.
 """
 
 from __future__ import annotations
@@ -29,7 +29,7 @@ from typing import Any, Callable, Iterable
 import numpy as np
 
 from .backends import Choice, JudgeBackend, make_backend
-from .sorter import PRESETS, Dimension, Item, JevSorter, SortResult
+from .sorter import PRESETS, Dimension, Item, PairSorter, SortResult
 
 __all__ = ["sort", "compare", "sorter", "as_dimensions", "as_items", "as_judge", "FunctionJudge", "Sorter"]
 
@@ -48,7 +48,7 @@ def _slug(question: str) -> str:
 def as_dimensions(by) -> list[Dimension]:
     """Anything question-like -> a list of Dimension (names auto-generated and de-duplicated)."""
     if by is None:
-        raise ValueError('say what to sort by, e.g. jevsort.sort(items, "Which is clearer?")')
+        raise ValueError('say what to sort by, e.g. pairsort.sort(items, "Which is clearer?")')
     if isinstance(by, Dimension):
         by = [by]
     elif isinstance(by, str):
@@ -169,7 +169,7 @@ def _warn(err: str) -> None:
 
 def as_judge(judge=None, *, model: str | None = None, cache: str | os.PathLike | None | bool = True) -> JudgeBackend:
     """None -> Jev via OpenRouter (falls back to an LLM judge); str -> backend spec; callable -> FunctionJudge."""
-    cache_dir = (os.environ.get("JEVSORT_CACHE", ".jevsort_cache") if cache is True else (cache or None))
+    cache_dir = (os.environ.get("PAIRSORT_CACHE", ".pairsort_cache") if cache is True else (cache or None))
     if isinstance(judge, JudgeBackend):
         return judge
     if judge is None:
@@ -193,13 +193,13 @@ def sort(items, by=None, *, judge=None, objective: str | None = None, budget: in
     judge      None (Jev via OpenRouter), a spec like ``"llm:deepseek/deepseek-v4.1-flash"``, a backend, or a function
     objective  context every judgment sees ("Pick talks for a beginner audience")
     budget     max pairs to compare (default: all pairs up to 12 items, else ~K·log2 K with adaptive stopping)
-    options    any other :class:`JevSorter` keyword (pair_strategy, fusion, coupling, profile, seed, ...)
+    options    any other :class:`PairSorter` keyword (pair_strategy, fusion, coupling, profile, seed, ...)
     """
     its, originals, extra = as_items(items)
     if by is None:
         by = extra.get("questions") or extra.get("dimensions") or extra.get("preset")
     dims = as_dimensions(by)
-    sorter_ = JevSorter(as_judge(judge, model=model, cache=cache), dims,
+    sorter_ = PairSorter(as_judge(judge, model=model, cache=cache), dims,
                         objective if objective is not None else extra.get("objective", ""),
                         max_pairs=options.pop("max_pairs", budget),
                         progress=options.pop("progress", (lambda m: print(f"· {m}", file=sys.stderr)) if verbose else None),
@@ -222,9 +222,9 @@ def compare(a, b, question: str = "Which is better?", *, judge=None, objective: 
 
 # --------------------------------------------------------------------------------------------- builder
 class Sorter:
-    """Fluent builder: ``jevsort.sorter().by("Which is clearer?").judge("llm").budget(60).sort(items)``.
+    """Fluent builder: ``pairsort.sorter().by("Which is clearer?").judge("llm").budget(60).sort(items)``.
 
-    Every method returns the builder; ``.sort(items)`` runs it. Any :class:`JevSorter` option is reachable through
+    Every method returns the builder; ``.sort(items)`` runs it. Any :class:`PairSorter` option is reachable through
     a named method or ``.option(name=value)``.
     """
 

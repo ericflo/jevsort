@@ -349,7 +349,7 @@ def market_sessions():
 
 
 def market(session):
-    from jevsort.metrics import kendall_tau
+    from pairsort.metrics import kendall_tau
 
     R = json.loads((RES / f"market_eval_{session}.json").read_text())
     D = json.loads((HERE / "data" / f"market_{session}.json").read_text())

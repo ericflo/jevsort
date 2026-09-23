@@ -10,7 +10,7 @@ Two modes:
   cross-fitted over two item folds so nothing is evaluated on data it was fit on.
 
 Both return plain JSON-able dicts that ``examples/make_plots.py`` turns into
-figures. Run ``jevsort eval --synthetic`` or ``jevsort eval --data FILE``.
+figures. Run ``pairsort eval --synthetic`` or ``pairsort eval --data FILE``.
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ from .calibrate import apply_temperature, fit_temperature, reliability
 from .couple import couple
 from .metrics import kendall_tau, pair_scores_labels, roc_auc, roc_curve, spearman, top_k_recall
 from .pairwise import PairwiseMatrix
-from .sorter import PAPER_DIMENSIONS, Item, JevSorter
+from .sorter import PAPER_DIMENSIONS, Item, PairSorter
 
 DIMS = [d.name for d in PAPER_DIMENSIONS]
 
@@ -202,8 +202,8 @@ def synthetic_suite(k: int = 40, seed: int = 7, n_seeds: int = 5, judge_kw: dict
     items_t, lat_t, ov_t, L_t, O_t = synthetic_world(k, seed=seed, prefix="t")
     j_c = synthetic_judge(lat_c, ov_c, seed=seed + 1, **judge_kw)
     j_t = synthetic_judge(lat_t, ov_t, seed=seed + 2, **judge_kw)
-    r_c = JevSorter(j_c, "papers", pair_strategy="round_robin").sort(items_c)
-    r_t = JevSorter(j_t, "papers", pair_strategy="round_robin").sort(items_t)
+    r_c = PairSorter(j_c, "papers", pair_strategy="round_robin").sort(items_c)
+    r_t = PairSorter(j_t, "papers", pair_strategy="round_robin").sort(items_t)
     roc, _ = _roc_suite(r_t, L_t, O_t, r_c, L_c, O_c,
                         Y_test=sampled_outcomes(L_t, seed + 3), Y_cal=sampled_outcomes(L_c, seed + 4))
     res.update(roc)
@@ -225,7 +225,7 @@ def synthetic_suite(k: int = 40, seed: int = 7, n_seeds: int = 5, judge_kw: dict
                 curve.append((n, kendall_tau(fused.log_strength, O)))
 
             adaptive = strat == "referee"
-            r = JevSorter(j, "papers", pair_strategy=strat, max_pairs=total, adaptive=adaptive,
+            r = PairSorter(j, "papers", pair_strategy=strat, max_pairs=total, adaptive=adaptive,
                           batch_size=max(2, k // 4), on_round=cb, seed=sd).sort(items)
             traj[strat].append(curve)
             if adaptive:
@@ -233,11 +233,11 @@ def synthetic_suite(k: int = 40, seed: int = 7, n_seeds: int = 5, judge_kw: dict
                                      "reason": r.config["stop_reason"]})
         # adaptive stopping with the plain active strategy
         j = synthetic_judge(lat, ov, seed=200 + sd, **judge_kw)
-        r = JevSorter(j, "papers", pair_strategy="active", max_pairs=total, adaptive=True, seed=sd).sort(items)
+        r = PairSorter(j, "papers", pair_strategy="active", max_pairs=total, adaptive=True, seed=sd).sort(items)
         stops["active_adaptive"].append({"pairs": r.usage["pairs"], "tau": kendall_tau(r.fused.log_strength, O),
                                          "reason": r.config["stop_reason"]})
         j = synthetic_judge(lat, ov, seed=200 + sd, **judge_kw)
-        r = JevSorter(j, "papers", pair_strategy="round_robin").sort(items)
+        r = PairSorter(j, "papers", pair_strategy="round_robin").sort(items)
         full_tau.append(kendall_tau(r.fused.log_strength, O))
     grid = np.unique(np.linspace(k // 2, total, 40).astype(int))
     res["tau_vs_pairs"] = {"grid": grid.tolist(), "total_pairs": total, "round_robin_tau": float(np.mean(full_tau)),
@@ -262,7 +262,7 @@ def synthetic_suite(k: int = 40, seed: int = 7, n_seeds: int = 5, judge_kw: dict
         for sd in range(12 if quick else 40):
             items, lat, ov, L, O = synthetic_world(12, seed=500 + sd, prefix="r")
             j = synthetic_judge(lat, ov, seed=600 + sd, opinion_noise=nz, overconfidence=1.0, call_noise=0.3)
-            r = JevSorter(j, "papers", pair_strategy="round_robin").sort(items)
+            r = PairSorter(j, "papers", pair_strategy="round_robin").sort(items)
             m = r.matrices["evidence"]
             acc["pkpd_full"].append(kendall_tau(couple(m, "pkpd").log_strength, L[:, 0]))
             acc["bt_full"].append(kendall_tau(couple(m, "bt").log_strength, L[:, 0]))
@@ -288,7 +288,7 @@ def synthetic_suite(k: int = 40, seed: int = 7, n_seeds: int = 5, judge_kw: dict
     for b in biases:
         for both, key in ((False, "one_order"), (True, "both_orders")):
             j = synthetic_judge(lat, ov, seed=901, position_bias=b)
-            r = JevSorter(j, "papers", pair_strategy="round_robin", both_orders=both, seed=3).sort(items)
+            r = PairSorter(j, "papers", pair_strategy="round_robin", both_orders=both, seed=3).sort(items)
             s, y = pair_scores_labels(r.matrices["evidence"].P, L[:, 0])
             pb[key].append(roc_auc(s, y))
     res["position_bias"] = pb
@@ -317,7 +317,7 @@ def real_suite(items: list[Item], objective: str, backend, progress=None, meta: 
     K = len(items)
     truth = np.column_stack([labels_of(items, d) for d in DIMS])
     overall = labels_of(items, "overall")
-    sorter = JevSorter(backend, "papers", objective, pair_strategy="round_robin", progress=progress)
+    sorter = PairSorter(backend, "papers", objective, pair_strategy="round_robin", progress=progress)
     full = sorter.sort(items)
     usage_full = dict(full.usage)
 
@@ -381,7 +381,7 @@ def real_suite(items: list[Item], objective: str, backend, progress=None, meta: 
     # --- meta stages (Option B + C) on top of the same judgments
     if meta:
         n0 = backend.usage.questions
-        r_meta = JevSorter(backend, "papers", objective, pair_strategy="round_robin", fusion="linear+meta+pairwise",
+        r_meta = PairSorter(backend, "papers", objective, pair_strategy="round_robin", fusion="linear+meta+pairwise",
                            progress=progress).sort(items)
         out["fused"]["meta"] = {"kendall_tau": kendall_tau(r_meta.fused.log_strength, overall),
                                 "top3_recall": top_k_recall(r_meta.fused.log_strength, overall, 3),
@@ -400,7 +400,7 @@ def real_suite(items: list[Item], objective: str, backend, progress=None, meta: 
         def cb(n, fused, curve=curve):
             curve.append([n, kendall_tau(fused.log_strength, overall)])
 
-        r = JevSorter(backend, "papers", objective, pair_strategy=strat, max_pairs=total, adaptive=True,
+        r = PairSorter(backend, "papers", objective, pair_strategy=strat, max_pairs=total, adaptive=True,
                       batch_size=4, on_round=cb, progress=progress).sort(items)
         out["tau_vs_pairs"]["runs"][strat] = {"curve": curve, "stop_pairs": r.usage["pairs"],
                                               "stop_tau": kendall_tau(r.fused.log_strength, overall),

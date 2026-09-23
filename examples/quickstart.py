@@ -4,7 +4,7 @@
     python examples/quickstart.py
 """
 
-import jevsort
+import pairsort
 
 ideas = [
     "A browser extension that summarizes long email threads",
@@ -15,28 +15,28 @@ ideas = [
 ]
 
 # 1. One question, one line.
-result = jevsort.sort(ideas, "Which side project would developers find most useful?")
+result = pairsort.sort(ideas, "Which side project would developers find most useful?")
 print(result.best)            # the winner (your own string back)
 print(result.top(3))          # the three best
 print(result.scores)          # {id: probability of being the best}
 
 # 2. Several questions, blended. Plain strings, or name="question".
-result = jevsort.sort(ideas, {"useful": "Which would developers find more useful?",
+result = pairsort.sort(ideas, {"useful": "Which would developers find more useful?",
                               "easy": "Which is easier to build in a weekend?"})
 print(result)                 # a table: overall + each question
 
 # 3. One comparison.
-p = jevsort.compare("Short, clear sentences.",
+p = pairsort.compare("Short, clear sentences.",
                     "Sentences that, owing to a proliferation of subordinate clauses, meander.",
                     "Which is easier to read?")
 print(f"P(first is easier to read) = {p:.2f}")
 
 # 4. Your own judge: any function (question, a, b) -> P(a is better). No API key needed.
-by_length = jevsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))
+by_length = pairsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))
 print(by_length.best)
 
 # 5. Everything else is still there: builder, budgets, meta-judge, calibration, any backend.
-result = (jevsort.sorter()
+result = (pairsort.sorter()
           .by("Which would developers find more useful?")
           .objective("We are picking one weekend hackathon project.")
           .judge("llm:deepseek/deepseek-v4.1-flash")   # any OpenRouter model, Jev, or a local model

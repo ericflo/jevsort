@@ -1,6 +1,6 @@
 # Summary Showdown results
 
-The full write-up behind the [interactive Summary Showdown](https://ericflo.github.io/jevsort/). Numbers below are
+The full write-up behind the [interactive Summary Showdown](https://ericflo.github.io/pairsort/). Numbers below are
 generated from `examples/results/showdown.json` by `examples/showdown_plots.py`.
 
 <!-- showdown:start -->
@@ -14,11 +14,11 @@ generated from `examples/results/showdown.json` by `examples/showdown_plots.py`.
 > separately in [Humans vs judges](humans-vs-judges.md).
 
 **100 of OpenRouter's most-used models each summarized the same paper, the 1994 PKPD paper this library implements.
-jevsort ranked the summaries on six questions from just 400 of the 4,950 possible pairs
-(8.1%).** Then you can [**judge them yourself →**](https://ericflo.github.io/jevsort/)
+pairsort ranked the summaries on six questions from just 400 of the 4,950 possible pairs
+(8.1%).** Then you can [**judge them yourself →**](https://ericflo.github.io/pairsort/)
 and find out which AI judge agrees with you.
 
-[![Summary Showdown: top 20](figures/showdown_top.png)](https://ericflo.github.io/jevsort/)
+[![Summary Showdown: top 20](figures/showdown_top.png)](https://ericflo.github.io/pairsort/)
 
 * **Contestants**: the top 100 callable models by tokens served on OpenRouter (Source: OpenRouter (openrouter.ai/rankings), as of 2026-09-23T04:24:12.609Z.), each given the
   full paper text and asked for one paragraph. Cost of all 100 summaries: **$0.78**.
@@ -45,8 +45,8 @@ and find out which AI judge agrees with you.
 | 9 | Claude Opus 4.8 | #22 | 6 | 4 | 3 | 23 | 63 | 86 | 231 | $0.0505 |
 | 10 | MiniMax M3 | #8 | 9 | 10 | 16 | 1 | 65 | 72 | 234 | $0.0020 |
 
-Full 100-model leaderboard: [examples/SHOWDOWN.md](https://github.com/ericflo/jevsort/blob/main/examples/SHOWDOWN.md) · interactive version:
-[ericflo.github.io/jevsort](https://ericflo.github.io/jevsort/).
+Full 100-model leaderboard: [examples/SHOWDOWN.md](https://github.com/ericflo/pairsort/blob/main/examples/SHOWDOWN.md) · interactive version:
+[ericflo.github.io/pairsort](https://ericflo.github.io/pairsort/).
 
 **What we found**
 
@@ -108,4 +108,4 @@ python examples/showdown_plots.py                                # figures, site
 
 ---
 
-← [Home](https://ericflo.github.io/jevsort/) · [Usage](usage.md) → · [All docs](guide.md)
+← [Home](https://ericflo.github.io/pairsort/) · [Usage](usage.md) → · [All docs](guide.md)

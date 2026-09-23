@@ -21,8 +21,8 @@ RLCD-calibrated decisions, so use it only when Jev is unavailable:
    is asked for a JSON object of option -> probability.
 
 Raw LLM probabilities are typically overconfident and position-biased;
-jevsort's sorter asks both orders and applies per-dimension temperature
-scaling on top (see ``jevsort calibrate``).
+pairsort's sorter asks both orders and applies per-dimension temperature
+scaling on top (see ``pairsort calibrate``).
 
 Reads ``OPENROUTER_API_KEY`` from the environment. The key is never logged.
 """
@@ -43,7 +43,7 @@ JEV_MODEL = "typesafe/jev-1.13"  # verified on OpenRouter 2026-09-22 ($0.042/M i
 DEFAULT_MODEL = JEV_MODEL
 FALLBACK_LLM = "deepseek/deepseek-v4.1-flash"  # has token logprobs; cheap
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-PROMPT_VERSION = "jevsort-choice-v1"
+PROMPT_VERSION = "pairsort-choice-v1"
 
 SYSTEM = (
     "You are a System One decision model: a fast, calibrated judge. You receive a STATE "
@@ -99,7 +99,7 @@ class OpenRouterJudge(JudgeBackend):
         provider: dict | None = None,
     ):
         super().__init__(cache_dir=cache_dir)
-        self.model = model or os.environ.get("JEVSORT_LLM_MODEL") or FALLBACK_LLM
+        self.model = model or os.environ.get("PAIRSORT_LLM_MODEL") or FALLBACK_LLM
         self._key = api_key or os.environ.get("OPENROUTER_API_KEY")
         self.mode = mode
         self.max_concurrency = max_concurrency
@@ -130,8 +130,8 @@ class OpenRouterJudge(JudgeBackend):
                 timeout=self.timeout,
                 headers={
                     "Authorization": f"Bearer {self._key}",
-                    "HTTP-Referer": "https://github.com/ericflo/jevsort",
-                    "X-Title": "jevsort",
+                    "HTTP-Referer": "https://github.com/ericflo/pairsort",
+                    "X-Title": "pairsort",
                 },
                 limits=httpx.Limits(max_connections=self.max_concurrency * 2),
             )
@@ -254,10 +254,10 @@ class OpenRouterJevJudge(JevWireJudge):
     SURFACES = {"decisions": "/alpha/decisions", "systemone": "/v1/systemone"}
 
     def __init__(self, model: str | None = None, api_key: str | None = None, surface: str | None = None, **kw):
-        surface = surface or os.environ.get("JEVSORT_JEV_SURFACE", "decisions")
+        surface = surface or os.environ.get("PAIRSORT_JEV_SURFACE", "decisions")
         super().__init__(
             base_url=os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api"),
-            model=model or os.environ.get("JEVSORT_MODEL") or JEV_MODEL,
+            model=model or os.environ.get("PAIRSORT_MODEL") or JEV_MODEL,
             api_key=api_key or os.environ.get("OPENROUTER_API_KEY"),
             path=self.SURFACES[surface],
             **kw,
