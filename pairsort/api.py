@@ -31,7 +31,7 @@ import numpy as np
 from .backends import Choice, JudgeBackend, make_backend
 from .sorter import PRESETS, Dimension, Item, PairSorter, SortResult
 
-__all__ = ["sort", "compare", "sorter", "as_dimensions", "as_items", "as_judge", "FunctionJudge", "Sorter"]
+__all__ = ["sort", "compare", "sorter", "reserved_names", "as_dimensions", "as_items", "as_judge", "FunctionJudge", "Sorter"]
 
 _STOP = set("""which what who whose whom is are was were be been would will could should can do does did the a an of
 for to in on at by with from than that this these those it its more most less least better best worse worst one two
@@ -184,26 +184,64 @@ def as_judge(judge=None, *, model: str | None = None, cache: str | os.PathLike |
 
 
 # --------------------------------------------------------------------------------------------- one-liners
+def reserved_names() -> frozenset:
+    """Keyword names that are options, never questions: sort()'s own parameters plus every PairSorter option."""
+    own = {p for p in inspect.signature(sort).parameters if p not in ("items", "questions")}
+    sorter_opts = {p for p in inspect.signature(PairSorter.__init__).parameters if p not in ("self", "backend", "dimensions")}
+    return frozenset(own | sorter_opts)
+
+
+def _split_kwargs(kwargs: dict) -> tuple[dict, dict]:
+    """Separate question keywords (name="Which ...?") from option keywords."""
+    import difflib
+
+    reserved = reserved_names()
+    questions, options = {}, {}
+    for k, v in kwargs.items():
+        close = difflib.get_close_matches(k, sorted(reserved), n=1, cutoff=0.8)
+        if k in reserved:
+            options[k] = v
+        elif close and isinstance(v, str):
+            raise TypeError(f"{k}={v!r} looks like a misspelled option {close[0]!r}. If you meant a question named {k!r}, "
+                            f"pass it as by={{{k!r}: {v!r}}}.")
+        elif isinstance(v, (str, Dimension)) or (isinstance(v, dict) and "question" in v):
+            questions[k] = v
+        else:
+            close = difflib.get_close_matches(k, sorted(reserved), n=1)
+            hint = f" Did you mean {close[0]!r}?" if close else ""
+            raise TypeError(f"unknown option {k}={v!r}.{hint} Questions are passed as name=\"Which ...?\" strings.")
+    return questions, options
+
+
 def sort(items, by=None, *, judge=None, objective: str | None = None, budget: int | None = None,
-         model: str | None = None, verbose: bool = False, cache=True, **options) -> SortResult:
+         model: str | None = None, verbose: bool = False, cache=True, **questions_and_options) -> SortResult:
     """Rank ``items`` by one or more pairwise questions. Returns a :class:`SortResult`.
+
+        pairsort.sort(ideas, "Which is more useful?")                                   # one question
+        pairsort.sort(ideas, useful="Which is more useful?", easy="Which is easier?")   # several, named
+        pairsort.sort(ideas, {"useful": "...", "easy": "..."})                          # same, as a dict
 
     items      list of strings / dicts / Items, a ``{id: text}`` dict, or a path to a file
     by         a question string, a list of them, ``{name: question}``, dicts, Dimensions, or a preset (``"papers"``)
+    **name     name="question" keywords add named questions (any name that isn't an option; for a question named
+               like an option, e.g. ``judge``, use the dict form: ``by={"judge": "..."}``)
     judge      None (Jev via OpenRouter), a spec like ``"llm:deepseek/deepseek-v4.1-flash"``, a backend, or a function
     objective  context every judgment sees ("Pick talks for a beginner audience")
     budget     max pairs to compare (default: all pairs up to 12 items, else ~K·log2 K with adaptive stopping)
-    options    any other :class:`PairSorter` keyword (pair_strategy, fusion, coupling, profile, seed, ...)
+    options    any other :class:`PairSorter` keyword (pair_strategy, fusion, coupling, profile, seed, ...);
+               ``pairsort.reserved_names()`` lists them all
     """
+    named, options = _split_kwargs(questions_and_options)
     its, originals, extra = as_items(items)
-    if by is None:
+    if by is None and not named:
         by = extra.get("questions") or extra.get("dimensions") or extra.get("preset")
-    dims = as_dimensions(by)
+    dims = (as_dimensions(by) if by is not None else []) + (as_dimensions(named) if named else [])
+    dims = as_dimensions(dims) if dims else as_dimensions(None)  # de-duplicate names / clear error if empty
     sorter_ = PairSorter(as_judge(judge, model=model, cache=cache), dims,
-                        objective if objective is not None else extra.get("objective", ""),
-                        max_pairs=options.pop("max_pairs", budget),
-                        progress=options.pop("progress", (lambda m: print(f"· {m}", file=sys.stderr)) if verbose else None),
-                        **options)
+                         objective if objective is not None else extra.get("objective", ""),
+                         max_pairs=options.pop("max_pairs", budget),
+                         progress=options.pop("progress", (lambda m: print(f"· {m}", file=sys.stderr)) if verbose else None),
+                         **options)
     res = sorter_.sort(its)
     res.originals = originals
     return res

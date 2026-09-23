@@ -44,8 +44,8 @@ plus every option by keyword:
 from pairsort import PairSorter
 
 sorter = PairSorter("llm:deepseek/deepseek-v4.1-flash",
-                   {"clarity": "Which explanation is clearer for a beginner?",
-                    "accuracy": "Which explanation is more technically accurate?"},
+                   {"clarity": "Which explanation is clearer for a beginner?",       # PairSorter takes questions
+                    "accuracy": "Which explanation is more technically accurate?"},  # as one argument (dict/list/str)
                    objective="Explain how TCP congestion control works.",
                    pair_strategy="active", max_pairs=80, fusion="linear+meta")
 result = sorter.sort(explanations)

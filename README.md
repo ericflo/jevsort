@@ -40,7 +40,7 @@ result.best        # 'A tool that ranks PRs by urgency'   (your own objects back
 result.top(2)      # the two best
 result.scores      # {id: probability of being the best}
 
-pairsort.sort(ideas, {"useful": "Which is more useful?", "easy": "Which is easier to build?"})   # blend questions
+pairsort.sort(ideas, useful="Which is more useful?", easy="Which is easier to build?")       # blend questions
 pairsort.compare("draft A", "draft B", "Which is clearer?")                                    # -> P(A is better)
 pairsort.sort(ideas, "Which is shorter?", judge=lambda q, a, b: len(a) < len(b))               # any function is a judge
 ```

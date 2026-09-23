@@ -101,3 +101,23 @@ def test_cli_sort_stdin_and_errors(tmp_path):
     r = subprocess.run(exe + ["sort", "--help"], capture_output=True, text=True)
     assert "QUESTION" in r.stdout and "--budget" in r.stdout and "--top" in r.stdout
 
+
+
+def test_questions_as_keywords():
+    r = pairsort.sort(["a", "bbb", "cc"], useful="Which is longer?", easy="Which is shorter?", judge=longer)
+    assert r.dims == ["useful", "easy"]
+    r = pairsort.sort(["a", "bbb", "cc"], "Which is longer?", extra="Which is weirder?", judge=longer, seed=2)
+    assert r.dims == ["longer", "extra"] and r.config["objective"] == ""
+
+
+def test_keyword_collisions_and_typos():
+    # a question named like an option goes through the dict form
+    assert pairsort.sort(["a", "bb"], by={"judge": "Which would a judge prefer?"}, judge=longer).dims == ["judge"]
+    # options are never mistaken for questions, even string-valued ones
+    r = pairsort.sort(["a", "bb", "ccc"], useful="Which is longer?", coupling="bt", judge=longer)
+    assert r.dims == ["useful"] and r.per_dim["useful"].method == "bt"
+    with pytest.raises(TypeError, match="max_pairs"):
+        pairsort.sort(["a", "b"], "Q?", judge=longer, max_pair=5)
+    with pytest.raises(TypeError, match="misspelled option 'fusion'"):
+        pairsort.sort(["a", "b"], "Q?", judge=longer, fusoin="linear+meta")
+    assert {"judge", "max_pairs", "budget", "objective", "fusion", "coupling"} <= pairsort.reserved_names()

@@ -27,9 +27,11 @@ print(result.best)            # the winner (your own string back)
 print(result.top(3))          # the three best
 print(result.scores)          # {id: probability of being the best}
 
-# 2. Several questions, blended. Plain strings, or name="question".
-result = pairsort.sort(ideas, {"useful": "Which would developers find more useful?",
-                              "easy": "Which is easier to build in a weekend?"})
+# 2. Several questions, blended: name each one as a keyword.
+result = pairsort.sort(ideas, useful="Which would developers find more useful?",
+                              easy="Which is easier to build in a weekend?")
+# (Same thing as a dict: pairsort.sort(ideas, {"useful": "...", "easy": "..."}). Use the dict when a question's
+#  name would clash with an option such as judge= or budget=.)
 print(result)                 # a table: overall + each question
 
 # 3. One comparison.
@@ -58,7 +60,7 @@ print(result.ids, result.usage["pairs"], "pairs")
 | argument | accepts |
 |---|---|
 | items | a list of strings, a list of dicts (`id`/`text`, or `title`/`abstract`/`body`), a `{id: text}` dict, or a path to a `.txt` / `.csv` / `.jsonl` / `.json` file |
-| questions (`by`) | a string, a list of strings, `{name: question}`, dicts with `question`/`guidance`, `(name, question)` tuples, `Dimension` objects, or a preset (`"papers"`) |
+| questions | named keywords, `useful="Which is more useful?"`, or as the `by` argument: a string, a list of strings, `{name: question}`, dicts with `question`/`guidance`, `(name, question)` tuples, `Dimension` objects, or a preset (`"papers"`). Keywords that are option names (`judge`, `budget`, `objective`, ...: `pairsort.reserved_names()`) are always options, and a misspelled option raises an error rather than becoming a question; to name a question `judge`, use `by={"judge": "..."}`. |
 | `judge` | nothing (Jev via OpenRouter, falling back to an LLM judge with a warning), a spec string (`"llm"`, `"llm:MODEL"`, `"typesafe"`, `"jev-wire:URL"`, `"hf:REPO"`...), a backend object, or a function `f(question, a, b)` returning a probability, `"A"`/`"B"`, or a bool (add a `context` parameter to receive the objective) |
 | `objective` | context every judgment sees |
 | `budget` | the most pairs to compare (default: every pair up to 12 items; beyond that about K·log₂K, stopping early once the ranking is stable) |

@@ -20,9 +20,11 @@ print(result.best)            # the winner (your own string back)
 print(result.top(3))          # the three best
 print(result.scores)          # {id: probability of being the best}
 
-# 2. Several questions, blended. Plain strings, or name="question".
-result = pairsort.sort(ideas, {"useful": "Which would developers find more useful?",
-                              "easy": "Which is easier to build in a weekend?"})
+# 2. Several questions, blended: name each one as a keyword.
+result = pairsort.sort(ideas, useful="Which would developers find more useful?",
+                              easy="Which is easier to build in a weekend?")
+# (Same thing as a dict: pairsort.sort(ideas, {"useful": "...", "easy": "..."}). Use the dict when a question's
+#  name would clash with an option such as judge= or budget=.)
 print(result)                 # a table: overall + each question
 
 # 3. One comparison.
