@@ -47,7 +47,16 @@ Active + adaptive stop: τ 0.858 with 80/120 pairs.
   requests for $0.0039 (fused AUC 0.994, referee said STOP at 24/120 pairs); showdown jury member 4,800 judgments in
   7 s for $0.107.
 
+## Evals (all with ground truth stated on every figure and page)
+- verifiable (exact planted counts, fictional docs), market (realized Fri→Mon returns from pre-open 8-Ks; Jev τ +0.14, p=0.035),
+  degradation ladder (logged damage ops), code runtime (sandboxed timing, 25 solutions), cross-lingual (EN/ES/DE/JA from
+  templates), weather (predictions for 2026-09-24 committed 05:26 UTC; resolve Action runs daily 13:30 UTC),
+  synthetic + 16 fictional papers.
+- Figures: one house style (examples/viz.py, Libre Franklin bundled); generators: eval_figs.py, showdown_figs.py, weather_plots.py.
+- Docs: README is short; details in docs/*.md, rendered as Pages subpages (Jekyll, docs/_layouts/default.html).
+
 ## Next
+- Check the weather resolve Action after 2026-09-25 13:30 UTC; then add the result to README/landing.
 - Collect human ballots (issues labeled `human-ballot`), then `jevsort agreement --github ericflo/jevsort` and commit
   `docs/data/agreement.json` + `docs/figures/agreement.png`.
 - Exercise the in-process open-model adapters against real checkpoints (needs GPU + each project's package).
