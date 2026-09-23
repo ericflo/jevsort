@@ -17,6 +17,7 @@ genuine signal about how surprising and material a disclosure is.
 ## Results
 
 <!-- market:start -->
+
 | judge | Kendall τ vs realized return | p (permutation) | pairs right | top-quartile mean return | bottom-quartile mean return | cost |
 |---|---|---|---|---|---|---|
 | Jev 1.13 (TypeSafe) | +0.138 | 0.035 | 55.5% | +3.74% | +0.45% | $0.073 |
@@ -25,6 +26,7 @@ genuine signal about how surprising and material a disclosure is.
 | Nemotron 3.5 Lightning | +0.066 | 0.195 | 53.8% | +1.42% | +0.28% | $0.114 |
 
 All 80 stocks averaged +0.87% (sd 7.19%) that day.
+
 <!-- market:end -->
 
 **Reading it honestly:** this is one trading day and 80 stocks, so the uncertainty is large (a random ranking's τ

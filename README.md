@@ -49,6 +49,7 @@ More: [usage & CLI](docs/usage.md).
 ## Summary Showdown
 
 <!-- showdown:start -->
+
 **100 of OpenRouter's most-used models each summarized the 1994 paper this library implements.** jevsort ranked them on six questions from 400 of 4,950 possible pairs (8%) with a jury of 4 AI judges. Current top 3: GPT-6 Astra, Claude Opus 5, Nemotron 3 Ultra.
 
 [![Summary Showdown](examples/figures/showdown_top.png)](https://ericflo.github.io/jevsort/)
@@ -56,6 +57,7 @@ More: [usage & CLI](docs/usage.md).
 *Ground truth: none — nobody can say which summary is truly best. The ranking is the AI jury's opinion; we check it against a separate LLM grader (Claude Sonnet 5 + a key-fact rubric), which the [verifiable eval](docs/verifiable.md) shows is itself accurate on exact counts. Humans can vote on the site.*
 
 [**Judge the summaries yourself →**](https://ericflo.github.io/jevsort/) · [full results + method](docs/showdown.md) · [leaderboard](examples/SHOWDOWN.md)
+
 <!-- showdown:end -->
 
 ## Does it work?

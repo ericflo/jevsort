@@ -4,6 +4,7 @@ The full write-up behind the [interactive Summary Showdown](https://ericflo.gith
 generated from `examples/results/showdown.json` by `examples/showdown_plots.py`.
 
 <!-- showdown:start -->
+
 ## Results
 
 > **Ground truth: none.** Nobody can say which summary of a paper is *truly* best. Rankings here are the AI jury's
@@ -74,6 +75,7 @@ Full 100-model leaderboard: [examples/SHOWDOWN.md](https://github.com/ericflo/je
 
 Reproduce: `python examples/summary_showdown.py all --n 100` (≈ $5 on OpenRouter; everything is cached, so
 re-runs are free). The paper text is downloaded at runtime and not redistributed.
+
 
 <!-- showdown:end -->
 

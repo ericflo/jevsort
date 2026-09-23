@@ -97,8 +97,8 @@ def main():
     page = ROOT / "docs" / "market.md"
     text = page.read_text()
     a, b = "<!-- market:start -->", "<!-- market:end -->"
-    page.write_text(text[: text.index(a) + len(a)] + "\n" + "\n".join(rows) + "\n\n" +
-                    f"All {R['k']} stocks averaged {R['universe_mean_return']:+.2%} (sd {R['universe_sd_return']:.2%}) that day.\n"
+    page.write_text(text[: text.index(a) + len(a)] + "\n\n" + "\n".join(rows) + "\n\n" +
+                    f"All {R['k']} stocks averaged {R['universe_mean_return']:+.2%} (sd {R['universe_sd_return']:.2%}) that day.\n\n"
                     + text[text.index(b):])
     R["p_values"] = pvals
     (HERE / "results" / "market_eval.json").write_text(json.dumps(R, indent=1) + "\n")

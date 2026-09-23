@@ -405,7 +405,7 @@ def _splice(path, start, end, body):
     if start not in text:
         return False
     a, b = text.index(start) + len(start), text.index(end)
-    path.write_text(text[:a] + "\n" + body + "\n" + text[b:])
+    path.write_text(text[:a] + "\n\n" + body + "\n\n" + text[b:])
     return True
 
 

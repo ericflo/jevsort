@@ -14,6 +14,7 @@ dataset author assigned. This eval removes the judgment call entirely.
 ## Results
 
 <!-- verifiable:start -->
+
 | judge | accuracy τ | accuracy: pairs right | completeness τ | completeness: pairs right | cost |
 |---|---|---|---|---|---|
 | Gemma 4 31B | 0.88 ± 0.04 | 97.2% | 0.99 ± 0.01 | 99.7% | $0.097 |
@@ -24,6 +25,7 @@ dataset author assigned. This eval removes the judgment call entirely.
 | Nemotron 3.5 Lightning | 0.75 ± 0.05 | 86.7% | 0.53 ± 0.10 | 75.3% | $0.068 |
 
 Measured correlation between the two true counts (errors vs facts mentioned) across all 72 summaries: r = 0.02. Error counts and fact counts are assigned independently, so answering one question (or preferring longer summaries) does not answer the other.
+
 <!-- verifiable:end -->
 
 "Pairs right" is the share of the judge's own pairwise answers (both orders averaged) that pick the item with the

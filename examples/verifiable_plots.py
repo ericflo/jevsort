@@ -68,10 +68,10 @@ def main():
     page = ROOT / "docs" / "verifiable.md"
     text = page.read_text()
     a, b = "<!-- verifiable:start -->", "<!-- verifiable:end -->"
-    page.write_text(text[: text.index(a) + len(a)] + "\n" + table + "\n\n" +
+    page.write_text(text[: text.index(a) + len(a)] + "\n\n" + table + "\n\n" +
                     f"Measured correlation between the two true counts (errors vs facts mentioned) across all 72 summaries: "
                     f"r = {R['truth_correlation']:.2f}. Error counts and fact counts are assigned independently, so answering "
-                    "one question (or preferring longer summaries) does not answer the other.\n" + text[text.index(b):])
+                    "one question (or preferring longer summaries) does not answer the other.\n\n" + text[text.index(b):])
     print("updated docs/verifiable.md")
 
 
