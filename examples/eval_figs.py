@@ -341,11 +341,20 @@ def verifiable():
 
 
 # ------------------------------------------------------------------------------------------------ market
-def market():
+DAY = {"2026-09-18": "Friday", "2026-09-21": "Monday", "2026-09-22": "Tuesday", "2026-09-23": "Wednesday"}
+
+
+def market_sessions():
+    return sorted(p.stem.replace("market_eval_", "") for p in RES.glob("market_eval_*.json"))
+
+
+def market(session):
     from jevsort.metrics import kendall_tau
 
-    R = json.loads((RES / "market_eval.json").read_text())
-    D = json.loads((HERE / "data" / "market.json").read_text())
+    R = json.loads((RES / f"market_eval_{session}.json").read_text())
+    D = json.loads((HERE / "data" / f"market_{session}.json").read_text())
+    prev = D.get("previous_session") or {"2026-09-21": "2026-09-18"}[session]
+    dp, ds = DAY.get(prev, prev), DAY.get(session, session)
     tick = [c["ticker"] for c in D["companies"]]
     truth = np.array([c["return"] for c in D["companies"]])
     ks = list(R["judges"])
@@ -353,20 +362,29 @@ def market():
     ls0 = np.array([R["judges"][ks[0]]["log_strength"][t] for t in tick])
     null = np.array([kendall_tau(ls0, rng.permutation(truth)) for _ in range(3000)])
     lo, hi = np.percentile(null, [2.5, 97.5])
-    fig, (a1, a2) = viz.canvas(13.5, 4.6, "Reading Monday's filings before the bell: a faint signal, strongest for Jev",
-                               f"{R['k']} companies filed material news with the SEC after Friday's close and before Monday's "
-                               "open. Judges saw only those filings and ranked which stock would do better on Monday.",
-                               truth="each stock's actual return from Friday 2026-09-18's close to Monday 2026-09-21's close "
-                                     "(Yahoo Finance), which did not exist until that day. Judges never saw prices, returns or "
-                                     "any news written after the market opened.",
-                               source=f"{R['pairs_used']} of {R['pairs_possible']:,} pairs (active schedule), both orders. "
-                                      "One trading day: treat as a first data point. p = one-sided permutation test.",
+    pv = R.get("p_values", {})
+    best = max(ks, key=lambda k: R["judges"][k]["kendall_tau"])
+    if pv.get(best, 1) < 0.05:
+        title = f"Reading {ds}'s filings before the bell: a faint signal, strongest for {viz.JUDGE_NAME.get(best, best)}"
+    elif R["judges"][best]["kendall_tau"] > 0:
+        title = f"{ds}'s filings: all four judges land just above zero; none clearly beats guessing"
+    else:
+        title = f"{ds}'s filings: no judge beat guessing"
+    fig, (a1, a2) = viz.canvas(13.5, 4.6, title,
+                               f"{R['k']} companies filed material news with the SEC after {dp}'s close ({prev}) and before "
+                               f"{ds}'s open ({session}). Judges saw only those filings and ranked which stock would do better "
+                               f"on {ds}.",
+                               truth=f"each stock's actual return from {dp} {prev}'s close to {ds} {session}'s close (Yahoo "
+                                     f"Finance), which did not exist until that day. Judges saw no prices or returns from the "
+                                     f"session being predicted, and no news written after the market opened.",
+                               source=f"{R['pairs_used']} of {R['pairs_possible']:,} pairs (active schedule chosen by the first "
+                                      "judge, Jev), both orders. One trading day per figure. p = one-sided permutation test, not "
+                                      "corrected for comparing four judges.",
                                ncols=2, wspace=1.3, width_ratios=[1, 1.1], left=2.1, top_extra=0.55)
     viz.clean(a1, grid="x", baseline=False)
     y = np.arange(len(ks))[::-1]
     a1.axvspan(lo, hi, color=viz.FAINT, lw=0, zorder=0)
     a1.text((lo + hi) / 2, len(ks) - 0.35, "what pure guessing\nlooks like (95%)", ha="center", fontsize=9, color=viz.INK3)
-    pv = R.get("p_values", {})
     for yy, k in zip(y, ks):
         j = R["judges"][k]
         col = viz.JUDGE.get(k, viz.INK3)
@@ -376,9 +394,9 @@ def market():
     a1.axvline(0, color=viz.INK3, lw=1, ls=(0, (3, 3)))
     a1.set_yticks(y, [viz.JUDGE_NAME.get(k, k) for k in ks], fontsize=10.5)
     a1.tick_params(axis="y", colors=viz.INK)
-    a1.set_xlim(-0.22, 0.42)
+    a1.set_xlim(-0.25, 0.45)
     a1.set_ylim(-0.6, len(ks) + 0.3)
-    a1.set_xlabel("agreement with actual Monday returns (Kendall τ)")
+    a1.set_xlabel(f"agreement with actual {ds} returns (Kendall τ)")
     _panel_title(a1, "Signal vs guessing", "0 = no better than shuffling")
     viz.clean(a2)
     qs = np.arange(4)
@@ -392,14 +410,50 @@ def market():
     a2.text(3.45, truth.mean() * 100 + 0.12, f"all {R['k']} stocks: {truth.mean() * 100:+.1f}%", ha="right", fontsize=9, color=viz.INK2)
     a2.set_xticks(qs, ["judge's\ntop quarter", "second", "third", "judge's\nbottom quarter"])
     a2.set_ylabel("average actual return (%)")
-    jv = R["judges"].get("typesafe/jev-1.13")
-    if jv:
-        viz.note(a2, (-0.3, jv["top_quartile_mean_return"] * 100), (0.6, jv["top_quartile_mean_return"] * 100 + 0.2),
-                 f"Jev's top picks: {jv['top_quartile_mean_return'] * 100:+.1f}% on average", rad=-0.2, color=viz.JEV)
     _panel_title(a2, "Did the top picks actually do better?", "stocks grouped by each judge's ranking")
     viz.key(a2, [(viz.JUDGE_NAME.get(k, k), viz.JUDGE.get(k, viz.INK3), "s") for k in ks], y=1.0, x0=1.0, size=9, ncol=1,
             loc="upper right")
-    viz.save(fig, "market_eval.png", also=DOCS_FIG)
+    viz.save(fig, f"market_eval_{session}.png", also=DOCS_FIG)
+
+
+def market_summary():
+    """All sessions side by side: each judge's τ per trading day."""
+    sess = market_sessions()
+    if len(sess) < 2:
+        return
+    Rs = {s: json.loads((RES / f"market_eval_{s}.json").read_text()) for s in sess}
+    ks = list(Rs[sess[0]]["judges"])
+    fig, (ax,) = viz.canvas(12, 0.7 * len(ks) + 0.8, "One day is noise; the market eval is built to be repeated",
+                            "Each judge's agreement with realized returns, one marker per trading session. A judge with real "
+                            "signal should stay right of zero session after session.",
+                            truth="each session's realized close-to-close stock returns (Yahoo Finance), which did not exist when "
+                                  "the judges read that session's pre-open SEC filings. Judges saw no prices or returns from the "
+                                  "session being predicted.",
+                            source=" · ".join(f"{DAY.get(s, s)} {s}: {Rs[s]['k']} stocks, {Rs[s]['pairs_used']} pairs" for s in sess),
+                            left=2.3, top_extra=0.2)
+    viz.clean(ax, grid="x", baseline=False)
+    y = np.arange(len(ks))[::-1]
+    marks = ["o", "D", "s", "^", "v"]
+    for yy, k in zip(y, ks):
+        col = viz.JUDGE.get(k, viz.INK3)
+        taus = [Rs[s]["judges"][k]["kendall_tau"] for s in sess if k in Rs[s]["judges"]]
+        ax.plot([min(taus), max(taus)], [yy, yy], color=col, lw=6, alpha=0.2, solid_capstyle="round")
+        for n, s in enumerate(sess):
+            if k in Rs[s]["judges"]:
+                j = Rs[s]["judges"][k]
+                p = Rs[s].get("p_values", {}).get(k, 1)
+                ax.scatter([j["kendall_tau"]], [yy], s=110, marker=marks[n % len(marks)], color=col if p < 0.05 else viz.PAPER,
+                           edgecolor=col, lw=1.8, zorder=5)
+        ax.text(0.33, yy, f"mean τ {np.mean(taus):+.2f}", va="center", fontsize=10, color=col, fontweight="semibold")
+    ax.axvline(0, color=viz.INK3, lw=1, ls=(0, (3, 3)))
+    ax.set_xlim(-0.25, 0.42)
+    ax.set_yticks(y, [viz.JUDGE_NAME.get(k, k) for k in ks], fontsize=10.5)
+    ax.tick_params(axis="y", colors=viz.INK)
+    ax.set_xlabel("agreement with that session's actual returns (Kendall τ)")
+    ax.set_ylim(-0.7, len(ks) - 0.3)
+    viz.key(ax, [(f"{DAY.get(s, s)} {s}", viz.INK2, marks[n % len(marks)]) for n, s in enumerate(sess)] +
+            [("filled = p < 0.05", viz.INK3, "o")], y=1.02, x0=0.0, size=9.5, loc="lower left")
+    viz.save(fig, "market_sessions.png", also=DOCS_FIG)
 
 
 def main():
@@ -413,8 +467,9 @@ def main():
         papers(real[0])
     if (RES / "verifiable_eval.json").exists():
         verifiable()
-    if (RES / "market_eval.json").exists():
-        market()
+    for sess in market_sessions():
+        market(sess)
+    market_summary()
     for name, fn in (("ladder_eval.json", ladder), ("runtime_eval.json", runtime), ("crosslingual_eval.json", crosslingual)):
         if (RES / name).exists():
             fn()

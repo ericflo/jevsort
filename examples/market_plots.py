@@ -35,9 +35,9 @@ def perm_p(ls, truth, n=20000, seed=0):
     return float((np.sum(null >= obs) + 1) / (n + 1)), null
 
 
-def main():
-    R = json.loads((HERE / "results" / "market_eval.json").read_text())
-    D = json.loads((HERE / "data" / "market.json").read_text())
+def main(session="2026-09-22"):
+    R = json.loads((HERE / "results" / f"market_eval_{session}.json").read_text())
+    D = json.loads((HERE / "data" / f"market_{session}.json").read_text())
     tick = [c["ticker"] for c in D["companies"]]
     truth = np.array([c["return"] for c in D["companies"]])
     judges = [k for k in R["judges"]]
@@ -51,18 +51,20 @@ def main():
     for k in judges:
         j = R["judges"][k]
         rows.append(f"| {LABELS.get(k, k)} | {j['kendall_tau']:+.3f} | {pvals[k]:.3f} | {j['pairwise_accuracy']:.1%} | "
-                    f"{j['top_quartile_mean_return']:+.2%} | {j['bottom_quartile_mean_return']:+.2%} | ${j['usage']['cost_usd']:.3f} |")
+                    f"{j['top_quartile_mean_return']:+.2%} | {j['bottom_quartile_mean_return']:+.2%} | "
+                    + (f"${j['usage']['cost_usd']:.3f} |" if j['usage']['cost_usd'] else "cached re-run (not recorded) |"))
     page = ROOT / "docs" / "market.md"
     text = page.read_text()
-    a, b = "<!-- market:start -->", "<!-- market:end -->"
+    a, b = f"<!-- market:{session}:start -->", f"<!-- market:{session}:end -->"
     page.write_text(text[: text.index(a) + len(a)] + "\n\n" + "\n".join(rows) + "\n\n" +
                     f"All {R['k']} stocks averaged {R['universe_mean_return']:+.2%} (sd {R['universe_sd_return']:.2%}) that day.\n\n"
                     + text[text.index(b):])
     R["p_values"] = pvals
-    (HERE / "results" / "market_eval.json").write_text(json.dumps(R, indent=1) + "\n")
+    (HERE / "results" / f"market_eval_{session}.json").write_text(json.dumps(R, indent=1) + "\n")
     import eval_figs  # figure in house style, after p-values are stored
 
-    eval_figs.market()
+    eval_figs.market(session)
+    eval_figs.market_summary()
     print("updated docs/market.md;", {LABELS.get(k, k): round(p, 3) for k, p in pvals.items()})
 
 
