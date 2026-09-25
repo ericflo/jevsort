@@ -1,0 +1,382 @@
+{
+ "target_date": "2026-09-24",
+ "resolved_at_utc": "2026-09-25T13:38:34+00:00",
+ "truth": {
+  "BIRK": {
+   "high": 13.0,
+   "low": 7.0,
+   "rain_obs": 21,
+   "n_obs": 24,
+   "conditions": [
+    "-RA",
+    "-RA -DZ",
+    "-DZ BR"
+   ]
+  },
+  "EGLL": {
+   "high": 21.0,
+   "low": 11.0,
+   "rain_obs": 1,
+   "n_obs": 48,
+   "conditions": [
+    "-RA"
+   ]
+  },
+  "LEMD": {
+   "high": 35.0,
+   "low": 15.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": []
+  },
+  "LIRF": {
+   "high": 27.0,
+   "low": 14.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": []
+  },
+  "ENGM": {
+   "high": 13.0,
+   "low": 11.0,
+   "rain_obs": 20,
+   "n_obs": 48,
+   "conditions": [
+    "-RA BR",
+    "-DZ -RA",
+    "BR"
+   ]
+  },
+  "UUEE": {
+   "high": 21.0,
+   "low": 12.0,
+   "rain_obs": 7,
+   "n_obs": 63,
+   "conditions": [
+    "-RA"
+   ]
+  },
+  "LTFM": {
+   "high": 19.0,
+   "low": 11.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": []
+  },
+  "HECA": {
+   "high": 32.0,
+   "low": 23.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": []
+  },
+  "HKJK": {
+   "high": 30.0,
+   "low": 14.0,
+   "rain_obs": 0,
+   "n_obs": 37,
+   "conditions": []
+  },
+  "FAOR": {
+   "high": 26.0,
+   "low": 12.0,
+   "rain_obs": 0,
+   "n_obs": 43,
+   "conditions": []
+  },
+  "DNMM": {
+   "high": 30.0,
+   "low": 24.0,
+   "rain_obs": 3,
+   "n_obs": 24,
+   "conditions": [
+    "-RA"
+   ]
+  },
+  "OMDB": {
+   "high": 42.0,
+   "low": 31.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": [
+    "HZ"
+   ]
+  },
+  "VIDP": {
+   "high": 34.0,
+   "low": 27.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": [
+    "HZ",
+    "BR"
+   ]
+  },
+  "VABB": {
+   "high": 32.0,
+   "low": 29.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": [
+    "HZ",
+    "BR"
+   ]
+  },
+  "VTBS": {
+   "high": 30.0,
+   "low": 23.0,
+   "rain_obs": 21,
+   "n_obs": 48,
+   "conditions": [
+    "-RA",
+    "-TSRA",
+    "+TSRA"
+   ]
+  },
+  "WSSS": {
+   "high": 32.0,
+   "low": 27.0,
+   "rain_obs": 3,
+   "n_obs": 49,
+   "conditions": [
+    "HZ",
+    "TS",
+    "-SHRA"
+   ]
+  },
+  "VHHH": {
+   "high": 33.0,
+   "low": 28.0,
+   "rain_obs": 1,
+   "n_obs": 50,
+   "conditions": [
+    "-SHRA"
+   ]
+  },
+  "ZBAA": {
+   "high": 25.0,
+   "low": 19.0,
+   "rain_obs": 11,
+   "n_obs": 49,
+   "conditions": [
+    "-SHRA",
+    "-TSRA",
+    "-TSRA BR"
+   ]
+  },
+  "RJTT": {
+   "high": 27.0,
+   "low": 20.0,
+   "rain_obs": 3,
+   "n_obs": 48,
+   "conditions": [
+    "-RA",
+    "-RA BR"
+   ]
+  },
+  "RKSI": {
+   "high": 25.0,
+   "low": 19.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": []
+  },
+  "YSSY": {
+   "high": 23.0,
+   "low": 16.0,
+   "rain_obs": 0,
+   "n_obs": 47,
+   "conditions": []
+  },
+  "NZAA": {
+   "high": 14.0,
+   "low": 5.0,
+   "rain_obs": 0,
+   "n_obs": 48,
+   "conditions": []
+  },
+  "PHNL": {
+   "high": 31.7,
+   "low": 26.1,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": []
+  },
+  "PANC": {
+   "high": 12.2,
+   "low": 1.1,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": [
+    "MIFG"
+   ]
+  },
+  "KSEA": {
+   "high": 16.7,
+   "low": 11.1,
+   "rain_obs": 4,
+   "n_obs": 25,
+   "conditions": [
+    "-RA",
+    "-RA BR"
+   ]
+  },
+  "KPHX": {
+   "high": 31.1,
+   "low": 25.0,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": []
+  },
+  "KDEN": {
+   "high": 21.1,
+   "low": 14.4,
+   "rain_obs": 1,
+   "n_obs": 25,
+   "conditions": [
+    "-RA"
+   ]
+  },
+  "KORD": {
+   "high": 20.6,
+   "low": 15.6,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": []
+  },
+  "KMIA": {
+   "high": 32.8,
+   "low": 25.6,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": []
+  },
+  "KJFK": {
+   "high": 18.9,
+   "low": 12.8,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": []
+  },
+  "MMMX": {
+   "high": 26.0,
+   "low": 14.0,
+   "rain_obs": 7,
+   "n_obs": 30,
+   "conditions": [
+    "RA",
+    "TS",
+    "TSRA"
+   ]
+  },
+  "SKBO": {
+   "high": 20.0,
+   "low": 5.0,
+   "rain_obs": 5,
+   "n_obs": 29,
+   "conditions": [
+    "MIFG",
+    "VCSH",
+    "VCFG"
+   ]
+  },
+  "SPJC": {
+   "high": 25.0,
+   "low": 21.0,
+   "rain_obs": 0,
+   "n_obs": 25,
+   "conditions": []
+  },
+  "SBGR": {
+   "high": 20.0,
+   "low": 14.0,
+   "rain_obs": 2,
+   "n_obs": 26,
+   "conditions": [
+    "BR",
+    "-DZ BR"
+   ]
+  },
+  "SAEZ": {
+   "high": 26.0,
+   "low": 12.0,
+   "rain_obs": 0,
+   "n_obs": 24,
+   "conditions": []
+  }
+ },
+ "scores": {
+  "typesafe/jev-1.13": {
+   "high": {
+    "kendall_tau": 0.7172727488365686,
+    "pairs_right": 0.8635578583765112,
+    "pairs": 579
+   },
+   "rain": {
+    "kendall_tau": 0.2983419101460195,
+    "pairs_right": 0.6826196473551638,
+    "pairs": 397
+   }
+  },
+  "deepseek/deepseek-v4.1-flash": {
+   "high": {
+    "kendall_tau": 0.7036428628729282,
+    "pairs_right": 0.8566493955094991,
+    "pairs": 579
+   },
+   "rain": {
+    "kendall_tau": 0.2766405278161854,
+    "pairs_right": 0.6700507614213198,
+    "pairs": 394
+   }
+  },
+  "google/gemma-4-31b-it": {
+   "high": {
+    "kendall_tau": 0.7274951633092988,
+    "pairs_right": 0.8687392055267703,
+    "pairs": 579
+   },
+   "rain": {
+    "kendall_tau": 0.31891721429402087,
+    "pairs_right": 0.6952141057934509,
+    "pairs": 397
+   }
+  },
+  "nvidia/nemotron-3.5-lightning": {
+   "high": {
+    "kendall_tau": 0.690012976909288,
+    "pairs_right": 0.8497409326424871,
+    "pairs": 579
+   },
+   "rain": {
+    "kendall_tau": 0.2078105718948136,
+    "pairs_right": 0.6272040302267002,
+    "pairs": 397
+   }
+  },
+  "baseline: Open-Meteo forecast": {
+   "high": {
+    "kendall_tau": 0.8635428413679717,
+    "pairs_right": 0.9377162629757786,
+    "pairs": 578
+   },
+   "rain": {
+    "kendall_tau": 0.6713736953114775,
+    "pairs_right": 0.8885793871866295,
+    "pairs": 359
+   }
+  },
+  "baseline: persistence": {
+   "high": {
+    "kendall_tau": 0.7390205550607558,
+    "pairs_right": 0.8769771528998243,
+    "pairs": 569
+   },
+   "rain": {
+    "kendall_tau": 0.19799747487413502,
+    "pairs_right": 0.6395759717314488,
+    "pairs": 283
+   }
+  }
+ }
+}
